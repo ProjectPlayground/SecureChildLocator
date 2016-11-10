@@ -13,26 +13,20 @@ public class Database
     private static final String driver = "com.mysql.jdbc.Driver";
     private static final String database = "jdbc:mysql://localhost:3306/childlocator?user=root&password=sirs@childlocator16";
 
-    private static final String removeUserStatement = //"delete from location where user_id_fk = (select user_id from users where email = ? limit 1);" +
-                                                      //"delete from children where user_id_fk = (select user_id from users where email = ? limit 1);" +
-                                                      "delete from users where user_id = (select user_id from users where email = ?)";
-
-    //private static final String removeChildStatement = "delete from location where user_id_fk = ? and child_id = ?"
-
     private Connection connection = null;
 
     public static void main(String[] args) {
         try {
             Database database = new Database();
-
-            //database.addUser("h", "c", "h@g.com", "96", "qwerty");
-            //database.addUser("c", "v", "c@g.com", "97", "qwerty");
-            //database.addChild("hh", "cc", "98", "h@g.com");
-            //database.addChild("hhh", "ccc", "99", "h@g.com");
-            //database.addChild("ccc", "c", "100", "c@g.com");
-
+/*
+            database.addUser("h", "c", "h@g.com", "96", "qwerty");
+            database.addUser("c", "v", "c@g.com", "97", "qwerty");
+            database.addChild("hh", "cc", "98", "h@g.com");
+            database.addChild("hhh", "ccc", "99", "h@g.com");
+            database.addChild("ccc", "c", "100", "c@g.com");
+*/
             // database.removeUser("h@g.com");
-            database.removeChild("99", "c@g.com");
+            // database.removeChild("100", "c@g.com");
         }
         catch (Exception e) {
             e.getMessage();
@@ -111,22 +105,38 @@ public class Database
         // checkRemoveUser(email);
 
         try {
-            String removeUserStatement = "delete from users where user_id in (" +
-                                              "select temp.user_id from (" +
-                                                   "select user_id from users where email = ?) as temp)";
+            int user_id = -1;
+
+            String removeUserStatement = "select user_id from users where email = ? limit 1";
             PreparedStatement statement = connection.prepareStatement(removeUserStatement);
             statement.setString(1, email);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                user_id = Integer.parseInt(result.getString(1));
+            }
+
+            if (user_id == -1) {
+                System.out.println("User not found");
+                System.exit(1);
+            }
+
+            removeUserStatement = "delete from children where user_id_fk = ?";
+            statement = connection.prepareStatement(removeUserStatement);
+            statement.setInt(1, user_id);
             statement.execute();
 
-            removeUserStatement = "delete from children where user_id_fk = (select user_id from users where email = ? limit 1)";
+            removeUserStatement = "delete from location where user_id_fk = ?";
             statement = connection.prepareStatement(removeUserStatement);
-            statement.setString(1, email);
+            statement.setInt(1, user_id);
             statement.execute();
 
-            removeUserStatement = "delete from location where user_id_fk = (select user_id from users where email = ? limit 1)";
+            removeUserStatement = "delete from users where user_id = ?";
             statement = connection.prepareStatement(removeUserStatement);
-            statement.setString(1, email);
+            statement.setInt(1, user_id);
             statement.execute();
+
+            connection.commit();
         }
         catch (SQLException e) {
             e.getMessage();
@@ -138,19 +148,36 @@ public class Database
     {
         // checkRemoveChild(phoneNumber, email);
 
-        int child_id;
-        int user_id;
-
         try {
+            int child_id = -1;
+            int user_id = -1;
+
             PreparedStatement statement = connection.prepareStatement("select user_id from users where email = ? limit 1");
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
-            user_id = result.getInt("user_id");
 
-            statement = connection.prepareStatement("select child_id from children where user_id_fk = ? limit 1");
+            while (result.next()) {
+                user_id = Integer.parseInt(result.getString(1));
+            }
+
+            if (user_id == -1) {
+                System.out.println("User not found");
+                System.exit(1);
+            }
+
+            statement = connection.prepareStatement("select child_id from children where user_id_fk = ? and phone_number = ?");
             statement.setInt(1, user_id);
+            statement.setString(2, phoneNumber);
             result = statement.executeQuery();
-            child_id = result.getInt("child_id");
+
+            while (result.next()) {
+                child_id = Integer.parseInt(result.getString(1));
+            }
+
+            if (child_id == -1) {
+                System.out.println("Child not found");
+                System.exit(1);
+            }
 
             statement = connection.prepareStatement("delete from children where child_id = ?");
             statement.setInt(1, child_id);
