@@ -7,6 +7,7 @@ import sirs.server.database.exceptions.UserDoesntExistException;
 
 import java.sql.*;
 import java.util.List;
+import java.util.Date;
 
 public class Database
 {
@@ -25,6 +26,8 @@ public class Database
             database.addChild("hhh", "ccc", "99", "h@g.com");
             database.addChild("ccc", "c", "100", "c@g.com");
 */
+            database.addLocation(1, 1, "location", new Date());
+
             // database.removeUser("h@g.com");
             // database.removeChild("100", "c@g.com");
         }
@@ -91,6 +94,28 @@ public class Database
             statement.setString(2, lastName);
             statement.setString(3, phoneNumber);
             statement.setString(4, email);
+
+            statement.execute();
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+    }
+
+    public void addLocation(int child_id, int user_id, String location, Date date) {
+        // checkAddLocation
+
+        try {
+            String addLocation = "insert into location (location_date, location, user_id_fk, child_id_fk) " +
+                    "values (?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(addLocation);
+
+            Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+
+            statement.setTimestamp(1, timestamp);
+            statement.setString(2, location);
+            statement.setInt(3, user_id);
+            statement.setInt(4, child_id);
 
             statement.execute();
         }
@@ -194,8 +219,7 @@ public class Database
 
     }
 
-    // tries to return the latest 10, all if less than 10
-    public List<String> getLatestLocations(String phoneNumber, String email) {
+    public List<String> getAllLocations(String phoneNumber, String email) {
         return null;
     }
 
