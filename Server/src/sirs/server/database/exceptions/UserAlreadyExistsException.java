@@ -2,22 +2,23 @@ package sirs.server.database.exceptions;
 
 public class UserAlreadyExistsException extends Exception
 {
-    private String _email;
-    private String _phoneNumber;
+    private String email;
+    private String phoneNumber;
 
-    public UserAlreadyExistsException(String email, String phoneNumber) {
-        _email = email;
-        _phoneNumber = phoneNumber;
+    public UserAlreadyExistsException(String email, String phoneNumber)
+    {
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override
     public String getMessage()
     {
-        if (_email != null) {
-            return "Email already in use: " + _email;
+        if (email != null) {
+            return "Email already in use: " + email;
         }
-        if (_phoneNumber != null) {
-            return "Phone number already in use: " + _phoneNumber;
+        if (phoneNumber != null) {
+            return "Phone number already in use: " + phoneNumber;
         }
         return null;
     }
