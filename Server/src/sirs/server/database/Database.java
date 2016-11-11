@@ -18,7 +18,8 @@ public class Database
         try {
             Database database = new Database();
 
-            /*database.addUser("h", "c", "h@g.com", "96", "qwerty");
+            /*
+            database.addUser("h", "c", "h@g.com", "96", "qwerty");
             database.addUser("c", "v", "h@g.com", "97", "qwerty");
             database.addUser("c", "v", "c@g.com", "96", "qwerty");
             database.addChild("hh", "cc", "98", "h@g.com");
@@ -30,13 +31,15 @@ public class Database
             database.addLocation(1, 1, "location8", new Date());
             Thread.sleep(4000);
             database.addLocation(1, 1, "location9", new Date());
-*/
-            //database.getAllLocations(10, 10);
-            //database.getLatestLocation(10, 1);
 
-            // database.removeUser("t@g.com");
-            // database.removeChild("1", "c@g.com");
-            // database.removeChild("100", "t@g.com");
+            database.getAllLocations(10, 10);
+            database.getLatestLocation(10, 1);
+
+            database.removeUser("t@g.com");
+            database.removeChild("1", "c@g.com");
+            database.removeChild("100", "t@g.com");
+
+            */
         }
         catch (Exception e) {
             System.out.println(e.getMessage());;
