@@ -6,8 +6,8 @@ import sirs.server.database.exceptions.UserAlreadyExistsException;
 import sirs.server.database.exceptions.UserDoesntExistException;
 
 import java.sql.*;
-import java.util.List;
 import java.util.Date;
+import java.util.*;
 
 public class Database
 {
@@ -27,10 +27,17 @@ public class Database
             database.addChild("hhh", "ccc", "99", "h@g.com");
             database.addChild("ccc", "c", "100", "c@g.com");
 
-            database.addLocation(1, 1, "location", new Date());
+            database.addLocation(1, 1, "location7", new Date());
+            Thread.sleep(4000);
+            database.addLocation(1, 1, "location8", new Date());
+            Thread.sleep(4000);
+            database.addLocation(1, 1, "location9", new Date());
 */
-            database.removeUser("h@g.com");
-            // database.removeChild("99", "h@g.com");
+            // database.getAllLocations(1, 1);
+            // database.getLatestLocation(1, 1);
+
+            // database.removeUser("h@g.com");
+            // database.removeChild("100", "c@g.com");
         }
         catch (Exception e) {
             e.getMessage();
@@ -218,11 +225,66 @@ public class Database
 
     }
 
-    public List<String> getAllLocations(String phoneNumber, String email) {
-        return null;
+    public TreeMap<Date, String> getAllLocations(int user_id, int child_id) {
+        TreeMap<Date, String> locations = new TreeMap<>();
+
+        try {
+            String getLocations = "select location, location_date from location where user_id_fk = ? and child_id_fk = ?";
+            PreparedStatement getLocationsStatement = connection.prepareStatement(getLocations);
+            getLocationsStatement.setInt(1, user_id);
+            getLocationsStatement.setInt(2, child_id);
+            ResultSet result = getLocationsStatement.executeQuery();
+
+            while (result.next()) {
+                String location = result.getString("location");
+                Date locationDate = result.getTimestamp("location_date");
+
+                locations.put(locationDate, location);
+            }
+
+            Set set = locations.entrySet();
+            Iterator it = set.iterator();
+
+            while (it.hasNext()) {
+                Map.Entry tm = (Map.Entry) it.next();
+                System.out.println("Location date: " + tm.getKey() + " Location: " + tm.getValue());
+            }
+
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+
+        return locations;
     }
 
-    public String getLatestLocation(String phoneNumber, String email) {
+    public Map.Entry<Date, String> getLatestLocation(int user_id, int child_id) {
+        // checkLocation(user_id, child_id);
+        try {
+            Map.Entry<Date, String> locationEntry;
+
+            String getLatestLocation = "select location_date, location from location where child_id_fk = ? and "
+                                     + "user_id_fk = ? order by location_date desc limit 1";
+            PreparedStatement statement = connection.prepareStatement(getLatestLocation);
+            statement.setInt(1, child_id);
+            statement.setInt(2, user_id);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                String location = result.getString("location");
+                Date locationDate = result.getTimestamp("location_date");
+
+                locationEntry = new AbstractMap.SimpleEntry<>(locationDate, location);
+
+                System.out.println(locationEntry);
+
+                return locationEntry;
+            }
+        }
+        catch (SQLException e) {
+            e.getMessage();
+        }
+
         return null;
     }
 
