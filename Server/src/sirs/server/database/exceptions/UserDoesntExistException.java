@@ -13,7 +13,7 @@ public class UserDoesntExistException extends Exception
     public UserDoesntExistException(int user_id)
     {
         this.user_id = user_id;
-        email = null;
+        this.email = null;
     }
 
     @Override
