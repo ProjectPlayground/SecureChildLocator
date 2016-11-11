@@ -19,17 +19,18 @@ public class Database
     public static void main(String[] args) {
         try {
             Database database = new Database();
+
 /*
             database.addUser("h", "c", "h@g.com", "96", "qwerty");
             database.addUser("c", "v", "c@g.com", "97", "qwerty");
             database.addChild("hh", "cc", "98", "h@g.com");
             database.addChild("hhh", "ccc", "99", "h@g.com");
             database.addChild("ccc", "c", "100", "c@g.com");
-*/
-            database.addLocation(1, 1, "location", new Date());
 
-            // database.removeUser("h@g.com");
-            // database.removeChild("100", "c@g.com");
+            database.addLocation(1, 1, "location", new Date());
+*/
+            database.removeUser("h@g.com");
+            // database.removeChild("99", "h@g.com");
         }
         catch (Exception e) {
             e.getMessage();
@@ -132,10 +133,10 @@ public class Database
         try {
             int user_id = -1;
 
-            String removeUserStatement = "select user_id from users where email = ? limit 1";
-            PreparedStatement statement = connection.prepareStatement(removeUserStatement);
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
+            String removeUser = "select user_id from users where email = ? limit 1";
+            PreparedStatement removeUserStatement = connection.prepareStatement(removeUser);
+            removeUserStatement.setString(1, email);
+            ResultSet result = removeUserStatement.executeQuery();
 
             while (result.next()) {
                 user_id = Integer.parseInt(result.getString(1));
@@ -146,22 +147,20 @@ public class Database
                 System.exit(1);
             }
 
-            removeUserStatement = "delete from children where user_id_fk = ?";
-            statement = connection.prepareStatement(removeUserStatement);
-            statement.setInt(1, user_id);
-            statement.execute();
+            removeUser = "delete from location where user_id_fk = ?";
+            removeUserStatement = connection.prepareStatement(removeUser);
+            removeUserStatement.setInt(1, user_id);
+            removeUserStatement.execute();
 
-            removeUserStatement = "delete from location where user_id_fk = ?";
-            statement = connection.prepareStatement(removeUserStatement);
-            statement.setInt(1, user_id);
-            statement.execute();
+            removeUser = "delete from children where user_id_fk = ?";
+            removeUserStatement = connection.prepareStatement(removeUser);
+            removeUserStatement.setInt(1, user_id);
+            removeUserStatement.execute();
 
-            removeUserStatement = "delete from users where user_id = ?";
-            statement = connection.prepareStatement(removeUserStatement);
-            statement.setInt(1, user_id);
-            statement.execute();
-
-            connection.commit();
+            removeUser = "delete from users where user_id = ?";
+            removeUserStatement = connection.prepareStatement(removeUser);
+            removeUserStatement.setInt(1, user_id);
+            removeUserStatement.execute();
         }
         catch (SQLException e) {
             e.getMessage();
