@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_confirm_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.locator.chield.secure.application.ConfirmRegisterActivity">
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:inputType="text"
+        android:ems="10"
+        android:background="#A9E2F3"
+        android:id="@+id/editTextCode"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/textView8"
+        android:layout_alignLeft="@+id/buttonConfirm"
+        android:layout_alignStart="@+id/buttonConfirm" />
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Confirm"
+        android:id="@+id/buttonConfirm"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/editTextCode"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Received Code"
+        android:id="@+id/textView8"
+        android:textColor="#0000FF"
+        android:layout_marginTop="164dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/editTextCode"
+        android:layout_alignStart="@+id/editTextCode" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Email Confirmation"
+        android:id="@+id/textView9"
+        android:textColor="#0000FF"
+        android:layout_marginBottom="59dp"
+        android:layout_above="@+id/editTextCode"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

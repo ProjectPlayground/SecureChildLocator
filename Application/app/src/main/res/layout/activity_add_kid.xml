@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_kid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.locator.chield.secure.application.AddKidActivity">
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:background="#A9E2F3"
+        android:id="@+id/editTextAddKidPass"
+        android:layout_marginTop="16dp"
+        android:inputType="textPassword"
+        android:layout_below="@+id/textView16"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Add Kid"
+        android:id="@+id/buttonAddKid"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/editTextAddKidPass"
+        android:layout_alignLeft="@+id/textView15"
+        android:layout_alignStart="@+id/textView15" />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:inputType="text"
+        android:ems="10"
+        android:background="#A9E2F3"
+        android:id="@+id/editTextAddKidName"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Shared Password"
+        android:id="@+id/textView16"
+        android:textColor="#0000FF"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/editTextAddKidName"
+        android:layout_alignLeft="@+id/editTextAddKidPass"
+        android:layout_alignStart="@+id/editTextAddKidPass" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Full name"
+        android:id="@+id/textView15"
+        android:textColor="#0000FF"
+        android:layout_marginTop="63dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/editTextAddKidName"
+        android:layout_alignStart="@+id/editTextAddKidName" />
+
+</RelativeLayout>
