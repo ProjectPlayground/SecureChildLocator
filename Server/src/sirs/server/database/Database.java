@@ -298,7 +298,7 @@ public class Database
         return null;
     }
 
-    public void checkAddUser(String email, String phoneNumber)
+    private void checkAddUser(String email, String phoneNumber)
             throws UserAlreadyExistsException
     {
         try {
@@ -325,7 +325,7 @@ public class Database
         }
     }
 
-    public void checkAddChild(String email, String phoneNumber)
+    private void checkAddChild(String email, String phoneNumber)
             throws ChildAlreadyExistsException, UserDoesntExistException
     {
         try {
@@ -363,7 +363,7 @@ public class Database
         }
     }
 
-    public void checkLocation(int child_id, int user_id)
+    private void checkLocation(int child_id, int user_id)
             throws UserDoesntExistException, ChildDoesntExistException
     {
         try {
@@ -390,7 +390,7 @@ public class Database
         }
     }
 
-    public void checkRemoveChild(String phoneNumber, String email)
+    private void checkRemoveChild(String phoneNumber, String email)
             throws ChildDoesntExistException, UserDoesntExistException
     {
         try {
@@ -424,7 +424,7 @@ public class Database
         }
     }
 
-    public void checkRemoveUser(String email)
+    private void checkRemoveUser(String email)
             throws UserDoesntExistException
     {
         try {
