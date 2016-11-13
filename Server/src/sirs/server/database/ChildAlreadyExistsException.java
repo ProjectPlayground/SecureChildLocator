@@ -1,4 +1,4 @@
-package sirs.server.database.exceptions;
+package sirs.server.database;
 
 public class ChildAlreadyExistsException extends Exception
 {

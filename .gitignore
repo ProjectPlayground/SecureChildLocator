@@ -31,10 +31,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
+.externalNativeBuild
 
-# Intellij
-*.iml
-.idea/workspace.xml
-
-# Keystore files
-*.jks
+# macOS
+.DS_Store

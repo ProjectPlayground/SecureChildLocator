@@ -1,18 +1,18 @@
-package sirs.server.database.exceptions;
+package sirs.server.database;
 
 public class UserDoesntExistException extends Exception
 {
     private String email;
-    private int user_id;
+    private int userID;
 
     public UserDoesntExistException(String email)
     {
         this.email = email;
     }
 
-    public UserDoesntExistException(int user_id)
+    public UserDoesntExistException(int userID)
     {
-        this.user_id = user_id;
+        this.userID = userID;
         this.email = null;
     }
 
@@ -20,7 +20,7 @@ public class UserDoesntExistException extends Exception
     public String getMessage()
     {
         if (email == null) {
-            return "User doesn't exist. Unknown user id: " + user_id;
+            return "User doesn't exist. Unknown user id: " + userID;
         }
         else {
             return "User doesn't exist. Unknown email: " + email;
