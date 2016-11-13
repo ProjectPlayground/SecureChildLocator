@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77691aa8-8db2-4e7b-86ff-f4ad2d4e0b8b" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/sirs/server/database/exceptions/ChildAlreadyExistsException.java" afterPath="$PROJECT_DIR$/src/sirs/server/database/ChildAlreadyExistsException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/sirs/server/database/exceptions/ChildDoesntExistException.java" afterPath="$PROJECT_DIR$/src/sirs/server/database/ChildDoesntExistException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/sirs/server/database/exceptions/UserAlreadyExistsException.java" afterPath="$PROJECT_DIR$/src/sirs/server/database/UserAlreadyExistsException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/sirs/server/database/exceptions/UserDoesntExistException.java" afterPath="$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java" />
+    <list default="true" id="77691aa8-8db2-4e7b-86ff-f4ad2d4e0b8b" name="Default" comment="added all imports individually and moved exceptions to package database">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sirs/server/database/Database.java" afterPath="$PROJECT_DIR$/src/sirs/server/database/Database.java" />
     </list>
     <ignored path="Child Locator Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,8 +28,8 @@
       <file leaf-file-name="Database.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state relative-caret-position="798">
+              <caret line="421" column="92" selection-start-line="421" selection-start-column="92" selection-end-line="421" selection-end-column="92" />
               <folding>
                 <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
                 <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
@@ -58,46 +54,6 @@
                 <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
                 <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChildAlreadyExistsException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildAlreadyExistsException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChildDoesntExistException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildDoesntExistException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserAlreadyExistsException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserAlreadyExistsException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-9">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserDoesntExistException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -821,7 +777,7 @@
       <workItem from="1478878180311" duration="13905000" />
       <workItem from="1478893719108" duration="1460000" />
       <workItem from="1479035073145" duration="2310000" />
-      <workItem from="1479045151221" duration="939000" />
+      <workItem from="1479045151221" duration="1666000" />
     </task>
     <task id="LOCAL-00001" summary="remove user and remove child are now working">
       <created>1478785955628</created>
@@ -921,11 +877,18 @@
       <option name="project" value="LOCAL" />
       <updated>1479036720938</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="added all imports individually and moved exceptions to package database">
+      <created>1479046145639</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1479046145639</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34298000" />
+    <option name="totallyTimeSpent" value="35025000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -979,7 +942,8 @@
     <MESSAGE value="fixed access permitions in some methods" />
     <MESSAGE value="changed child_id to childID and user_id to userID in attributes" />
     <MESSAGE value="updated the way we connect to database. using properties now" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated the way we connect to database. using properties now" />
+    <MESSAGE value="added all imports individually and moved exceptions to package database" />
+    <option name="LAST_COMMIT_MESSAGE" value="added all imports individually and moved exceptions to package database" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1183,9 +1147,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildAlreadyExistsException.java">
+    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
+        <state relative-caret-position="38">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
@@ -1193,7 +1157,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildDoesntExistException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
+        <state relative-caret-position="38">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
@@ -1201,13 +1165,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserAlreadyExistsException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9">
+        <state relative-caret-position="38">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java">
+    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildAlreadyExistsException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
@@ -1217,8 +1181,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state relative-caret-position="798">
+          <caret line="421" column="92" selection-start-line="421" selection-start-column="92" selection-end-line="421" selection-end-column="92" />
           <folding>
             <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
             <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
