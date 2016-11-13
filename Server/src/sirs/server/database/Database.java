@@ -17,13 +17,12 @@ public class Database
     {
         try {
             Database database = new Database();
-
             /*
             database.addUser("h", "c", "h@g.com", "96", "qwerty");
             database.addUser("c", "v", "h@g.com", "97", "qwerty");
             database.addUser("c", "v", "c@g.com", "96", "qwerty");
             database.addChild("hh", "cc", "98", "h@g.com");
-            database.addChild("hhh", "ccc", "99", "h@g.com")
+            database.addChild("hhh", "ccc", "99", "h@g.com");
             database.addChild("ccc", "c", "100", "c@g.com");
 
             database.addLocation(1, 1, "location7", new Date());
@@ -38,7 +37,6 @@ public class Database
             database.removeUser("t@g.com");
             database.removeChild("1", "c@g.com");
             database.removeChild("100", "t@g.com");
-
             */
         }
         catch (Exception e) {
@@ -112,10 +110,10 @@ public class Database
         }
     }
 
-    public void addLocation(int child_id, int user_id, String location, Date date)
+    public void addLocation(int childID, int userID, String location, Date date)
             throws UserDoesntExistException, ChildDoesntExistException
     {
-        checkLocation(child_id, user_id);
+        checkLocation(childID, userID);
 
         try {
             String addLocation = "insert into location (location_date, location, user_id_fk, child_id_fk) " +
@@ -126,8 +124,8 @@ public class Database
 
             statement.setTimestamp(1, timestamp);
             statement.setString(2, location);
-            statement.setInt(3, user_id);
-            statement.setInt(4, child_id);
+            statement.setInt(3, userID);
+            statement.setInt(4, childID);
 
             statement.execute();
         }
@@ -142,7 +140,7 @@ public class Database
         checkRemoveUser(email);
 
         try {
-            int user_id = -1;
+            int userID = -1;
 
             String removeUser = "select user_id from users where email = ? limit 1";
             PreparedStatement removeUserStatement = connection.prepareStatement(removeUser);
@@ -150,26 +148,26 @@ public class Database
             ResultSet result = removeUserStatement.executeQuery();
 
             while (result.next()) {
-                user_id = Integer.parseInt(result.getString(1));
+                userID = Integer.parseInt(result.getString(1));
             }
 
-            if (user_id == -1) {
+            if (userID == -1) {
                 throw new UserDoesntExistException(email);
             }
 
             removeUser = "delete from location where user_id_fk = ?";
             removeUserStatement = connection.prepareStatement(removeUser);
-            removeUserStatement.setInt(1, user_id);
+            removeUserStatement.setInt(1, userID);
             removeUserStatement.execute();
 
             removeUser = "delete from children where user_id_fk = ?";
             removeUserStatement = connection.prepareStatement(removeUser);
-            removeUserStatement.setInt(1, user_id);
+            removeUserStatement.setInt(1, userID);
             removeUserStatement.execute();
 
             removeUser = "delete from users where user_id = ?";
             removeUserStatement = connection.prepareStatement(removeUser);
-            removeUserStatement.setInt(1, user_id);
+            removeUserStatement.setInt(1, userID);
             removeUserStatement.execute();
         }
         catch (SQLException e) {
@@ -183,43 +181,43 @@ public class Database
         checkRemoveChild(phoneNumber, email);
 
         try {
-            int child_id = -1;
-            int user_id = -1;
+            int childID = -1;
+            int userID = -1;
 
             PreparedStatement statement = connection.prepareStatement("select user_id from users where email = ? limit 1");
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                user_id = Integer.parseInt(result.getString(1));
+                userID = Integer.parseInt(result.getString(1));
             }
 
-            if (user_id == -1) {
+            if (userID == -1) {
                 System.out.println("User not found");
                 System.exit(1);
             }
 
             statement = connection.prepareStatement("select child_id from children where user_id_fk = ? and phone_number = ?");
-            statement.setInt(1, user_id);
+            statement.setInt(1, userID);
             statement.setString(2, phoneNumber);
             result = statement.executeQuery();
 
             while (result.next()) {
-                child_id = Integer.parseInt(result.getString(1));
+                childID = Integer.parseInt(result.getString(1));
             }
 
-            if (child_id == -1) {
+            if (childID == -1) {
                 System.out.println("Child not found");
                 System.exit(1);
             }
 
             statement = connection.prepareStatement("delete from children where child_id = ?");
-            statement.setInt(1, child_id);
+            statement.setInt(1, childID);
             statement.execute();
 
             statement = connection.prepareStatement("delete from location where child_id_fk = ? and user_id_fk = ?");
-            statement.setInt(1, child_id);
-            statement.setInt(2, user_id);
+            statement.setInt(1, childID);
+            statement.setInt(2, userID);
             statement.execute();
         }
         catch (SQLException e) {
@@ -228,18 +226,18 @@ public class Database
 
     }
 
-    public TreeMap<Date, String> getAllLocations(int user_id, int child_id)
+    public TreeMap<Date, String> getAllLocations(int userID, int childID)
             throws UserDoesntExistException, ChildDoesntExistException
     {
-        checkLocation(child_id, user_id);
+        checkLocation(childID, userID);
 
         TreeMap<Date, String> locations = new TreeMap<>();
 
         try {
             String getLocations = "select location, location_date from location where user_id_fk = ? and child_id_fk = ?";
             PreparedStatement getLocationsStatement = connection.prepareStatement(getLocations);
-            getLocationsStatement.setInt(1, user_id);
-            getLocationsStatement.setInt(2, child_id);
+            getLocationsStatement.setInt(1, userID);
+            getLocationsStatement.setInt(2, childID);
             ResultSet result = getLocationsStatement.executeQuery();
 
             while (result.next()) {
@@ -265,10 +263,10 @@ public class Database
         return locations;
     }
 
-    public Map.Entry<Date, String> getLatestLocation(int user_id, int child_id)
+    public Map.Entry<Date, String> getLatestLocation(int userID, int childID)
             throws UserDoesntExistException, ChildDoesntExistException
     {
-        checkLocation(child_id, user_id);
+        checkLocation(childID, userID);
 
         try {
             Map.Entry<Date, String> locationEntry;
@@ -276,11 +274,11 @@ public class Database
             String getLatestLocation = "select location_date, location from location where child_id_fk = ? and "
                                      + "user_id_fk = ? order by location_date desc limit 1";
             PreparedStatement statement = connection.prepareStatement(getLatestLocation);
-            statement.setInt(1, child_id);
-            statement.setInt(2, user_id);
+            statement.setInt(1, childID);
+            statement.setInt(2, userID);
             ResultSet result = statement.executeQuery();
 
-            while (result.next()) {
+            if (result.next()) {
                 String location = result.getString("location");
                 Date locationDate = result.getTimestamp("location_date");
 
@@ -329,7 +327,7 @@ public class Database
             throws ChildAlreadyExistsException, UserDoesntExistException
     {
         try {
-            int user_id = -1;
+            int userID = -1;
 
             String checkChild = "select user_id from users where email = ? limit 1";
             PreparedStatement statement = connection.prepareStatement(checkChild);
@@ -337,17 +335,17 @@ public class Database
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                user_id = Integer.parseInt(result.getString(1));
+                userID = Integer.parseInt(result.getString(1));
             }
 
-            if (user_id == -1) {
+            if (userID == -1) {
                 throw new UserDoesntExistException(email);
             }
 
             checkChild = "select phone_number from children where phone_number = ? and user_id_fk = ?";
             statement = connection.prepareStatement(checkChild);
             statement.setString(1, phoneNumber);
-            statement.setInt(2, user_id);
+            statement.setInt(2, userID);
             result = statement.executeQuery();
 
             if (result.next()) {
@@ -363,26 +361,26 @@ public class Database
         }
     }
 
-    private void checkLocation(int child_id, int user_id)
+    private void checkLocation(int childID, int userID)
             throws UserDoesntExistException, ChildDoesntExistException
     {
         try {
             String checkLocation = "select * from children where child_id = ?";
             PreparedStatement statement = connection.prepareStatement(checkLocation);
-            statement.setInt(1, child_id);
+            statement.setInt(1, childID);
             ResultSet result = statement.executeQuery();
 
             if (!result.next()) {
-                throw new ChildDoesntExistException(child_id);
+                throw new ChildDoesntExistException(childID);
             }
 
             checkLocation = "select * from users where user_id = ?";
             statement = connection.prepareStatement(checkLocation);
-            statement.setInt(1, user_id);
+            statement.setInt(1, userID);
             result = statement.executeQuery();
 
             if (!result.next()) {
-                throw new UserDoesntExistException(user_id);
+                throw new UserDoesntExistException(userID);
             }
         }
         catch (SQLException e) {
@@ -394,7 +392,7 @@ public class Database
             throws ChildDoesntExistException, UserDoesntExistException
     {
         try {
-            int user_id = -1;
+            int userID = -1;
 
             String checkChild = "select user_id from users where email = ? limit 1";
             PreparedStatement statement = connection.prepareStatement(checkChild);
@@ -402,16 +400,16 @@ public class Database
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                user_id = Integer.parseInt(result.getString(1));
+                userID = Integer.parseInt(result.getString(1));
             }
 
-            if (user_id == -1) {
+            if (userID == -1) {
                 throw new UserDoesntExistException(email);
             }
 
             checkChild = "select * from children where user_id_fk = ? and phone_number = ?";
             statement = connection.prepareStatement(checkChild);
-            statement.setInt(1, user_id);
+            statement.setInt(1, userID);
             statement.setString(2, phoneNumber);
             result = statement.executeQuery();
 
