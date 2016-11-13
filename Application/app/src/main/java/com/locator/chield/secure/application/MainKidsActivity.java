@@ -39,6 +39,7 @@ public class MainKidsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(MainKidsActivity.this, AddParentActivity.class);
                 MainKidsActivity.this.startActivity(myIntent);
+                finish();
             }
         });
     }

@@ -1,13 +1,13 @@
 package com.locator.chield.secure.application;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LocalMemory {
 
+    private Manager manager = new Manager();
     private static LocalMemory instance;
-    private List<Parent> parents = new ArrayList<>();
-    private List<Kid> kids = new ArrayList<>();
+    private List<Parent> parents = manager.loadParents();
+    private List<Kid> kids = manager.loadKids();
 
     public LocalMemory(){
     }
@@ -48,6 +48,10 @@ public class LocalMemory {
             if(kids.get(i).getName().equals(name))
                 kids.remove(i);
         }
+    }
+
+    public Manager getManager(){
+        return manager;
     }
 
 

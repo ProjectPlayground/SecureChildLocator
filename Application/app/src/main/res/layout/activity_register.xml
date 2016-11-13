@@ -40,7 +40,7 @@
         android:inputType="textPassword"
         android:ems="10"
         android:background="#A9E2F3"
-        android:id="@+id/textViewPassRegister"
+        android:id="@+id/editTextPassRegister"
         android:layout_below="@+id/textView2"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignStart="@+id/textView2"
@@ -52,7 +52,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Register"
         android:id="@+id/buttonRegister"
-        android:layout_below="@+id/textViewPassRegister"
+        android:layout_below="@+id/editTextPassRegister"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp" />
 

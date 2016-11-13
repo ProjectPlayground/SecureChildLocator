@@ -1,5 +1,6 @@
 package com.locator.chield.secure.application;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -95,11 +96,15 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
                     m.removeParent(list.get(position));
                     Intent myIntent = new Intent(context, MainKidsActivity.class);
                     context.startActivity(myIntent);
+                    Activity a = (Activity) context;
+                    a.finish();
                 }
                 else{
                     m.removeKid(list.get(position));
                     Intent myIntent = new Intent(context, MainParentActivity.class);
                     context.startActivity(myIntent);
+                    Activity a = (Activity) context;
+                    a.finish();
                 }
             }
         });
