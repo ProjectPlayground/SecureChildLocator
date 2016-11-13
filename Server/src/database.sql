@@ -5,7 +5,7 @@ set SQL_SAFE_UPDATES = 0;
 
 create table if not exists users
 (
-    user_id        int 			      not null auto_increment,
+    user_id        int 			  not null auto_increment,
     first_name     varchar(32)	  not null,
     last_name      varchar(32)	  not null,
     email          varchar(40)	  not null unique,
@@ -17,7 +17,7 @@ create table if not exists users
 
 create table if not exists children
 (
-    child_id       int 		     	  not null auto_increment,
+    child_id       int 		      not null auto_increment,
     first_name     varchar(32)    not null,
     last_name      varchar(32)	  not null,
     phone_number   varchar(20)	  not null unique,
