@@ -8,17 +8,18 @@ import java.util.Date;
 
 public class Database
 {
-    private static final String driver = "com.mysql.jdbc.Driver";
-    private static final String database = "jdbc:mysql://localhost:3306/childlocator?user=root&password=sirs@childlocator16";
+    private static final String DATABASE = "jdbc:mysql://localhost:3306/childlocator";
+    private static final String USER = "root";
+    private static final String PASSWORD = "sirs@childlocator16";
 
-    private Connection connection = null;
+    private Connection connection;
 
     public static void main(String[] args)
     {
         try {
             Database database = new Database();
             /*
-            database.addUser("h", "c", "h@g.com", "96", "qwerty");
+            database.addUser("h", "c", "hc@g.com", "3", "qwerty");
             database.addUser("c", "v", "h@g.com", "97", "qwerty");
             database.addUser("c", "v", "c@g.com", "96", "qwerty");
             database.addChild("hh", "cc", "98", "h@g.com");
@@ -53,15 +54,17 @@ public class Database
     private void connectToDatabase()
     {
         try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(database);
+            Properties properties = new Properties();
+
+            properties.setProperty("user", USER);
+            properties.setProperty("password", PASSWORD);
+            properties.setProperty("useSSL", "true");
+            properties.setProperty("autoReconnect", "true");
+
+            connection = DriverManager.getConnection(DATABASE, properties);
         }
         catch (SQLException exception) {
             System.out.println("Error trying to connect to database.");
-            System.exit(1);
-        }
-        catch (ClassNotFoundException exception) {
-            System.out.println("Error loading mysql driver.");
             System.exit(1);
         }
     }
