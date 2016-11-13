@@ -1,9 +1,18 @@
 package sirs.server.database;
 
-import sirs.server.database.exceptions.*;
+import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+import java.sql.ResultSet;
 
-import java.sql.*;
-import java.util.*;
+import java.util.Properties;
+import java.util.TreeMap;
+import java.util.Set;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.AbstractMap;
 import java.util.Date;
 
 public class Database
