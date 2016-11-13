@@ -31,11 +31,7 @@ proguard/
 
 # Android Studio captures folder
 captures/
-
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
 .externalNativeBuild
+
+# macOS
+.DS_Store
