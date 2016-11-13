@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="77691aa8-8db2-4e7b-86ff-f4ad2d4e0b8b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="77691aa8-8db2-4e7b-86ff-f4ad2d4e0b8b" name="Default" comment="" />
     <ignored path="Child Locator Server.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -830,7 +828,7 @@
       <workItem from="1478730953025" duration="10142000" />
       <workItem from="1478777033555" duration="5542000" />
       <workItem from="1478878180311" duration="13905000" />
-      <workItem from="1478893719108" duration="665000" />
+      <workItem from="1478893719108" duration="951000" />
     </task>
     <task id="LOCAL-00001" summary="remove user and remove child are now working">
       <created>1478785955628</created>
@@ -885,7 +883,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30254000" />
+    <option name="totallyTimeSpent" value="30540000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
