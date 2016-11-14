@@ -15,12 +15,17 @@ public class ViewKidActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("NAME");
         String pass = intent.getStringExtra("PASS");
+        String code = intent.getStringExtra("CODE");
+
 
         TextView nameV = (TextView) findViewById(R.id.textViewKidNameView);
         TextView passV = (TextView) findViewById(R.id.textViewKidPassView);
+        TextView codeV = (TextView) findViewById(R.id.textViewKidCodeView);
+
 
         nameV.setText(name);
         passV.setText(pass);
+        codeV.setText(code);
 
     }
 }

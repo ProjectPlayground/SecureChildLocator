@@ -15,12 +15,16 @@ public class ViewParentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String mail = intent.getStringExtra("MAIL");
         String name = intent.getStringExtra("NAME");
+        String code = intent.getStringExtra("CODE");
 
         TextView mailV = (TextView) findViewById(R.id.textViewParentMailView);
         TextView nameV = (TextView) findViewById(R.id.textViewParentNameView);
+        TextView codeV = (TextView) findViewById(R.id.textViewParentCodeView);
+
 
         mailV.setText(mail);
         nameV.setText(name);
+        codeV.setText(code);
 
     }
 }

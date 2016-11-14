@@ -19,14 +19,14 @@ public class Manager {
 
     public Result addParent(String mail,String name,String pass){
         LocalMemory m = LocalMemory.getInstance();
-        m.addParent(new Parent(mail,name,pass));
+        m.addParent(new Parent(mail,name,pass,"Xy383892"));
         saveParents();
         return new Result(true,null);
     }
 
     public Result addKid(String name,String pass){
         LocalMemory m = LocalMemory.getInstance();
-        m.addKid(new Kid(name,pass));
+        m.addKid(new Kid(name,pass,"Xy383892"));
         saveKids();
         return new Result(true,null);
     }

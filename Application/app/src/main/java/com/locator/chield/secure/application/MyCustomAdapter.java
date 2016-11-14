@@ -67,6 +67,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
                         if(parents.get(i).getMail().equals(elementBtn.getText())){
                             myIntent.putExtra("MAIL", parents.get(i).getMail());
                             myIntent.putExtra("NAME", parents.get(i).getName());
+                            myIntent.putExtra("CODE", parents.get(i).getCode());
                             break;
                         }
                     }
@@ -78,6 +79,7 @@ public class MyCustomAdapter extends BaseAdapter implements ListAdapter {
                         if(kids.get(i).getName().equals(elementBtn.getText())){
                             myIntent.putExtra("NAME", kids.get(i).getName());
                             myIntent.putExtra("PASS", kids.get(i).getPass());
+                            myIntent.putExtra("CODE", kids.get(i).getCode());
                             break;
                         }
                     }
