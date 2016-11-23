@@ -22,7 +22,9 @@ public class Database
     {
         try {
             Database database = new Database();
-/*
+
+            // ONLY WORKS IF DATABASE IS EMPTY!!!
+
             database.addUser("h@g.c", "96", "qwerty");
             database.addUser("c@g.c", "97", "qwerty");
 
@@ -30,12 +32,12 @@ public class Database
             System.out.println(sessionKey + " length: " + sessionKey.length());
 
             database.addLocation(sessionKey, "h@g.c", "location1");
-*/
-            database.getAllLocations("h@g.c", "qacn4lrevldmjv67ok2s");
-            database.getLatestLocation("h@g.c", "qacn4lrevldmjv67ok2s");
+
+            database.getAllLocations("h@g.c", sessionKey);
+            database.getLatestLocation("h@g.c", sessionKey);
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());;
+            System.out.println(e.getMessage());
         }
     }
 
