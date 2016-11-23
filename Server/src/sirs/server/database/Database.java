@@ -1,18 +1,9 @@
 package sirs.server.database;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.Timestamp;
-import java.sql.ResultSet;
-
-import java.util.Properties;
-import java.util.TreeMap;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.AbstractMap;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.sql.*;
+import java.util.*;
 import java.util.Date;
 
 public class Database
@@ -21,33 +12,37 @@ public class Database
     private static final String USER = "root";
     private static final String PASSWORD = "sirs@childlocator16";
 
+    private static final int MINUTES_15 = 900000; // 15 minutes in ms
+
     private Connection connection;
+
+    private SecureRandom random;
 
     public static void main(String[] args)
     {
         try {
             Database database = new Database();
-            /*
-            database.addUser("h", "c", "hc@g.com", "3", "qwerty");
-            database.addUser("c", "v", "h@g.com", "97", "qwerty");
-            database.addUser("c", "v", "c@g.com", "96", "qwerty");
-            database.addChild("hh", "cc", "98", "h@g.com");
-            database.addChild("hhh", "ccc", "99", "h@g.com");
-            database.addChild("ccc", "c", "100", "c@g.com");
+/*
+            database.addUser("hc@g.com", "3", "qwerty");
+            database.addUser("h@g.com", "97", "qwerty");
+            database.addUser("c@g.com", "96", "qwerty");
+            database.addChild("98", "h@g.com");
+            database.addChild("99", "h@g.com");
+            database.addChild("100", "c@g.com");
 
             database.addLocation(1, 1, "location7", new Date());
             Thread.sleep(4000);
             database.addLocation(1, 1, "location8", new Date());
             Thread.sleep(4000);
             database.addLocation(1, 1, "location9", new Date());
-
+            /*
             database.getAllLocations(10, 10);
             database.getLatestLocation(10, 1);
 
             database.removeUser("t@g.com");
             database.removeChild("1", "c@g.com");
             database.removeChild("100", "t@g.com");
-            */
+*/
         }
         catch (Exception e) {
             System.out.println(e.getMessage());;
@@ -57,6 +52,7 @@ public class Database
     public Database()
     {
         connection = null;
+        random = new SecureRandom();
         connectToDatabase();
     }
 
@@ -78,21 +74,19 @@ public class Database
         }
     }
 
-    public void addUser(String firstName, String lastName, String email, String phoneNumber, String passwordHash)
+    public void addUser(String email, String phoneNumber, String passwordHash)
             throws UserAlreadyExistsException
     {
         checkAddUser(email, phoneNumber);
 
         try {
-            String addUserStatement = "insert into users (first_name, last_name, email, phone_number, " +
-                                      "password_hash) values (?, ?, ?, ?, ?)";
+            String addUserStatement = "insert into users (email, phone_number, " +
+                                      "password_hash) values (?, ?, ?)";
 
             PreparedStatement statement = connection.prepareStatement(addUserStatement);
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            statement.setString(3, email);
-            statement.setString(4, phoneNumber);
-            statement.setString(5, passwordHash);
+            statement.setString(1, email);
+            statement.setString(2, phoneNumber);
+            statement.setString(3, passwordHash);
 
             statement.execute();
         } catch (SQLException e) {
@@ -100,44 +94,22 @@ public class Database
         }
     }
 
-    public void addChild(String firstName, String lastName, String phoneNumber, String email)
-            throws ChildAlreadyExistsException, UserDoesntExistException
+    public void addLocation(String sessionKey, String email, String location)
+            throws UserDoesntExistException, SessionKeyDoesntExistException
     {
-        checkAddChild(email, phoneNumber);
+        checkLocation(sessionKey, email);
 
         try {
-            String addChildStatement = "insert into children (first_name, last_name, phone_number, user_id_fk)" +
-                                       "select ?, ?, ?, user_id from users where email = ? limit 1";
-
-            PreparedStatement statement = connection.prepareStatement(addChildStatement);
-            statement.setString(1, firstName);
-            statement.setString(2, lastName);
-            statement.setString(3, phoneNumber);
-            statement.setString(4, email);
-
-            statement.execute();
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void addLocation(int childID, int userID, String location, Date date)
-            throws UserDoesntExistException, ChildDoesntExistException
-    {
-        checkLocation(childID, userID);
-
-        try {
-            String addLocation = "insert into location (location_date, location, user_id_fk, child_id_fk) " +
+            String addLocation = "insert into location (location_date, location, session_key, email) " +
                     "values (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(addLocation);
 
-            Timestamp timestamp = new java.sql.Timestamp(date.getTime());
+            Timestamp timestamp = new java.sql.Timestamp(new Date().getTime());
 
             statement.setTimestamp(1, timestamp);
             statement.setString(2, location);
-            statement.setInt(3, userID);
-            statement.setInt(4, childID);
+            statement.setString(3, sessionKey);
+            statement.setString(4, email);
 
             statement.execute();
         }
@@ -187,59 +159,8 @@ public class Database
         }
     }
 
-    public void removeChild(String phoneNumber, String email)
-            throws ChildDoesntExistException, UserDoesntExistException
-    {
-        checkRemoveChild(phoneNumber, email);
-
-        try {
-            int childID = -1;
-            int userID = -1;
-
-            PreparedStatement statement = connection.prepareStatement("select user_id from users where email = ? limit 1");
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
-
-            while (result.next()) {
-                userID = Integer.parseInt(result.getString(1));
-            }
-
-            if (userID == -1) {
-                System.out.println("User not found");
-                System.exit(1);
-            }
-
-            statement = connection.prepareStatement("select child_id from children where user_id_fk = ? and phone_number = ?");
-            statement.setInt(1, userID);
-            statement.setString(2, phoneNumber);
-            result = statement.executeQuery();
-
-            while (result.next()) {
-                childID = Integer.parseInt(result.getString(1));
-            }
-
-            if (childID == -1) {
-                System.out.println("Child not found");
-                System.exit(1);
-            }
-
-            statement = connection.prepareStatement("delete from children where child_id = ?");
-            statement.setInt(1, childID);
-            statement.execute();
-
-            statement = connection.prepareStatement("delete from location where child_id_fk = ? and user_id_fk = ?");
-            statement.setInt(1, childID);
-            statement.setInt(2, userID);
-            statement.execute();
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
     public TreeMap<Date, String> getAllLocations(int userID, int childID)
-            throws UserDoesntExistException, ChildDoesntExistException
+            throws UserDoesntExistException, SessionKeyDoesntExistException
     {
         checkLocation(childID, userID);
 
@@ -276,7 +197,7 @@ public class Database
     }
 
     public Map.Entry<Date, String> getLatestLocation(int userID, int childID)
-            throws UserDoesntExistException, ChildDoesntExistException
+            throws UserDoesntExistException, SessionKeyDoesntExistException
     {
         checkLocation(childID, userID);
 
@@ -308,6 +229,63 @@ public class Database
         return null;
     }
 
+    public String createSessionKey()
+    {
+        try {
+            List<String> sessionKeys = new ArrayList<>();
+
+            String getCodes = "select session_key from session_keys";
+            PreparedStatement statement = connection.prepareStatement(getCodes);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                String key = result.getString("session_key");
+                sessionKeys.add(key);
+            }
+
+            String newKey = new BigInteger(130, random).toString(32);
+
+            while (sessionKeys.contains(newKey)) {
+                newKey = new BigInteger(130, random).toString(32);
+            }
+
+            return newKey;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void checkSessionKey(String key)
+            throws ExpiredSessionKeyException
+    {
+        try {
+            String getCodes = "select * from session_keys where session_key = ? limit 1";
+            PreparedStatement statement = connection.prepareStatement(getCodes);
+            statement.setString(1, key);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                String sessionKey = result.getString("session_key");
+                int tries = result.getInt("tries");
+                Timestamp timestamp = result.getTimestamp("session_timestamp");
+
+                if (tries >= 3) {
+                    throw new ExpiredSessionKeyException(key);
+                }
+
+                Timestamp time = new Timestamp(new Date().getTime());
+
+                if (time.getTime() > (timestamp.getTime() + MINUTES_15)) {
+                    throw new ExpiredSessionKeyException(key);
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void checkAddUser(String email, String phoneNumber)
             throws UserAlreadyExistsException
     {
@@ -335,99 +313,20 @@ public class Database
         }
     }
 
-    private void checkAddChild(String email, String phoneNumber)
-            throws ChildAlreadyExistsException, UserDoesntExistException
+    private void checkLocation(String sessionKey, String email)
+            throws UserDoesntExistException, SessionKeyDoesntExistException
     {
         try {
-            int userID = -1;
-
-            String checkChild = "select user_id from users where email = ? limit 1";
-            PreparedStatement statement = connection.prepareStatement(checkChild);
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
-
-            while (result.next()) {
-                userID = Integer.parseInt(result.getString(1));
-            }
-
-            if (userID == -1) {
-                throw new UserDoesntExistException(email);
-            }
-
-            checkChild = "select phone_number from children where phone_number = ? and user_id_fk = ?";
-            statement = connection.prepareStatement(checkChild);
-            statement.setString(1, phoneNumber);
-            statement.setInt(2, userID);
-            result = statement.executeQuery();
-
-            if (result.next()) {
-                String phoneNumberQuery = result.getString("phone_number");
-
-                if (phoneNumberQuery.equals(phoneNumber)) {
-                    throw new ChildAlreadyExistsException(phoneNumber);
-                }
-            }
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void checkLocation(int childID, int userID)
-            throws UserDoesntExistException, ChildDoesntExistException
-    {
-        try {
-            String checkLocation = "select * from children where child_id = ?";
+            String checkLocation = "select * from users where email = ?";
             PreparedStatement statement = connection.prepareStatement(checkLocation);
-            statement.setInt(1, childID);
-            ResultSet result = statement.executeQuery();
-
-            if (!result.next()) {
-                throw new ChildDoesntExistException(childID);
-            }
-
-            checkLocation = "select * from users where user_id = ?";
-            statement = connection.prepareStatement(checkLocation);
-            statement.setInt(1, userID);
-            result = statement.executeQuery();
-
-            if (!result.next()) {
-                throw new UserDoesntExistException(userID);
-            }
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void checkRemoveChild(String phoneNumber, String email)
-            throws ChildDoesntExistException, UserDoesntExistException
-    {
-        try {
-            int userID = -1;
-
-            String checkChild = "select user_id from users where email = ? limit 1";
-            PreparedStatement statement = connection.prepareStatement(checkChild);
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();
 
-            while (result.next()) {
-                userID = Integer.parseInt(result.getString(1));
-            }
-
-            if (userID == -1) {
+            if (!result.next()) {
                 throw new UserDoesntExistException(email);
             }
 
-            checkChild = "select * from children where user_id_fk = ? and phone_number = ?";
-            statement = connection.prepareStatement(checkChild);
-            statement.setInt(1, userID);
-            statement.setString(2, phoneNumber);
-            result = statement.executeQuery();
-
-            if (!result.next()) {
-                throw new ChildDoesntExistException(phoneNumber);
-            }
+            checkKey(sessionKey);
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
