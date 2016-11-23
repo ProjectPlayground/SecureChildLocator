@@ -2,28 +2,16 @@ package sirs.server.database;
 
 public class SessionKeyDoesntExistException extends Exception
 {
-    private int childID;
-    private String phoneNumber;
+    private String key;
 
-    public SessionKeyDoesntExistException(String phoneNumber)
+    public SessionKeyDoesntExistException(String key)
     {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public SessionKeyDoesntExistException(int childID)
-    {
-        this.childID = childID;
-        this.phoneNumber = null;
+        this.key = key;
     }
 
     @Override
     public String getMessage()
     {
-        if (phoneNumber == null) {
-            return "Child doesn't exist. Unknown child id: " + childID;
-        }
-        else {
-            return "Child doesn't exist. Unknown phone number: " + phoneNumber;
-        }
+        return key + " doesn't exist.";
     }
 }
