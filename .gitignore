@@ -34,5 +34,9 @@ proguard/
 captures/
 .externalNativeBuild
 
+# IntelliJ
+.idea/
+*.iml
+
 # macOS
 .DS_Store
