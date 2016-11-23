@@ -1,16 +1,16 @@
 package sirs.server.database;
 
-public class ChildDoesntExistException extends Exception
+public class SessionKeyDoesntExistException extends Exception
 {
     private int childID;
     private String phoneNumber;
 
-    public ChildDoesntExistException(String phoneNumber)
+    public SessionKeyDoesntExistException(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
     }
 
-    public ChildDoesntExistException(int childID)
+    public SessionKeyDoesntExistException(int childID)
     {
         this.childID = childID;
         this.phoneNumber = null;
