@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77691aa8-8db2-4e7b-86ff-f4ad2d4e0b8b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__sirs_communication_sirs_communication_1_0_SNAPSHOT.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/AddLocationRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/AddUserRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/ConfirmUserRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/CreateSessionKeyRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/GetLatestLocationRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/GetLocationsRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/LoginRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/RemoveUserRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/Request.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/requests/VerifySessionKeyRequest.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Communication/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Child Locator Server.iml" afterPath="$PROJECT_DIR$/Child Locator Server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/sirs/server/Server.java" afterPath="$PROJECT_DIR$/src/main/java/sirs/server/Server.java" />
     </list>
     <ignored path="Child Locator Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -776,7 +762,7 @@
       <workItem from="1478893719108" duration="1460000" />
       <workItem from="1479035073145" duration="2310000" />
       <workItem from="1479045151221" duration="1666000" />
-      <workItem from="1479903050460" duration="8695000" />
+      <workItem from="1479903050460" duration="8846000" />
     </task>
     <task id="LOCAL-00001" summary="remove user and remove child are now working">
       <created>1478785955628</created>
@@ -943,7 +929,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43720000" />
+    <option name="totallyTimeSpent" value="43871000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
