@@ -14,7 +14,7 @@ create table if not exists users
 
 create table if not exists location
 (
-   	location_id		    	int	           auto_increment not null unique,
+    location_id		    	int	           auto_increment not null unique,
     location_date       timestamp      not null,
     location            varchar(500)   not null,
     session_key	        varchar(40)    not null,
@@ -25,8 +25,8 @@ create table if not exists location
 
 create table if not exists session_keys
 (
-	  session_key	        varchar(40)	  not null,
-    tries		            int		    	  not null,
+    session_key	        varchar(40)	  not null,
+    used		            boolean	      not null,
     session_timestamp   timestamp	    not null,
     
     primary key (session_key)
