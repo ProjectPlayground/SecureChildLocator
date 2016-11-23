@@ -23,26 +23,16 @@ public class Database
         try {
             Database database = new Database();
 /*
-            database.addUser("hc@g.com", "3", "qwerty");
-            database.addUser("h@g.com", "97", "qwerty");
-            database.addUser("c@g.com", "96", "qwerty");
-            database.addChild("98", "h@g.com");
-            database.addChild("99", "h@g.com");
-            database.addChild("100", "c@g.com");
+            database.addUser("h@g.c", "96", "qwerty");
+            database.addUser("c@g.c", "97", "qwerty");
 
-            database.addLocation(1, 1, "location7", new Date());
-            Thread.sleep(4000);
-            database.addLocation(1, 1, "location8", new Date());
-            Thread.sleep(4000);
-            database.addLocation(1, 1, "location9", new Date());
-            /*
-            database.getAllLocations(10, 10);
-            database.getLatestLocation(10, 1);
+            String sessionKey = database.createSessionKey();
+            System.out.println(sessionKey + " length: " + sessionKey.length());
 
-            database.removeUser("t@g.com");
-            database.removeChild("1", "c@g.com");
-            database.removeChild("100", "t@g.com");
+            database.addLocation(sessionKey, "h@g.c", "location1");
 */
+            database.getAllLocations("h@g.c", "qacn4lrevldmjv67ok2s");
+            database.getLatestLocation("h@g.c", "qacn4lrevldmjv67ok2s");
         }
         catch (Exception e) {
             System.out.println(e.getMessage());;
@@ -95,7 +85,7 @@ public class Database
     }
 
     public void addLocation(String sessionKey, String email, String location)
-            throws UserDoesntExistException, SessionKeyDoesntExistException
+            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
         checkLocation(sessionKey, email);
 
@@ -124,34 +114,14 @@ public class Database
         checkRemoveUser(email);
 
         try {
-            int userID = -1;
-
-            String removeUser = "select user_id from users where email = ? limit 1";
+            String removeUser = "delete from users where email = ?";
             PreparedStatement removeUserStatement = connection.prepareStatement(removeUser);
             removeUserStatement.setString(1, email);
-            ResultSet result = removeUserStatement.executeQuery();
-
-            while (result.next()) {
-                userID = Integer.parseInt(result.getString(1));
-            }
-
-            if (userID == -1) {
-                throw new UserDoesntExistException(email);
-            }
-
-            removeUser = "delete from location where user_id_fk = ?";
-            removeUserStatement = connection.prepareStatement(removeUser);
-            removeUserStatement.setInt(1, userID);
             removeUserStatement.execute();
 
-            removeUser = "delete from children where user_id_fk = ?";
+            removeUser = "delete from location where email = ?";
             removeUserStatement = connection.prepareStatement(removeUser);
-            removeUserStatement.setInt(1, userID);
-            removeUserStatement.execute();
-
-            removeUser = "delete from users where user_id = ?";
-            removeUserStatement = connection.prepareStatement(removeUser);
-            removeUserStatement.setInt(1, userID);
+            removeUserStatement.setString(1, email);
             removeUserStatement.execute();
         }
         catch (SQLException e) {
@@ -159,18 +129,19 @@ public class Database
         }
     }
 
-    public TreeMap<Date, String> getAllLocations(int userID, int childID)
-            throws UserDoesntExistException, SessionKeyDoesntExistException
+    public TreeMap<Date, String> getAllLocations(String email, String sessionKey)
+            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
-        checkLocation(childID, userID);
+        checkLocation(email, sessionKey);
 
         TreeMap<Date, String> locations = new TreeMap<>();
 
         try {
-            String getLocations = "select location, location_date from location where user_id_fk = ? and child_id_fk = ?";
+            String getLocations = "select location_date, location from location where email = ? and "
+                    + "session_key = ? order by location_date desc";
             PreparedStatement getLocationsStatement = connection.prepareStatement(getLocations);
-            getLocationsStatement.setInt(1, userID);
-            getLocationsStatement.setInt(2, childID);
+            getLocationsStatement.setString(1, email);
+            getLocationsStatement.setString(2, sessionKey);
             ResultSet result = getLocationsStatement.executeQuery();
 
             while (result.next()) {
@@ -196,19 +167,19 @@ public class Database
         return locations;
     }
 
-    public Map.Entry<Date, String> getLatestLocation(int userID, int childID)
-            throws UserDoesntExistException, SessionKeyDoesntExistException
+    public Map.Entry<Date, String> getLatestLocation(String email, String sessionKey)
+            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
-        checkLocation(childID, userID);
+        checkLocation(email, sessionKey);
 
         try {
             Map.Entry<Date, String> locationEntry;
 
-            String getLatestLocation = "select location_date, location from location where child_id_fk = ? and "
-                                     + "user_id_fk = ? order by location_date desc limit 1";
+            String getLatestLocation = "select location_date, location from location where email = ? and "
+                                     + "session_key = ? order by location_date desc limit 1";
             PreparedStatement statement = connection.prepareStatement(getLatestLocation);
-            statement.setInt(1, childID);
-            statement.setInt(2, userID);
+            statement.setString(1, email);
+            statement.setString(2, sessionKey);
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
@@ -243,10 +214,10 @@ public class Database
                 sessionKeys.add(key);
             }
 
-            String newKey = new BigInteger(130, random).toString(32);
+            String newKey = new BigInteger(100, random).toString(32);
 
             while (sessionKeys.contains(newKey)) {
-                newKey = new BigInteger(130, random).toString(32);
+                newKey = new BigInteger(100, random).toString(32);
             }
 
             return newKey;
@@ -254,6 +225,8 @@ public class Database
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        return null;
     }
 
     public void checkSessionKey(String key)
@@ -313,8 +286,8 @@ public class Database
         }
     }
 
-    private void checkLocation(String sessionKey, String email)
-            throws UserDoesntExistException, SessionKeyDoesntExistException
+    private void checkLocation(String email, String sessionKey)
+            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
         try {
             String checkLocation = "select * from users where email = ?";
@@ -326,7 +299,7 @@ public class Database
                 throw new UserDoesntExistException(email);
             }
 
-            checkKey(sessionKey);
+            checkSessionKey(sessionKey);
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -337,7 +310,7 @@ public class Database
             throws UserDoesntExistException
     {
         try {
-            String checkUser = "select user_id from users where email = ?";
+            String checkUser = "select * from users where email = ?";
             PreparedStatement statement = connection.prepareStatement(checkUser);
             statement.setString(1, email);
             ResultSet result = statement.executeQuery();

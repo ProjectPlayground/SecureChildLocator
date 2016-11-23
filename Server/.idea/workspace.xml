@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="77691aa8-8db2-4e7b-86ff-f4ad2d4e0b8b" name="Default" comment="added all imports individually and moved exceptions to package database">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sirs/server/database/Database.java" afterPath="$PROJECT_DIR$/src/sirs/server/database/Database.java" />
     </list>
     <ignored path="Child Locator Server.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -15,6 +16,11 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Server$Database.coverage" NAME="Database Coverage Results" MODIFIED="1479904487915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>sirs.server.database.*</FILTER>
+    </SUITE>
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -28,32 +34,31 @@
       <file leaf-file-name="Database.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="421" column="92" selection-start-line="421" selection-start-column="92" selection-end-line="421" selection-end-column="92" />
+            <state relative-caret-position="650">
+              <caret line="301" column="28" lean-forward="false" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
               <folding>
-                <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-                <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-                <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-                <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-                <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-                <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-                <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-                <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-                <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-                <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-                <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-                <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-                <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-                <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-                <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-                <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-                <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-                <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-                <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-                <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-                <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-                <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+                <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+                <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+                <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+                <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+                <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+                <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+                <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+                <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+                <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+                <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+                <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/database.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="589">
+              <caret line="31" column="29" lean-forward="true" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,6 +71,13 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>checkremove</find>
+      <find>getall</find>
+      <find>checksession</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -81,11 +93,12 @@
         <option value="$PROJECT_DIR$/src/sirs/server/database/exceptions/ChildAlreadyExistsException.java" />
         <option value="$PROJECT_DIR$/src/sirs/server/database/exceptions/NoLocationsAvailableException.java" />
         <option value="$PROJECT_DIR$/src/sirs/server/database/exceptions/UserAlreadyExistsException.java" />
-        <option value="$PROJECT_DIR$/src/database.sql" />
         <option value="$PROJECT_DIR$/src/sirs/server/database/exceptions/ChildDoesntExistException.java" />
         <option value="$PROJECT_DIR$/src/sirs/server/database/exceptions/UserDoesntExistException.java" />
-        <option value="$PROJECT_DIR$/src/sirs/server/database/Database.java" />
         <option value="$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java" />
+        <option value="$PROJECT_DIR$/src/sirs/server/database/ExpiredSessionKeyException.java" />
+        <option value="$PROJECT_DIR$/src/database.sql" />
+        <option value="$PROJECT_DIR$/src/sirs/server/database/Database.java" />
       </list>
     </option>
   </component>
@@ -109,14 +122,7 @@
     <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <OptionsSetting value="true" id="Add" />
-    <OptionsSetting value="true" id="Remove" />
-    <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
-    <OptionsSetting value="true" id="Status" />
-    <OptionsSetting value="true" id="Edit" />
     <ConfirmationsSetting value="2" id="Add" />
-    <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -138,12 +144,6 @@
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Server" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="Server" />
@@ -199,121 +199,12 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="js.eslint.eslintPackage" value="" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\helcr\Documents\IST\MEIC\SIRS\Child Locator Server\src\sirs\server\database" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
-    <UpdatedFiles>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Updated from server" />
-        <option name="myStatusName" value="Changed on server" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="CHANGED_ON_SERVER" />
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated" />
-          <option name="myStatusName" value="Changed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/../.gitignore</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created" />
-          <option name="myStatusName" value="Created" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Deleted" />
-          <option name="myStatusName" value="Deleted" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="true" />
-          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Restored" />
-          <option name="myStatusName" value="Will be restored" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="RESTORED" />
-        </FILE-GROUP>
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Modified" />
-        <option name="myStatusName" value="Modified" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MODIFIED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Skipped" />
-        <option name="myStatusName" value="Skipped" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SKIPPED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with conflicts" />
-        <option name="myStatusName" value="Will be merged with conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_CONFLICTS" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with tree conflicts" />
-        <option name="myStatusName" value="Merged with tree conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged with property conflicts" />
-        <option name="myStatusName" value="Will be merged with property conflicts" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Merged" />
-        <option name="myStatusName" value="Will be merged" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="MERGED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Not in repository" />
-        <option name="myStatusName" value="Not in repository" />
-        <option name="mySupportsDeletion" value="true" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="UNKNOWN" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally added" />
-        <option name="myStatusName" value="Locally added" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_ADDED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Locally removed" />
-        <option name="myStatusName" value="Locally removed" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="LOCALLY_REMOVED" />
-      </FILE-GROUP>
-      <FILE-GROUP>
-        <option name="myUpdateName" value="Switched" />
-        <option name="myStatusName" value="Switched" />
-        <option name="mySupportsDeletion" value="false" />
-        <option name="myCanBeAbsent" value="false" />
-        <option name="myId" value="SWITCHED" />
-      </FILE-GROUP>
-    </UpdatedFiles>
   </component>
   <component name="RunManager" selected="Application.Database">
     <configuration default="false" name="Database" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -340,9 +231,10 @@
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
       <method />
     </configuration>
-    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
@@ -352,7 +244,7 @@
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
       <option name="PREFERRED_AVD" value="" />
       <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
       <option name="DEBUGGER_TYPE" value="Java" />
@@ -360,7 +252,11 @@
       <option name="PREFERRED_AVD" value="" />
       <Java />
       <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
         <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -385,7 +281,11 @@
       <option name="PREFERRED_AVD" value="" />
       <Java />
       <Profilers>
+        <option name="ENABLE_ADVANCED_PROFILING" value="true" />
+        <option name="GAPID_ENABLED" value="false" />
         <option name="GAPID_DISABLE_PCS" value="false" />
+        <option name="SUPPORT_LIB_ENABLED" value="true" />
+        <option name="INSTRUMENTATION_ENABLED" value="true" />
       </Profilers>
       <method />
     </configuration>
@@ -563,6 +463,7 @@
       <setting name="cmdLine" value="run-app" />
       <setting name="passParentEnv" value="true" />
       <setting name="launchBrowser" value="true" />
+      <setting name="launchBrowserUrl" value="" />
       <setting name="depsClasspath" value="false" />
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <method />
@@ -579,27 +480,6 @@
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
@@ -627,6 +507,12 @@
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerProtractor" factoryName="Protractor">
+      <config-file value="" />
+      <node-interpreter value="project" />
       <envs />
       <method />
     </configuration>
@@ -700,34 +586,6 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="TestNGTestDiscovery" factoryName="TestNG Test Discovery" changeList="All">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -758,6 +616,30 @@
         <item index="0" class="java.lang.String" itemvalue="Application.Database" />
       </list>
     </recent_temporary>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <Java />
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
@@ -778,6 +660,7 @@
       <workItem from="1478893719108" duration="1460000" />
       <workItem from="1479035073145" duration="2310000" />
       <workItem from="1479045151221" duration="1666000" />
+      <workItem from="1479903050460" duration="1797000" />
     </task>
     <task id="LOCAL-00001" summary="remove user and remove child are now working">
       <created>1478785955628</created>
@@ -884,34 +767,55 @@
       <option name="project" value="LOCAL" />
       <updated>1479046145639</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Changes:&#10;- primary key for location is now an id because primary keys must be unique&#10;- size of session_key increased">
+      <created>1479904802993</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1479904802993</updated>
+    </task>
+    <task id="LOCAL-00017" summary="new exceptions">
+      <created>1479904840112</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1479904840112</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35025000" />
+    <option name="totallyTimeSpent" value="36822000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Tool Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1796875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="ANTLR Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39956093" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1796875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -920,6 +824,9 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="processedProjectFiles" value="true" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -933,6 +840,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <MESSAGE value="remove user and remove child are now working" />
     <MESSAGE value="add location done" />
     <MESSAGE value="REMOVE USER FINALLY WORKS JEEZ" />
@@ -943,10 +851,14 @@
     <MESSAGE value="changed child_id to childID and user_id to userID in attributes" />
     <MESSAGE value="updated the way we connect to database. using properties now" />
     <MESSAGE value="added all imports individually and moved exceptions to package database" />
-    <option name="LAST_COMMIT_MESSAGE" value="added all imports individually and moved exceptions to package database" />
+    <MESSAGE value="Changes:&#10;- primary key for location is now an id because primary keys must be unique&#10;- size of session_key increased" />
+    <MESSAGE value="new exceptions" />
+    <option name="LAST_COMMIT_MESSAGE" value="new exceptions" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -957,30 +869,39 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-            <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-            <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-            <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-            <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-            <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-            <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
           </folding>
         </state>
       </provider>
@@ -988,30 +909,19 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
-          <caret line="11" column="79" selection-start-line="11" selection-start-column="79" selection-end-line="11" selection-end-column="79" />
+          <caret line="11" column="79" lean-forward="false" selection-start-line="11" selection-start-column="79" selection-end-line="11" selection-end-column="79" />
           <folding>
-            <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-            <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-            <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-            <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-            <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-            <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-            <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
           </folding>
         </state>
       </provider>
@@ -1019,37 +929,26 @@
     <entry file="file://$PROJECT_DIR$/src/database.sql">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-            <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-            <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-            <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-            <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-            <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-            <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
           </folding>
         </state>
       </provider>
@@ -1057,30 +956,19 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-            <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-            <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-            <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-            <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-            <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-            <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
           </folding>
         </state>
       </provider>
@@ -1088,30 +976,19 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-            <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-            <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-            <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-            <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-            <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-            <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
           </folding>
         </state>
       </provider>
@@ -1119,46 +996,32 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+          <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildDoesntExistException.java">
+    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/SessionKeyDoesntExistException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
-          <caret line="13" column="75" selection-start-line="13" selection-start-column="75" selection-end-line="13" selection-end-column="75" />
+          <caret line="13" column="75" lean-forward="false" selection-start-line="13" selection-start-column="75" selection-end-line="13" selection-end-column="75" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Child Locator Server.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="9" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/exceptions/NoLocationsAvailableException.java" />
-    <entry file="file://$PROJECT_DIR$/src/database.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserDoesntExistException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildDoesntExistException.java">
+    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/SessionKeyDoesntExistException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1166,7 +1029,7 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/UserAlreadyExistsException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1174,38 +1037,56 @@
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ChildAlreadyExistsException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Child Locator Server.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="9" lean-forward="false" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sirs/server/database/ExpiredSessionKeyException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="36" lean-forward="false" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+          <folding>
+            <element signature="e#170#171#0" expanded="true" />
+            <element signature="e#200#201#0" expanded="true" />
+            <element signature="e#252#253#0" expanded="true" />
+            <element signature="e#295#296#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/database.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="589">
+          <caret line="31" column="29" lean-forward="true" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sirs/server/database/Database.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="421" column="92" selection-start-line="421" selection-start-column="92" selection-end-line="421" selection-end-column="92" />
+        <state relative-caret-position="650">
+          <caret line="301" column="28" lean-forward="false" selection-start-line="301" selection-start-column="28" selection-end-line="301" selection-end-column="28" />
           <folding>
-            <marker date="1479046095358" expanded="true" signature="2716:2859" ph="insert into users... " />
-            <marker date="1479046095358" expanded="true" signature="3592:3764" ph="insert into children... " />
-            <marker date="1479046095358" expanded="true" signature="3706:3756" ph="select ?, ?,... users" />
-            <marker date="1479046095358" expanded="true" signature="4432:4548" ph="insert into location... " />
-            <marker date="1479046095358" expanded="true" signature="5233:5282" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="5746:5787" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="5986:6027" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6226:6261" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="6872:6921" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="7327:7398" ph="select child... children" />
-            <marker date="1479046095358" expanded="true" signature="7844:7883" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8016:8077" ph="delete from " />
-            <marker date="1479046095358" expanded="true" signature="8607:8692" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="9943:10106" ph="select locat... location" />
-            <marker date="1479046095358" expanded="true" signature="10996:11051" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="12135:12184" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="12618:12693" ph="select phone... children" />
-            <marker date="1479046095358" expanded="true" signature="13464:13505" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="13834:13871" ph="select * fro... users" />
-            <marker date="1479046095358" expanded="true" signature="14469:14518" ph="select user_... users" />
-            <marker date="1479046095358" expanded="true" signature="14952:15016" ph="select * fro... children" />
-            <marker date="1479046095358" expanded="true" signature="15587:15628" ph="select user_... users" />
+            <marker date="1479904758338" expanded="true" signature="2147:2261" ph="insert into users... " />
+            <marker date="1479904758338" expanded="true" signature="2909:3020" ph="insert into location... " />
+            <marker date="1479904758338" expanded="true" signature="3689:3722" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="3941:3977" ph="delete from " />
+            <marker date="1479904758338" expanded="true" signature="4603:4736" ph="select locat... location" />
+            <marker date="1479904758338" expanded="false" signature="6038:6196" ph="select locat... location" />
+            <marker date="1479904758338" expanded="true" signature="7079:7115" ph="select sessi... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="7910:7966" ph="select * fro... session_keys" />
+            <marker date="1479904758338" expanded="true" signature="9011:9066" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10153:10188" ph="select * fro... users" />
+            <marker date="1479904758338" expanded="true" signature="10778:10813" ph="select user_... users" />
           </folding>
         </state>
       </provider>
