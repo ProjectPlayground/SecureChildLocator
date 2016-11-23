@@ -89,7 +89,7 @@ public class Database
     public void addLocation(String sessionKey, String email, String location)
             throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
-        checkLocation(sessionKey, email);
+        checkLocation(email);
 
         try {
             String addLocation = "insert into location (location_date, location, session_key, email) " +
@@ -134,7 +134,7 @@ public class Database
     public TreeMap<Date, String> getAllLocations(String email, String sessionKey)
             throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
-        checkLocation(email, sessionKey);
+        checkLocation(email);
 
         TreeMap<Date, String> locations = new TreeMap<>();
 
@@ -172,7 +172,7 @@ public class Database
     public Map.Entry<Date, String> getLatestLocation(String email, String sessionKey)
             throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
     {
-        checkLocation(email, sessionKey);
+        checkLocation(email);
 
         try {
             Map.Entry<Date, String> locationEntry;
@@ -231,8 +231,8 @@ public class Database
         return null;
     }
 
-    public void checkSessionKey(String key)
-            throws ExpiredSessionKeyException
+    public void checkSessionValid(String key)
+            throws ExpiredSessionKeyException, UsedSessionKeyException
     {
         try {
             String getCodes = "select * from session_keys where session_key = ? limit 1";
@@ -242,11 +242,11 @@ public class Database
 
             if (result.next()) {
                 String sessionKey = result.getString("session_key");
-                int tries = result.getInt("tries");
+                boolean used = result.getBoolean("used");
                 Timestamp timestamp = result.getTimestamp("session_timestamp");
 
-                if (tries >= 3) {
-                    throw new ExpiredSessionKeyException(key);
+                if (used) {
+                    throw new UsedSessionKeyException(key);
                 }
 
                 Timestamp time = new Timestamp(new Date().getTime());
@@ -288,26 +288,6 @@ public class Database
         }
     }
 
-    private void checkLocation(String email, String sessionKey)
-            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
-    {
-        try {
-            String checkLocation = "select * from users where email = ?";
-            PreparedStatement statement = connection.prepareStatement(checkLocation);
-            statement.setString(1, email);
-            ResultSet result = statement.executeQuery();
-
-            if (!result.next()) {
-                throw new UserDoesntExistException(email);
-            }
-
-            checkSessionKey(sessionKey);
-        }
-        catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     private void checkRemoveUser(String email)
             throws UserDoesntExistException
     {
@@ -324,6 +304,13 @@ public class Database
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void checkLocation(String email)
+            throws UserDoesntExistException
+    {
+        // they check the same thing, if the used exists or not
+        checkRemoveUser(email);
     }
 
 }
