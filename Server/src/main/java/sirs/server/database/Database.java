@@ -112,10 +112,10 @@ public class Database
 
     public void addLocation(String sessionKey, String email, String password, String location)
             throws UserDoesntExistException, SessionKeyDoesntExistException,
-            ExpiredSessionKeyException, IncorrectPasswordException
+            ExpiredSessionKeyException, IncorrectPasswordException, WrongKeyException
     {
-        checkLocation(email);
         login(email, password);
+        checkIfSessionKeyBelongsToUser(email, sessionKey);
 
         try {
             String addLocation = "insert into location (location_date, location, session_key, email) " +
@@ -160,10 +160,10 @@ public class Database
 
     public TreeMap<Date, String> getAllLocations(String email, String password, String sessionKey)
             throws UserDoesntExistException, SessionKeyDoesntExistException,
-            ExpiredSessionKeyException, IncorrectPasswordException
+            ExpiredSessionKeyException, IncorrectPasswordException, WrongKeyException
     {
-        checkLocation(email);
         login(email, password);
+        checkIfSessionKeyBelongsToUser(email, sessionKey);
 
         TreeMap<Date, String> locations = new TreeMap<>();
 
@@ -200,10 +200,10 @@ public class Database
 
     public Map.Entry<Date, String> getLatestLocation(String email, String password, String sessionKey)
             throws UserDoesntExistException, SessionKeyDoesntExistException,
-            ExpiredSessionKeyException, IncorrectPasswordException
+            ExpiredSessionKeyException, IncorrectPasswordException, WrongKeyException
     {
-        checkLocation(email);
         login(email, password);
+        checkIfSessionKeyBelongsToUser(email, sessionKey);
 
         try {
             Map.Entry<Date, String> locationEntry;
@@ -277,9 +277,19 @@ public class Database
         return null;
     }
 
-    public void checkSessionValid(String key)
-            throws ExpiredSessionKeyException, UsedSessionKeyException
+    /*
+     * Verifies a session key when a user creates a child. It happens once.
+     * It checks if it's not used already and if it's still valid
+     * (they last for 15 minutes).
+     * If this all checks, then we mark the session key as used and that's it.
+     */
+    public void verifySessionKey(String email, String password, String key)
+            throws ExpiredSessionKeyException, UsedSessionKeyException,
+            IncorrectPasswordException, UserDoesntExistException,
+            WrongKeyException
     {
+        login(email, password);
+
         try {
             String getCodes = "select * from session_keys where session_key = ? limit 1";
             PreparedStatement statement = connection.prepareStatement(getCodes);
@@ -288,11 +298,15 @@ public class Database
 
             if (result.next()) {
                 String sessionKey = result.getString("session_key");
+                String queryEmail = result.getString("email");
                 boolean used = result.getBoolean("used");
                 Timestamp timestamp = result.getTimestamp("session_timestamp");
 
                 if (used) {
                     throw new UsedSessionKeyException(key);
+                }
+                else if (!queryEmail.equals(email)) {
+                    throw new WrongKeyException(email, key);
                 }
                 else {
                     String setUsed = "update session_keys set used = ? where session_key = ?";
@@ -307,6 +321,35 @@ public class Database
                 if (time.getTime() > (timestamp.getTime() + MINUTES_15)) {
                     throw new ExpiredSessionKeyException(key);
                 }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /*
+     * Differs from verifySessionKey because it only checks if this session key
+     * belongs to a specific user.
+     * If it doesn't, then he can't use it.
+     */
+    private void checkIfSessionKeyBelongsToUser(String email, String sessionKey)
+            throws WrongKeyException, UserDoesntExistException
+    {
+        try {
+            String getCodes = "select * from session_keys where session_key = ? limit 1";
+            PreparedStatement statement = connection.prepareStatement(getCodes);
+            statement.setString(1, sessionKey);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                String queryEmail = result.getString("email");
+                if (!email.equals(queryEmail)) {
+                    throw new WrongKeyException(email, sessionKey);
+                }
+            }
+            else {
+                throw new UserDoesntExistException(email);
             }
         }
         catch (SQLException e) {
@@ -357,13 +400,6 @@ public class Database
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private void checkLocation(String email)
-            throws UserDoesntExistException
-    {
-        // they check the same thing, if the used exists or not
-        checkRemoveUser(email);
     }
 
 }

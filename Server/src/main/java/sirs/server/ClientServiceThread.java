@@ -169,6 +169,8 @@ class ClientServiceThread extends Thread
             }
             catch (Exception e) {
                 AddLocationResponse addLocationResponse = new AddLocationResponse(false);
+                addLocationResponse.setError(e.getClass().getSimpleName());
+                addLocationResponse.setMessage(e.getMessage());
                 String response = gson.toJson(addLocationResponse);
                 send(response);
             }
@@ -197,6 +199,8 @@ class ClientServiceThread extends Thread
             }
             catch (Exception e) {
                 CreateSessionKeyResponse createSessionKeyResponse = new CreateSessionKeyResponse(false);
+                createSessionKeyResponse.setError(e.getClass().getSimpleName());
+                createSessionKeyResponse.setMessage(e.getMessage());
                 String response = gson.toJson(createSessionKeyResponse);
                 send(response);
             }
@@ -216,6 +220,8 @@ class ClientServiceThread extends Thread
             }
             catch (Exception e) {
                 GetLatestLocationResponse getLatestLocationResponse = new GetLatestLocationResponse(false);
+                getLatestLocationResponse.setError(e.getClass().getSimpleName());
+                getLatestLocationResponse.setMessage(e.getMessage());
                 String response = gson.toJson(getLatestLocationResponse);
                 send(response);
             }
@@ -236,8 +242,10 @@ class ClientServiceThread extends Thread
                 send(response);
             }
             catch (Exception e) {
-                GetLatestLocationResponse getLatestLocationResponse = new GetLatestLocationResponse(false);
-                String response = gson.toJson(getLatestLocationResponse);
+                GetLocationsResponse getLocationsResponse = new GetLocationsResponse(false);
+                getLocationsResponse.setError(e.getClass().getSimpleName());
+                getLocationsResponse.setMessage(e.getMessage());
+                String response = gson.toJson(getLocationsResponse);
                 send(response);
             }
         }
@@ -253,6 +261,8 @@ class ClientServiceThread extends Thread
         }
         catch (Exception e) {
             LoginResponse loginResponse = new LoginResponse(false);
+            loginResponse.setError(e.getClass().getSimpleName());
+            loginResponse.setMessage(e.getMessage());
             String response = gson.toJson(loginResponse);
             send(response);
         }
@@ -269,6 +279,8 @@ class ClientServiceThread extends Thread
             }
             catch (Exception e) {
                 RemoveUserResponse removeUserResponse = new RemoveUserResponse(false);
+                removeUserResponse.setError(e.getClass().getSimpleName());
+                removeUserResponse.setMessage(e.getMessage());
                 String response = gson.toJson(removeUserResponse);
                 send(response);
             }
@@ -279,13 +291,17 @@ class ClientServiceThread extends Thread
     {
         synchronized (database) {
             try {
-                database.checkSessionValid(verifySessionKeyRequest.getSessionKey());
+                database.verifySessionKey(verifySessionKeyRequest.getEmail(),
+                        verifySessionKeyRequest.getPassword(),
+                        verifySessionKeyRequest.getSessionKey());
                 VerifySessionKeyResponse verifySessionKeyResponse = new VerifySessionKeyResponse(true);
                 String response = gson.toJson(verifySessionKeyResponse);
                 send(response);
             }
-            catch (ExpiredSessionKeyException | UsedSessionKeyException e) {
+            catch (Exception e) {
                 VerifySessionKeyResponse verifySessionKeyResponse = new VerifySessionKeyResponse(false);
+                verifySessionKeyResponse.setError(e.getClass().getSimpleName());
+                verifySessionKeyResponse.setMessage(e.getMessage());
                 String response = gson.toJson(verifySessionKeyResponse);
                 send(response);
             }
