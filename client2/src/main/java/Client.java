@@ -1,3 +1,7 @@
+import com.google.gson.Gson;
+import sirs.communication.request.AddLocationRequest;
+import sirs.communication.response.AddUserResponse;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -7,12 +11,16 @@ public class Client
     private Socket socket;
     private String serverName;
     private int port;
+    private BufferedReader bufferedReader;
+    private PrintWriter printWriter;
 
     public Client()
     {
         socket = null;
         serverName = "10.0.2.2"; // because of Android Studio
         port = 9000;
+        bufferedReader = null;
+        printWriter = null;
     }
 
     public Client(String serverName, int port)
@@ -20,6 +28,8 @@ public class Client
         socket = null;
         this.serverName = serverName;
         this.port = port;
+        bufferedReader = null;
+        printWriter = null;
     }
 
     private void startClient()
@@ -38,37 +48,56 @@ public class Client
             System.exit(1);
         }
 
-        BufferedReader bufferedReader = null;
-        PrintWriter printWriter = null;
-
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printWriter = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-
-            printWriter.println("Hi!");
-            printWriter.flush();
-
-            System.out.println(bufferedReader.readLine());
-
-            printWriter.println("stop");
-            printWriter.flush();
         }
         catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        finally {
-            try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
-                if (printWriter != null) {
-                    printWriter.close();
-                }
-                socket.close();
-            }
-            catch (IOException e) {
-                System.exit(1);
-            }
+    }
+
+    private void send(String message)
+    {
+        System.out.println("Sending: " + message);
+        printWriter.println(message);
+        printWriter.flush();
+
+        System.out.println("Sent");
+
+        receive();
+    }
+
+    private void receive()
+    {
+        try {
+            String message = bufferedReader.readLine();
+
+            System.out.println("Received: " + message);
+
+            Gson gson = new Gson();
+            AddUserResponse addUserResponse = gson.fromJson(message, AddUserResponse.class);
+
+            System.out.println(addUserResponse);
+        }
+        catch (IOException e) {
+            System.out.println("Error reading from socket.");
+            System.exit(1);
+        }
+    }
+
+    private void close()
+    {
+        printWriter.println("stop");
+        printWriter.flush();
+
+        try {
+            bufferedReader.close();
+            printWriter.close();
+            socket.close();
+        }
+        catch (IOException e) {
+            System.exit(1);
         }
     }
 
@@ -78,5 +107,12 @@ public class Client
 
         client = new Client("localhost", 9000);
         client.startClient();
+
+        AddLocationRequest addLocationRequest = new AddLocationRequest("session", "h@g.c", "qwerty", "location");
+        Gson gson = new Gson();
+        String addLocationRequestString = gson.toJson(addLocationRequest);
+
+        client.send(addLocationRequestString);
+        client.close();
     }
 }
