@@ -28,13 +28,13 @@ public class Database
             database.addUser("h@g.c", "96", "qwerty");
             database.addUser("c@g.c", "97", "qwerty");
 
-            String sessionKey = database.createSessionKey();
+            String sessionKey = database.createSessionKey("h@g.c", "qwerty");
             System.out.println(sessionKey + " length: " + sessionKey.length());
 
-            database.addLocation(sessionKey, "h@g.c", "location1");
+            database.addLocation(sessionKey, "h@g.c", "qwerty", "location1");
 
-            database.getAllLocations("h@g.c", sessionKey);
-            database.getLatestLocation("h@g.c", sessionKey);
+            database.getAllLocations("h@g.c", "qwerty", sessionKey);
+            database.getLatestLocation("h@g.c", "qwerty", sessionKey);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -66,6 +66,30 @@ public class Database
         }
     }
 
+    public void login(String email, String passwordHash)
+            throws IncorrectPasswordException, UserDoesntExistException
+    {
+        try {
+            String loginStatement = "select password_hash from users where email = ?";
+            PreparedStatement statement = connection.prepareStatement(loginStatement);
+            statement.setString(1, email);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                String password = result.getString("password_hash");
+                if (!password.equals(passwordHash)) {
+                    throw new IncorrectPasswordException(email, passwordHash);
+                }
+            }
+            else {
+                throw new UserDoesntExistException(email);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void addUser(String email, String phoneNumber, String passwordHash)
             throws UserAlreadyExistsException
     {
@@ -86,10 +110,12 @@ public class Database
         }
     }
 
-    public void addLocation(String sessionKey, String email, String location)
-            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
+    public void addLocation(String sessionKey, String email, String password, String location)
+            throws UserDoesntExistException, SessionKeyDoesntExistException,
+            ExpiredSessionKeyException, IncorrectPasswordException
     {
         checkLocation(email);
+        login(email, password);
 
         try {
             String addLocation = "insert into location (location_date, location, session_key, email) " +
@@ -110,10 +136,11 @@ public class Database
         }
     }
 
-    public void removeUser(String email)
-            throws UserDoesntExistException
+    public void removeUser(String email, String password)
+            throws UserDoesntExistException, IncorrectPasswordException
     {
         checkRemoveUser(email);
+        login(email, password);
 
         try {
             String removeUser = "delete from users where email = ?";
@@ -131,10 +158,12 @@ public class Database
         }
     }
 
-    public TreeMap<Date, String> getAllLocations(String email, String sessionKey)
-            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
+    public TreeMap<Date, String> getAllLocations(String email, String password, String sessionKey)
+            throws UserDoesntExistException, SessionKeyDoesntExistException,
+            ExpiredSessionKeyException, IncorrectPasswordException
     {
         checkLocation(email);
+        login(email, password);
 
         TreeMap<Date, String> locations = new TreeMap<>();
 
@@ -169,10 +198,12 @@ public class Database
         return locations;
     }
 
-    public Map.Entry<Date, String> getLatestLocation(String email, String sessionKey)
-            throws UserDoesntExistException, SessionKeyDoesntExistException, ExpiredSessionKeyException
+    public Map.Entry<Date, String> getLatestLocation(String email, String password, String sessionKey)
+            throws UserDoesntExistException, SessionKeyDoesntExistException,
+            ExpiredSessionKeyException, IncorrectPasswordException
     {
         checkLocation(email);
+        login(email, password);
 
         try {
             Map.Entry<Date, String> locationEntry;
@@ -202,8 +233,11 @@ public class Database
         return null;
     }
 
-    public String createSessionKey()
+    public String createSessionKey(String email, String password)
+            throws IncorrectPasswordException, UserDoesntExistException
     {
+        login(email, password);
+
         try {
             List<String> sessionKeys = new ArrayList<>();
 
