@@ -7,7 +7,7 @@ public class AddLocationRequest extends Request
     private String location;
     private String password;
 
-    public AddLocationRequest(String sessionKey, String email, String location, String password)
+    public AddLocationRequest(String sessionKey, String email, String password, String location)
     {
         super("AddLocationRequest");
         this.sessionKey = sessionKey;
