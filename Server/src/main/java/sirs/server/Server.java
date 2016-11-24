@@ -1,19 +1,53 @@
 package sirs.server;
 
-import com.google.gson.Gson;
-import sirs.communication.request.AddUserRequest;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class Server
 {
-    public static void main(String[] args)
-    {
-        // Json example
+    private int port;
+    private ServerSocket serverSocket;
 
-        AddUserRequest addUserRequest = new AddUserRequest("h@g.com", "96", "qwerty");
-        Gson gson = new Gson();
-        String json = gson.toJson(addUserRequest);
-        System.out.println(json);
-        AddUserRequest addUserRequest2 = gson.fromJson(json, AddUserRequest.class);
-        System.out.println(addUserRequest2);
+    public Server()
+    {
+        this.port = 9000;
+        startServer();
+    }
+
+    public Server(int port)
+    {
+        this.port = port;
+        startServer();
+    }
+
+    private void startServer()
+    {
+        try {
+            serverSocket = new ServerSocket(port);
+        }
+        catch (IOException e) {
+            System.out.println("Error creating the server on port " + port + ". Exiting.");
+            System.exit(1);
+        }
+
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
+        System.out.println("Server started at : " + formatter.format(now.getTime()));
+
+        while (true) {
+            try {
+                Socket clientSocket = serverSocket.accept();
+                ClientServiceThread clientThread = new ClientServiceThread(clientSocket);
+                clientThread.start();
+            }
+            catch (IOException e) {
+                System.out.println("Error accepting client.");
+                e.printStackTrace();
+            }
+        }
     }
 }
