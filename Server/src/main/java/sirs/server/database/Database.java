@@ -256,6 +256,18 @@ public class Database
                 newKey = new BigInteger(100, random).toString(32);
             }
 
+            String addKey = "insert into session_keys (session_key, email, used, session_timestamp) " +
+                    "values (?, ?, ?, ?)";
+
+            Timestamp time = new Timestamp(new Date().getTime());
+
+            statement = connection.prepareStatement(addKey);
+            statement.setString(1, newKey);
+            statement.setString(2, email);
+            statement.setBoolean(3, false);
+            statement.setTimestamp(4, time);
+            statement.execute();
+
             return newKey;
         }
         catch (SQLException e) {
@@ -281,6 +293,13 @@ public class Database
 
                 if (used) {
                     throw new UsedSessionKeyException(key);
+                }
+                else {
+                    String setUsed = "update session_keys set used = ? where session_key = ?";
+                    statement = connection.prepareStatement(setUsed);
+                    statement.setBoolean(1, true);
+                    statement.setString(2, sessionKey);
+                    statement.execute();
                 }
 
                 Timestamp time = new Timestamp(new Date().getTime());
