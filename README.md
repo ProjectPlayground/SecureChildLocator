@@ -1,4 +1,4 @@
-# SecureChildLocator
+# Secure Child Locator
 
 ## MEIC SIRS 2016
 
