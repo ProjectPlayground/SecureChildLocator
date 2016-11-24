@@ -7,12 +7,14 @@ public class GetLatestLocationResponse extends Response
 
     public GetLatestLocationResponse(String location)
     {
+        super("GetLatestLocationResponse");
         this.successful = true;
         this.location = location;
     }
 
     public GetLatestLocationResponse(boolean successful)
     {
+        super("GetLatestLocationResponse");
         this.successful = successful;
         this.location = null;
     }

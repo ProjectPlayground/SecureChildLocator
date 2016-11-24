@@ -6,6 +6,7 @@ public class AddUserResponse extends Response
 
     public AddUserResponse(boolean successful)
     {
+        super("AddUserResponse");
         this.successful = successful;
     }
 

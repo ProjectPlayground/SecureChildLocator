@@ -7,6 +7,7 @@ public class CreateSessionKeyRequest extends Request
 
     public CreateSessionKeyRequest(String email, String password)
     {
+        super("CreateSessionKeyRequest");
         this.email = email;
         this.password = password;
     }

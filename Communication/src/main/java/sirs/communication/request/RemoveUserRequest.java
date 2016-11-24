@@ -7,6 +7,7 @@ public class RemoveUserRequest extends Request
 
     public RemoveUserRequest(String email, String password)
     {
+        super("RemoveUserRequest");
         this.email = email;
         this.password = password;
     }

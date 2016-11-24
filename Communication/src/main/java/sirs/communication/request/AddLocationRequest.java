@@ -5,9 +5,11 @@ public class AddLocationRequest extends Request
     private String sessionKey;
     private String email;
     private String location;
+    private String password;
 
-    public AddLocationRequest(String sessionKey, String email, String location)
+    public AddLocationRequest(String sessionKey, String email, String location, String password)
     {
+        super("AddLocationRequest");
         this.sessionKey = sessionKey;
         this.email = email;
         this.location = location;
@@ -42,4 +44,15 @@ public class AddLocationRequest extends Request
     {
         this.location = location;
     }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
 }

@@ -6,6 +6,7 @@ public class LoginResponse extends Response
 
     public LoginResponse(boolean successful)
     {
+        super("LoginResponse");
         this.successful = successful;
     }
 

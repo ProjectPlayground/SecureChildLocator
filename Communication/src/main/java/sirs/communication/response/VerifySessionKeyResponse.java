@@ -6,6 +6,7 @@ public class VerifySessionKeyResponse extends Response
 
     public VerifySessionKeyResponse(boolean valid)
     {
+        super("VerifySessionKeyResponse");
         this.valid = valid;
     }
 

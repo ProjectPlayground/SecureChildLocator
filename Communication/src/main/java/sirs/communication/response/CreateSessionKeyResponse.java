@@ -7,12 +7,14 @@ public class CreateSessionKeyResponse extends Response
 
     public CreateSessionKeyResponse(boolean successful)
     {
+        super("CreateSessionKeyResponse");
         this.successful = successful;
         sessionKey = null;
     }
 
     public CreateSessionKeyResponse(String sessionKey)
     {
+        super("CreateSessionKeyResponse");
         this.successful = true;
         this.sessionKey = sessionKey;
     }

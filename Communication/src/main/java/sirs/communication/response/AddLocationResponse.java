@@ -6,6 +6,7 @@ public class AddLocationResponse extends Response
 
     public AddLocationResponse(boolean successful)
     {
+        super("AddLocationResponse");
         this.successful = successful;
     }
 

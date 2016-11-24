@@ -6,6 +6,7 @@ public class ConfirmUserResponse extends Response
 
     public ConfirmUserResponse(boolean successful)
     {
+        super("ConfirmUserResponse");
         this.successful = successful;
     }
 

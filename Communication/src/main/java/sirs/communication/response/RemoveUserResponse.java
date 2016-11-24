@@ -6,6 +6,7 @@ public class RemoveUserResponse extends Response
 
     public RemoveUserResponse(boolean successful)
     {
+        super("RemoveUserResponse");
         this.successful = successful;
     }
 

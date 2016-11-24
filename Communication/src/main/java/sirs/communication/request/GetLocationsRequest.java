@@ -8,6 +8,7 @@ public class GetLocationsRequest extends Request
 
     public GetLocationsRequest(String email, String password, String sessionKey)
     {
+        super("GetLocationsRequest");
         this.email = email;
         this.password = password;
         this.sessionKey = sessionKey;

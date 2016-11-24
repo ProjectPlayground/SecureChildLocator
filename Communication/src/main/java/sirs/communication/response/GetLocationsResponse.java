@@ -9,12 +9,14 @@ public class GetLocationsResponse extends Response
 
     public GetLocationsResponse(List<String> locations)
     {
+        super("GetLocationsResponse");
         this.successful = true;
         this.location = locations;
     }
 
     public GetLocationsResponse(boolean successful)
     {
+        super("GetLocationsResponse");
         this.successful = successful;
     }
 

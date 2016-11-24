@@ -7,6 +7,7 @@ public class LoginRequest extends Request
 
     public LoginRequest(String email, String password)
     {
+        super("LoginRequest");
         this.email = email;
         this.password = password;
     }

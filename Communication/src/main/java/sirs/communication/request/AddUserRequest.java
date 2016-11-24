@@ -8,6 +8,7 @@ public class AddUserRequest extends Request
 
     public AddUserRequest(String email, String phoneNumber, String password)
     {
+        super("AddUserRequest");
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
