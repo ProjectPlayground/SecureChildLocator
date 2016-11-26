@@ -12,6 +12,7 @@
 bin/
 gen/
 out/
+target/
 
 # Gradle files
 .gradle/
@@ -32,6 +33,10 @@ proguard/
 # Android Studio captures folder
 captures/
 .externalNativeBuild
+
+# IntelliJ
+.idea/
+*.iml
 
 # macOS
 .DS_Store
