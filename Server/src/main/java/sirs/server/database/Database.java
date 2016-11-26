@@ -8,9 +8,9 @@ import java.util.Date;
 
 public class Database
 {
-    private static final String DATABASE = "jdbc:mysql://localhost:3306/childlocator";
-    private static final String USER = "root";
-    private static final String PASSWORD = "sirs@childlocator16";
+    private static final String DATABASE = "jdbc:mysql://db.ist.utl.pt:3306/ist178190";
+    private static final String USER = "ist178190";
+    private static final String PASSWORD = "wgul0127";
 
     private static final int MINUTES_15 = 900000; // 15 minutes in ms
 
