@@ -12,6 +12,7 @@ public class LocalMemory {
     private List<Kid> kids = manager.loadKids();
     private Runnable runnableGPS = null;
     private Handler handlerGPS = null;
+    private Client client = new Client("localhost", 9000);
 
     public LocalMemory(){
     }
@@ -30,6 +31,10 @@ public class LocalMemory {
 
     public void setHandlerGPS(Handler h){
         handlerGPS=h;
+    }
+
+    public Client getClient(){
+        return client;
     }
 
     public List<Parent> getParents() {

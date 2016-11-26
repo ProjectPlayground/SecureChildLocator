@@ -1,7 +1,11 @@
 package com.locator.chield.secure.application;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import sirs.communication.request.AddLocationRequest;
 
 public class Manager {
 
@@ -50,7 +54,15 @@ public class Manager {
     }
 
     public void addLocation(double latitude, double longitude){
+        Client client = LocalMemory.getInstance().getClient();
+        client.startClient();
 
+        AddLocationRequest addLocationRequest = new AddLocationRequest("session", "h@g.c", "qwerty", "location");
+        Gson gson = new Gson();
+        String addLocationRequestString = gson.toJson(addLocationRequest);
+
+        client.send(addLocationRequestString);
+        client.close();
     }
 
     public List<String> getLocations(String personName){
