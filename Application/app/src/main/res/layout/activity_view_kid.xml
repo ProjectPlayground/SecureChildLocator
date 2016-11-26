@@ -14,30 +14,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Full Name"
-        android:id="@+id/textView17"
-        android:textColor="#0000FF"
-        android:layout_marginTop="52dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Password"
-        android:id="@+id/textView18"
-        android:textColor="#0000FF"
-        android:layout_marginTop="120dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="example"
         android:id="@+id/textViewKidNameView"
         android:textColor="#000000"
@@ -77,6 +53,51 @@
         android:id="@+id/textViewKidCodeView"
         android:textColor="#000000"
         android:layout_below="@+id/textView19"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Password"
+        android:id="@+id/textView18"
+        android:textColor="#0000FF"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/textViewKidNameView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Full Name"
+        android:id="@+id/textView17"
+        android:textColor="#0000FF"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listViewLocations"
+        android:clickable="true"
+        android:layout_below="@+id/textView21"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Recent Locations:"
+        android:id="@+id/textView21"
+        android:textColor="#0000FF"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/textViewKidCodeView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

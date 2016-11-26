@@ -1,5 +1,7 @@
 package com.locator.chield.secure.application;
 
+import android.os.Handler;
+
 import java.util.List;
 
 public class LocalMemory {
@@ -8,8 +10,26 @@ public class LocalMemory {
     private static LocalMemory instance;
     private List<Parent> parents = manager.loadParents();
     private List<Kid> kids = manager.loadKids();
+    private Runnable runnableGPS = null;
+    private Handler handlerGPS = null;
 
     public LocalMemory(){
+    }
+
+    public Runnable getRunnableGPS(){
+        return runnableGPS;
+    }
+
+    public void setRunnableGPS(Runnable r){
+        runnableGPS=r;
+    }
+
+    public Handler getHandlerGPS(){
+        return handlerGPS;
+    }
+
+    public void setHandlerGPS(Handler h){
+        handlerGPS=h;
     }
 
     public List<Parent> getParents() {

@@ -48,4 +48,21 @@ public class Manager {
     public void saveKids(){
 
     }
+
+    public void addLocation(double latitude, double longitude){
+
+    }
+
+    public List<String> getLocations(String personName){
+        List<String> l = new ArrayList<>();
+        l.add("38.703809;-9.182701;17-01-2015");
+        l.add("0;0;17-02-2015");
+        l.add("38.703809;-9.182701;17-03-2015");
+        l.add("0;0;17-02-2015");
+        l.add("0;0;17-02-2015");
+        l.add("0;0;17-02-2015");
+        l.add("0;0;17-02-2015");
+
+        return l;
+    }
 }

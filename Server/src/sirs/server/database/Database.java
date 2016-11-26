@@ -84,7 +84,7 @@ public class Database
         checkAddUser(email, phoneNumber);
 
         try {
-            String addUserStatement = "insert into users (first_name, last_name, email, phone_number, " +
+                String addUserStatement = "insert into users (first_name, last_name, email, phone_number, " +
                                       "password_hash) values (?, ?, ?, ?, ?)";
 
             PreparedStatement statement = connection.prepareStatement(addUserStatement);

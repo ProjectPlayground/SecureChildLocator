@@ -41,7 +41,7 @@ public class MainParentActivity extends AppCompatActivity {
     }
 
     private void populateListView() {
-        MyCustomAdapter adapter = new MyCustomAdapter(names,this);
+        MyParentsAdapter adapter = new MyParentsAdapter(names,this);
         ListView list = (ListView) findViewById(R.id.listViewKids);
         list.setAdapter(adapter);
     }
