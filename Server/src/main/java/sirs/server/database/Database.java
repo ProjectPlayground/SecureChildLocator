@@ -33,7 +33,7 @@ public class Database
 
             database.addLocation(sessionKey, "h@g.c", "qwerty", "location1");
 
-            database.getAllLocations("h@g.c", "qwerty", sessionKey);
+            database.get30Locations("h@g.c", "qwerty", sessionKey);
             database.getLatestLocation("h@g.c", "qwerty", sessionKey);
         }
         catch (Exception e) {
@@ -158,7 +158,7 @@ public class Database
         }
     }
 
-    public TreeMap<Date, String> getAllLocations(String email, String password, String sessionKey)
+    public TreeMap<Date, String> get30Locations(String email, String password, String sessionKey)
             throws UserDoesntExistException, SessionKeyDoesntExistException,
             ExpiredSessionKeyException, IncorrectPasswordException, WrongKeyException
     {
@@ -169,7 +169,7 @@ public class Database
 
         try {
             String getLocations = "select location_date, location from location where email = ? and "
-                    + "session_key = ? order by location_date desc";
+                    + "session_key = ? order by location_date desc limit 30";
             PreparedStatement getLocationsStatement = connection.prepareStatement(getLocations);
             getLocationsStatement.setString(1, email);
             getLocationsStatement.setString(2, sessionKey);
