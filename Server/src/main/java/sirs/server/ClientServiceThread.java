@@ -149,6 +149,8 @@ class ClientServiceThread extends Thread
             }
             catch (UserAlreadyExistsException e) {
                 AddUserResponse addUserResponse = new AddUserResponse(false);
+                addUserResponse.setError(e.getClass().getSimpleName());
+                addUserResponse.setMessage(e.getMessage());
                 String response = gson.toJson(addUserResponse);
                 send(response);
             }

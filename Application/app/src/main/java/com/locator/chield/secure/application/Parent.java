@@ -9,12 +9,14 @@ public class Parent {
     String name;
     String pass;
     String code;
+    boolean verified;
 
-    public Parent(String mail, String name, String pass,String code){
+    public Parent(String mail, String name, String pass,String code,boolean verified){
         this.mail=mail;
         this.name=name;
         this.pass=pass;
         this.code=code;
+        this.verified=verified;
     }
 
     public String getMail(){
@@ -31,6 +33,9 @@ public class Parent {
 
     public String getCode(){
         return code;
+    }
+    public boolean isVerified(){
+        return verified;
     }
 
 }

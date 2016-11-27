@@ -12,9 +12,28 @@ public class LocalMemory {
     private List<Kid> kids = manager.loadKids();
     private Runnable runnableGPS = null;
     private Handler handlerGPS = null;
-    private Client client = new Client("localhost", 9000);
+
+    private String loggedUserMail;
+    private String loggedUserPassword;
 
     public LocalMemory(){
+
+    }
+
+    public void setLoggedUserMail(String m){
+        loggedUserMail=m;
+    }
+
+    public String getLoggedUserMail(){
+        return loggedUserMail;
+    }
+
+    public void setLoggedUserPass(String p){
+        loggedUserPassword=p;
+    }
+
+    public String getLoggedUserPass(){
+        return loggedUserPassword;
     }
 
     public Runnable getRunnableGPS(){
@@ -33,9 +52,6 @@ public class LocalMemory {
         handlerGPS=h;
     }
 
-    public Client getClient(){
-        return client;
-    }
 
     public List<Parent> getParents() {
         return parents;

@@ -34,6 +34,19 @@
         android:layout_alignStart="@+id/editTextEmailRegister"
         android:layout_marginTop="20dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Phone Number"
+        android:id="@+id/textView23"
+        android:textColor="#0000FF"
+        android:layout_below="@+id/editTextPassRegister"
+        android:layout_alignLeft="@+id/editTextPassRegister"
+        android:layout_alignStart="@+id/editTextPassRegister"
+        android:layout_marginTop="20dp" />
+
+
     <EditText
         android:layout_width="350dp"
         android:layout_height="40dp"
@@ -46,15 +59,16 @@
         android:layout_alignStart="@+id/textView2"
         android:layout_marginTop="11dp" />
 
-    <Button
+    <EditText
         android:layout_width="350dp"
-        android:layout_height="60dp"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:text="Register"
-        android:id="@+id/buttonRegister"
-        android:layout_below="@+id/editTextPassRegister"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_height="40dp"
+        android:ems="10"
+        android:background="#A9E2F3"
+        android:id="@+id/editTextPhoneRegister"
+        android:layout_below="@+id/textView23"
+        android:layout_alignLeft="@+id/textView23"
+        android:layout_alignStart="@+id/textView23"
+        android:layout_marginTop="11dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,9 +77,9 @@
         android:text="Please Enter Your Info"
         android:id="@+id/textView4"
         android:textColor="#0000FF"
-        android:layout_marginBottom="61dp"
-        android:layout_above="@+id/editTextEmailRegister"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -74,9 +88,19 @@
         android:text="Email"
         android:id="@+id/textView3"
         android:textColor="#0000FF"
-        android:layout_marginTop="144dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/textView4"
         android:layout_alignLeft="@+id/editTextEmailRegister"
         android:layout_alignStart="@+id/editTextEmailRegister" />
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Register"
+        android:id="@+id/buttonRegister"
+        android:layout_marginTop="75dp"
+        android:layout_below="@+id/textView23"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

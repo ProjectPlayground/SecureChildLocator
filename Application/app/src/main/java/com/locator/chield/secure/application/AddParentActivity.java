@@ -1,5 +1,6 @@
 package com.locator.chield.secure.application;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,14 +8,15 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class AddParentActivity extends AppCompatActivity {
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_parent);
+        context=this;
 
         final Button button = (Button) findViewById(R.id.buttonAddParent);
         button.setOnClickListener(new View.OnClickListener() {
@@ -23,16 +25,9 @@ public class AddParentActivity extends AppCompatActivity {
                 EditText mail   = (EditText)findViewById(R.id.editTextAddParentMail);
                 EditText name   = (EditText)findViewById(R.id.editTextAddParentName);
                 EditText pass   = (EditText)findViewById(R.id.editTextAddParentPass);
+                EditText sharedPass   = (EditText)findViewById(R.id.editTextAddParentSharedPass);
 
-                Result r = m.addParent(mail.getText().toString(),name.getText().toString(),pass.getText().toString());
-                if (r.getResult()) {
-                    Intent myIntent = new Intent(AddParentActivity.this, MainKidsActivity.class);
-                    AddParentActivity.this.startActivity(myIntent);
-                    finish();
-                }
-                else{
-                    Toast.makeText(AddParentActivity.this,r.getMessage(),Toast.LENGTH_LONG).show();
-                }
+                m.addParent(context,mail.getText().toString(),name.getText().toString(),pass.getText().toString(),sharedPass.getText().toString());
 
             }
         });

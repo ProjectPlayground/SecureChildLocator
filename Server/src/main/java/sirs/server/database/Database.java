@@ -322,6 +322,9 @@ public class Database
                     throw new ExpiredSessionKeyException(key);
                 }
             }
+            else{
+                throw new WrongKeyException(email, key);
+            }
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());

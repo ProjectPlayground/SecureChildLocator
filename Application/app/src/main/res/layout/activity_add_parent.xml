@@ -17,7 +17,7 @@
         android:ems="10"
         android:background="#A9E2F3"
         android:id="@+id/editTextAddParentMail"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/textView10"
         android:layout_centerHorizontal="true" />
 
@@ -28,7 +28,7 @@
         android:text="Email Address"
         android:id="@+id/textView10"
         android:textColor="#0000FF"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/editTextAddParentMail"
         android:layout_alignStart="@+id/editTextAddParentMail" />
@@ -56,14 +56,24 @@
         android:layout_below="@+id/textView12"
         android:layout_centerHorizontal="true" />
 
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:background="#A9E2F3"
+        android:id="@+id/editTextAddParentSharedPass"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/textView24"
+        android:layout_centerHorizontal="true" />
+
     <Button
         android:layout_width="350dp"
         android:layout_height="60dp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:text="Add Parent"
         android:id="@+id/buttonAddParent"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/editTextAddParentPass"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/editTextAddParentSharedPass"
         android:layout_alignLeft="@+id/textView11"
         android:layout_alignStart="@+id/textView11" />
 
@@ -89,6 +99,18 @@
         android:layout_below="@+id/editTextAddParentName"
         android:layout_alignLeft="@+id/editTextAddParentPass"
         android:layout_alignStart="@+id/editTextAddParentPass" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Shared Code"
+        android:id="@+id/textView24"
+        android:textColor="#0000FF"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/editTextAddParentPass"
+        android:layout_alignLeft="@+id/editTextAddParentSharedPass"
+        android:layout_alignStart="@+id/editTextAddParentSharedPass" />
 
 
 </RelativeLayout>

@@ -68,8 +68,7 @@ public class MainKidsActivity extends AppCompatActivity {
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     double lat = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
                     double longitude = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
-                    m.getManager().addLocation(lat,longitude);
-                    //Toast.makeText(context, ""+lat, Toast.LENGTH_SHORT).show();
+                    m.getManager().addLocation(context,lat,longitude);
 
                     Handler handler = new Handler();
                     m.setHandlerGPS(handler);
