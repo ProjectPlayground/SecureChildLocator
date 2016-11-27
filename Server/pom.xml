@@ -15,7 +15,7 @@
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <mainclass>sirs.server.Server</mainclass>
+        <mainclass>sirs.server.Main</mainclass>
 
     </properties>
 
@@ -30,9 +30,9 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.5</version>
+            <version>5.1.40</version>
         </dependency>
-
+             
         <dependency>
             <groupId>sirs.communication</groupId>
             <artifactId>sirs-communication</artifactId>
