@@ -235,7 +235,7 @@ class ClientServiceThread extends Thread
     {
         synchronized (database) {
             try {
-                Map<Date, String> locationsMap = database.getAllLocations(getLocationsRequest.getEmail(),
+                Map<Date, String> locationsMap = database.get30Locations(getLocationsRequest.getEmail(),
                         getLocationsRequest.getPassword(),
                         getLocationsRequest.getSessionKey());
                 List<String> locations = (List<String>) new ArrayList(locationsMap.values());
