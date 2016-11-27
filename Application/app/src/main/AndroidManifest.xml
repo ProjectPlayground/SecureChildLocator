@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.locator.chield.secure.application">
+    package="com.locator.child.secure.application">
 
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StartActivity">
+        <activity android:name="com.locator.child.secure.application.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,26 +25,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ConfirmRegisterActivity"
+            android:name="com.locator.child.secure.application.ConfirmRegisterActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MainKidsActivity" />
-        <activity android:name=".MainParentActivity" />
+        <activity android:name="com.locator.child.secure.application.MainKidsActivity" />
+        <activity android:name="com.locator.child.secure.application.MainParentActivity" />
         <activity
-            android:name=".ParentLogActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".RegisterActivity"
+            android:name="com.locator.child.secure.application.ParentLogActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".AddParentActivity"
+            android:name="com.locator.child.secure.application.RegisterActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ViewParentActivity"
+            android:name="com.locator.child.secure.application.AddParentActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".AddKidActivity"
+            android:name="com.locator.child.secure.application.ViewParentActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ViewKidActivity" />
+        <activity
+            android:name="com.locator.child.secure.application.AddKidActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name="com.locator.child.secure.application.ViewKidActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -58,7 +58,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.locator.child.secure.application.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>
 
