@@ -14,7 +14,7 @@ create table if not exists users
 
 create table if not exists location
 (
-    location_id         int            auto_increment not null unique,
+    location_id         int            serial primary key,
     location_date       timestamp      not null,
     location            varchar(500)   not null,
     session_key	        varchar(40)    not null,
