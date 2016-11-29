@@ -2,12 +2,12 @@ package sirs.communication.response;
 
 public class CipheredResponse
 {
-    private byte[] message;
-    private byte[] timestamp;
-    private byte[] messageHash;
-    private byte[] timestampHash;
+    private String message;
+    private String timestamp;
+    private String messageHash;
+    private String timestampHash;
 
-    public CipheredResponse(byte[] message, byte[] timestamp, byte[] messageHash, byte[] timestampHash)
+    public CipheredResponse(String message, String timestamp, String messageHash, String timestampHash)
     {
         this.message = message;
         this.timestamp = timestamp;
@@ -15,42 +15,42 @@ public class CipheredResponse
         this.timestampHash = timestampHash;
     }
 
-    public byte[] getMessage()
+    public String getMessage()
     {
         return message;
     }
 
-    public void setMessage(byte[] message)
+    public void setMessage(String message)
     {
         this.message = message;
     }
 
-    public byte[] getTimestamp()
+    public String getTimestamp()
     {
         return timestamp;
     }
 
-    public void setTimestamp(byte[] timestamp)
+    public void setTimestamp(String timestamp)
     {
         this.timestamp = timestamp;
     }
 
-    public byte[] getMessageHash()
+    public String getMessageHash()
     {
         return messageHash;
     }
 
-    public void setMessageHash(byte[] messageHash)
+    public void setMessageHash(String messageHash)
     {
         this.messageHash = messageHash;
     }
 
-    public byte[] getTimestampHash()
+    public String getTimestampHash()
     {
         return timestampHash;
     }
 
-    public void setTimestampHash(byte[] timestampHash)
+    public void setTimestampHash(String timestampHash)
     {
         this.timestampHash = timestampHash;
     }

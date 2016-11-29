@@ -2,31 +2,31 @@ package sirs.communication.request;
 
 public class FinalRequest
 {
-    private byte[] message;
-    private byte[] key;
+    private String message;
+    private String key;
 
-    public FinalRequest(byte[] message, byte[] key)
+    public FinalRequest(String message, String key)
     {
         this.message = message;
         this.key = key;
     }
 
-    public byte[] getMessage()
+    public String getMessage()
     {
         return message;
     }
 
-    public void setMessage(byte[] message)
+    public void setMessage(String message)
     {
         this.message = message;
     }
 
-    public byte[] getKey()
+    public String getKey()
     {
         return key;
     }
 
-    public void setKey(byte[] key)
+    public void setKey(String key)
     {
         this.key = key;
     }
