@@ -4,13 +4,13 @@ public abstract class Response
 {
     private String type;
     private String error;
-    private String message;
+    private String errorMessage;
 
     public Response(String type)
     {
         this.type = type;
         this.error = null;
-        this.message = null;
+        this.errorMessage = null;
     }
 
     public String getType()
@@ -33,13 +33,13 @@ public abstract class Response
         this.error = error;
     }
 
-    public String getMessage()
+    public String getErrorMessage()
     {
-        return message;
+        return errorMessage;
     }
 
-    public void setMessage(String message)
+    public void setErrorMessage(String message)
     {
-        this.message = message;
+        this.errorMessage = message;
     }
 }
