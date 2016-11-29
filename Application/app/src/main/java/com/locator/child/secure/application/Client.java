@@ -16,6 +16,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import sirs.communication.response.AddUserResponse;
@@ -147,7 +148,7 @@ public class Client extends AsyncTask<String, Void, Result>
                 Parent nParent=null;
                 for(int i=0;i<parents.size();i++){
                     if(!parents.get(i).isVerified()){
-                        nParent = new Parent(parents.get(i).getMail(),parents.get(i).getName(),parents.get(i).getPass(),parents.get(i).getCode(),true);
+                        nParent = new Parent(parents.get(i).getMail(),parents.get(i).getPass(),parents.get(i).getSharedPass(),parents.get(i).getCode(),true);
                         m.removeParent(parents.get(i).getMail());
                         break;
                     }
@@ -171,10 +172,16 @@ public class Client extends AsyncTask<String, Void, Result>
             }
         }
         else if(addUserResponse.getType().equals("GetLocationsResponse")){
+            Cryptography cript = new Cryptography();
+            LocalMemory m = LocalMemory.getInstance();
+
             GetLocationsResponse getLocationsResponse = gson.fromJson(r.getMessage(), GetLocationsResponse.class);
 
             if (getLocationsResponse.isSuccessful()){
-                List<String> locations = getLocationsResponse.getLocation();
+                List<String> locations = new ArrayList<>();
+                List<String> locationsEnc = getLocationsResponse.getLocation();
+                for(String s:locationsEnc)
+                    locations.add(cript.desincriptMessage(s,m.getKidRequestPass()));
                 MyLocationsAdapter adapter = new MyLocationsAdapter(locations,context);
                 ListView list = (ListView) ((Activity)context).findViewById(R.id.listViewLocations);
                 list.setAdapter(adapter);

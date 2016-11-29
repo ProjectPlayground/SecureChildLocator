@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Full Name"
+        android:text="Shared Pass"
         android:id="@+id/textView14"
         android:textColor="#0000FF"
         android:layout_marginTop="120dp"
@@ -49,8 +49,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="example"
-        android:id="@+id/textViewParentNameView"
+        android:text="12345"
+        android:id="@+id/textViewParentSharedPassView"
         android:textColor="#000000"
         android:layout_below="@+id/textView14"
         android:layout_alignParentLeft="true"
@@ -64,7 +64,7 @@
         android:id="@+id/textView20"
         android:textColor="#0000FF"
         android:layout_marginTop="13dp"
-        android:layout_below="@+id/textViewParentNameView"
+        android:layout_below="@+id/textViewParentSharedPassView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

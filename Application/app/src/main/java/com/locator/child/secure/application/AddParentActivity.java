@@ -23,11 +23,11 @@ public class AddParentActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Manager m = LocalMemory.getInstance().getManager();
                 EditText mail   = (EditText)findViewById(R.id.editTextAddParentMail);
-                EditText name   = (EditText)findViewById(R.id.editTextAddParentName);
                 EditText pass   = (EditText)findViewById(R.id.editTextAddParentPass);
                 EditText sharedPass   = (EditText)findViewById(R.id.editTextAddParentSharedPass);
+                EditText code   = (EditText)findViewById(R.id.editTextAddParentCode);
 
-                m.addParent(context,mail.getText().toString(),name.getText().toString(),pass.getText().toString(),sharedPass.getText().toString());
+                m.addParent(context,mail.getText().toString(),pass.getText().toString(),sharedPass.getText().toString(),code.getText().toString());
 
             }
         });

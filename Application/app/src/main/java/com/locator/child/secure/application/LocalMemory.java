@@ -2,19 +2,23 @@ package com.locator.child.secure.application;
 
 import android.os.Handler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LocalMemory {
 
     private Manager manager = new Manager();
     private static LocalMemory instance;
-    private List<Parent> parents = manager.loadParents();
-    private List<Kid> kids = manager.loadKids();
+    private List<Parent> parents;
+    private Map<String, List<Kid>> kids = new HashMap<String, List<Kid>>();
     private Runnable runnableGPS = null;
     private Handler handlerGPS = null;
 
     private String loggedUserMail;
     private String loggedUserPassword;
+    private String kidRequestPass;
 
     public LocalMemory(){
 
@@ -26,6 +30,14 @@ public class LocalMemory {
 
     public String getLoggedUserMail(){
         return loggedUserMail;
+    }
+
+    public String getKidRequestPass(){
+        return kidRequestPass;
+    }
+
+    public void setKidRequestPass(String r){
+        kidRequestPass=r;
     }
 
     public void setLoggedUserPass(String p){
@@ -59,10 +71,18 @@ public class LocalMemory {
 
     public void addParent(Parent p){
         for(int i=0;i<parents.size();i++){
-            if(parents.get(i).equals(p.getName()))
+            if(parents.get(i).getMail().equals(p.getMail()))
                 return;
         }
         parents.add(p);
+    }
+
+    public void loadParents(List<Parent> l){
+        parents=l;
+    }
+
+    public void loadKids(Map<String,List<Kid>> dic){
+        kids=dic;
     }
 
     public void removeParent(String mail){
@@ -73,21 +93,30 @@ public class LocalMemory {
     }
 
     public List<Kid> getKids() {
+        if(!kids.containsKey(loggedUserMail)){
+            List<Kid> l = new ArrayList<>();
+            kids.put(loggedUserMail,l);
+        }
+        return kids.get(loggedUserMail);
+    }
+
+    public Map<String,List<Kid>> getAllKids() {
         return kids;
     }
 
     public void addKid(Kid k){
-        for(int i=0;i<kids.size();i++){
-            if(kids.get(i).equals(k.getName()))
+        for(int i=0;i<kids.get(loggedUserMail).size();i++){
+            if(kids.get(loggedUserMail).get(i).getName().equals(k.getName()))
                 return;
         }
-        kids.add(k);
+        List<Kid> l = kids.get(loggedUserMail);
+        l.add(k);
     }
 
     public void removeKid(String name){
-        for(int i=0;i<kids.size();i++){
-            if(kids.get(i).getName().equals(name))
-                kids.remove(i);
+        for(int i=0;i<kids.get(loggedUserMail).size();i++){
+            if(kids.get(loggedUserMail).get(i).getName().equals(name))
+                kids.get(loggedUserMail).remove(i);
         }
     }
 

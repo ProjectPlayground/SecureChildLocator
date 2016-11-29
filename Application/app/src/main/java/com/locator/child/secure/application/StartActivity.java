@@ -13,6 +13,9 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        LocalMemory.getInstance().getManager().loadKids(this);
+        LocalMemory.getInstance().getManager().loadParents(this);
+
         final Button button1 = (Button) findViewById(R.id.buttonParentSection);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

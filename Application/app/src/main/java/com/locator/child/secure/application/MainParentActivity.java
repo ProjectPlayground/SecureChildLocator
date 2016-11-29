@@ -40,6 +40,13 @@ public class MainParentActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalMemory.getInstance().getManager().saveKids(this);
+    }
+
+
     private void populateListView() {
         MyParentsAdapter adapter = new MyParentsAdapter(names,this);
         ListView list = (ListView) findViewById(R.id.listViewKids);

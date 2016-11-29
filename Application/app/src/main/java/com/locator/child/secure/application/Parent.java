@@ -1,20 +1,22 @@
 package com.locator.child.secure.application;
 
+import java.io.Serializable;
+
 /**
  * Created by Valentyn on 12-11-2016.
  */
 
-public class Parent {
+public class Parent implements Serializable {
     String mail;
-    String name;
     String pass;
+    String sharedPass;
     String code;
     boolean verified;
 
-    public Parent(String mail, String name, String pass,String code,boolean verified){
+    public Parent(String mail, String pass,String sharedPass,String code,boolean verified){
         this.mail=mail;
-        this.name=name;
         this.pass=pass;
+        this.sharedPass=sharedPass;
         this.code=code;
         this.verified=verified;
     }
@@ -23,12 +25,12 @@ public class Parent {
         return mail;
     }
 
-    public String getName(){
-        return name;
-    }
-
     public String getPass(){
         return pass;
+    }
+
+    public String getSharedPass(){
+        return sharedPass;
     }
 
     public String getCode(){

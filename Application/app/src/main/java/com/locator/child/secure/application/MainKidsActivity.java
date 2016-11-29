@@ -25,8 +25,6 @@ public class MainKidsActivity extends AppCompatActivity {
     List<Parent> parents = m.getParents();
 
     private List<String> mails = new ArrayList <>();
-    private List<String> names = new ArrayList <>();
-    private List<String> passes = new ArrayList <>();
 
     public Context context;
 
@@ -39,8 +37,6 @@ public class MainKidsActivity extends AppCompatActivity {
 
         for (int i=0;i<parents.size();i++){
             mails.add(parents.get(i).getMail());
-            names.add(parents.get(i).getName());
-            passes.add(parents.get(i).getPass());
         }
 
         populateListView();
@@ -66,9 +62,16 @@ public class MainKidsActivity extends AppCompatActivity {
                     }
 
                     LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    double lat = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
-                    double longitude = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
-                    m.getManager().addLocation(context,lat,longitude);
+                    double lat=0;
+                    double longitude=0;
+
+                    if(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)!=null){
+                        lat = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
+                        longitude = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
+                    }
+                    for (Parent p : LocalMemory.getInstance().getParents()) {
+                        m.getManager().addLocation(context,p,lat,longitude);
+                    }
 
                     Handler handler = new Handler();
                     m.setHandlerGPS(handler);
@@ -93,6 +96,12 @@ public class MainKidsActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalMemory.getInstance().getManager().saveParents(this);
     }
 
 

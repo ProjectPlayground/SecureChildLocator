@@ -64,7 +64,7 @@ public class MyKidsAdapter extends BaseAdapter implements ListAdapter {
                 for (int i=0;i<parents.size();i++){
                     if(parents.get(i).getMail().equals(elementBtn.getText())){
                         myIntent.putExtra("MAIL", parents.get(i).getMail());
-                        myIntent.putExtra("NAME", parents.get(i).getName());
+                        myIntent.putExtra("sPASS", parents.get(i).getSharedPass());
                         myIntent.putExtra("CODE", parents.get(i).getCode());
                         break;
                     }

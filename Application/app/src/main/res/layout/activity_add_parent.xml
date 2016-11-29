@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Full name"
+        android:text="Password"
         android:id="@+id/textView11"
         android:textColor="#0000FF"
         android:layout_marginTop="15dp"
@@ -50,7 +50,7 @@
         android:layout_height="40dp"
         android:ems="10"
         android:background="#A9E2F3"
-        android:id="@+id/editTextAddParentPass"
+        android:id="@+id/editTextAddParentSharedPass"
         android:layout_marginTop="16dp"
         android:inputType="textPassword"
         android:layout_below="@+id/textView12"
@@ -61,7 +61,7 @@
         android:layout_height="40dp"
         android:ems="10"
         android:background="#A9E2F3"
-        android:id="@+id/editTextAddParentSharedPass"
+        android:id="@+id/editTextAddParentCode"
         android:layout_marginTop="16dp"
         android:layout_below="@+id/textView24"
         android:layout_centerHorizontal="true" />
@@ -73,7 +73,7 @@
         android:text="Add Parent"
         android:id="@+id/buttonAddParent"
         android:layout_marginTop="14dp"
-        android:layout_below="@+id/editTextAddParentSharedPass"
+        android:layout_below="@+id/editTextAddParentCode"
         android:layout_alignLeft="@+id/textView11"
         android:layout_alignStart="@+id/textView11" />
 
@@ -83,7 +83,7 @@
         android:inputType="text"
         android:ems="10"
         android:background="#A9E2F3"
-        android:id="@+id/editTextAddParentName"
+        android:id="@+id/editTextAddParentPass"
         android:layout_marginTop="14dp"
         android:layout_below="@+id/textView11"
         android:layout_centerHorizontal="true" />
@@ -96,9 +96,9 @@
         android:id="@+id/textView12"
         android:textColor="#0000FF"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/editTextAddParentName"
-        android:layout_alignLeft="@+id/editTextAddParentPass"
-        android:layout_alignStart="@+id/editTextAddParentPass" />
+        android:layout_below="@+id/editTextAddParentPass"
+        android:layout_alignLeft="@+id/editTextAddParentSharedPass"
+        android:layout_alignStart="@+id/editTextAddParentSharedPass" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,9 +108,9 @@
         android:id="@+id/textView24"
         android:textColor="#0000FF"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/editTextAddParentPass"
-        android:layout_alignLeft="@+id/editTextAddParentSharedPass"
-        android:layout_alignStart="@+id/editTextAddParentSharedPass" />
+        android:layout_below="@+id/editTextAddParentSharedPass"
+        android:layout_alignLeft="@+id/editTextAddParentCode"
+        android:layout_alignStart="@+id/editTextAddParentCode" />
 
 
 </RelativeLayout>

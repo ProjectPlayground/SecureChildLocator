@@ -35,16 +35,16 @@ public class ViewKidActivity extends AppCompatActivity {
         passV.setText(pass);
         codeV.setText(code);
 
-        populateListView(context,code);
+        populateListView(context,code,pass);
 
     }
 
-    private void populateListView(Context context,String code) {
+    private void populateListView(Context context,String code,String pass) {
         List<String>  l = new ArrayList<String>();
         MyLocationsAdapter adapter = new MyLocationsAdapter(l,this);
         ListView list = (ListView) findViewById(R.id.listViewLocations);
         list.setAdapter(adapter);
-        m.getManager().getLocations(context,code);
+        m.getManager().getLocations(context,code,pass);
     }
 
 }

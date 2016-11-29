@@ -13,7 +13,7 @@ public class AddLocationRequest extends Request
         this.sessionKey = sessionKey;
         this.email = email;
         this.location = location;
-        this.password = password;
+        this.password=password;
     }
 
     public String getSessionKey()
