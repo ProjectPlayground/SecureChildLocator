@@ -1,16 +1,18 @@
 package sirs.communication.response;
 
+import org.joda.time.DateTime;
+
 public class CipheredResponse
 {
     private String message;
-    private String timestamp;
+    private DateTime dateTime;
     private String messageHash;
     private String timestampHash;
 
-    public CipheredResponse(String message, String timestamp, String messageHash, String timestampHash)
+    public CipheredResponse(String message, DateTime dateTime, String messageHash, String timestampHash)
     {
         this.message = message;
-        this.timestamp = timestamp;
+        this.dateTime = dateTime;
         this.messageHash = messageHash;
         this.timestampHash = timestampHash;
     }
@@ -25,14 +27,14 @@ public class CipheredResponse
         this.message = message;
     }
 
-    public String getTimestamp()
+    public DateTime getDateTime()
     {
-        return timestamp;
+        return dateTime;
     }
 
-    public void setTimestamp(String timestamp)
+    public void setTimestamp(DateTime dateTime)
     {
-        this.timestamp = timestamp;
+        this.dateTime = dateTime;
     }
 
     public String getMessageHash()

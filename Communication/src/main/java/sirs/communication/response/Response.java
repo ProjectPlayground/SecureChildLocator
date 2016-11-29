@@ -1,6 +1,6 @@
 package sirs.communication.response;
 
-public abstract class Response
+public class Response
 {
     private String type;
     private String error;

@@ -1,20 +1,20 @@
 package sirs.communication.request;
 
-import java.security.Timestamp;
+import org.joda.time.DateTime;
 
 public class CipheredRequest
 {
     private String message;
-    private Timestamp timestamp;
+    private DateTime dateTime;
     private String messageHash;
-    private String timestampHash;
+    private String dateTimeHash;
 
-    public CipheredRequest(String message, Timestamp timestamp, String messageHash, String timestampHash)
+    public CipheredRequest(String message, DateTime dateTime, String messageHash, String dateTimeHash)
     {
         this.message = message;
-        this.timestamp = timestamp;
+        this.dateTime = dateTime;
         this.messageHash = messageHash;
-        this.timestampHash = timestampHash;
+        this.dateTimeHash = dateTimeHash;
     }
 
     public String getMessage()
@@ -27,14 +27,14 @@ public class CipheredRequest
         this.message = message;
     }
 
-    public Timestamp getTimestamp()
+    public DateTime getDateTime()
     {
-        return timestamp;
+        return dateTime;
     }
 
-    public void setTimestamp(Timestamp timestamp)
+    public void setDateTime(DateTime dateTime)
     {
-        this.timestamp = timestamp;
+        this.dateTime = dateTime;
     }
 
     public String getMessageHash()
@@ -47,13 +47,13 @@ public class CipheredRequest
         this.messageHash = messageHash;
     }
 
-    public String getTimestampHash()
+    public String getDateTimeHash()
     {
-        return timestampHash;
+        return dateTimeHash;
     }
 
-    public void setTimestampHash(String timestampHash)
+    public void setDateTimeHash(String dateTimeHash)
     {
-        this.timestampHash = timestampHash;
+        this.dateTimeHash = dateTimeHash;
     }
 }
