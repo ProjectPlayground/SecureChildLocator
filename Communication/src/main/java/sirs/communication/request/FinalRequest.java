@@ -1,13 +1,12 @@
 package sirs.communication.request;
 
-class FinalRequest extends Request
+class FinalRequest
 {
     private byte[] message;
     private byte[] key;
 
     public FinalRequest(byte[] message, byte[] key)
     {
-        super("FinalRequest");
         this.message = message;
         this.key = key;
     }
