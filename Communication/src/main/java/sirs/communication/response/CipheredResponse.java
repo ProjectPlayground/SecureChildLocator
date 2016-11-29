@@ -1,13 +1,18 @@
 package sirs.communication.response;
 
-public class CipheredResponse extends Response
+public class CipheredResponse
 {
     private byte[] message;
-    private byte[] hash;
+    private byte[] timestamp;
+    private byte[] messageHash;
+    private byte[] timestampHash;
 
-    public CipheredResponse()
+    public CipheredResponse(byte[] message, byte[] timestamp, byte[] messageHash, byte[] timestampHash)
     {
-        super("CipheredResponse");
+        this.message = message;
+        this.timestamp = timestamp;
+        this.messageHash = messageHash;
+        this.timestampHash = timestampHash;
     }
 
     public byte[] getMessage()
@@ -20,13 +25,33 @@ public class CipheredResponse extends Response
         this.message = message;
     }
 
-    public byte[] getHash()
+    public byte[] getTimestamp()
     {
-        return hash;
+        return timestamp;
     }
 
-    public void setHash(byte[] hash)
+    public void setTimestamp(byte[] timestamp)
     {
-        this.hash = hash;
+        this.timestamp = timestamp;
+    }
+
+    public byte[] getMessageHash()
+    {
+        return messageHash;
+    }
+
+    public void setMessageHash(byte[] messageHash)
+    {
+        this.messageHash = messageHash;
+    }
+
+    public byte[] getTimestampHash()
+    {
+        return timestampHash;
+    }
+
+    public void setTimestampHash(byte[] timestampHash)
+    {
+        this.timestampHash = timestampHash;
     }
 }

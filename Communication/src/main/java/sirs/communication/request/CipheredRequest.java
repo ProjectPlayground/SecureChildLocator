@@ -1,46 +1,59 @@
 package sirs.communication.request;
 
-class CipheredRequest extends Request
-{
-    private byte[] message;
-    private byte[] hash;
-    private byte[] key;
+import java.security.Timestamp;
 
-    public CipheredRequest(byte[] message, byte[] hash, byte[] key)
+public class CipheredRequest
+{
+    private String message;
+    private Timestamp timestamp;
+    private byte[] messageHash;
+    private byte[] timestampHash;
+
+    public CipheredRequest(String message, Timestamp timestamp, byte[] messageHash, byte[] timestampHash)
     {
-        super("CipheredRequest");
         this.message = message;
-        this.hash = hash;
-        this.key = key;
+        this.timestamp = timestamp;
+        this.messageHash = messageHash;
+        this.timestampHash = timestampHash;
     }
 
-    public byte[] getMessage()
+    public String getMessage()
     {
         return message;
     }
 
-    public void setMessage(byte[] message)
+    public void setMessage(String message)
     {
         this.message = message;
     }
 
-    public byte[] getHash()
+    public Timestamp getTimestamp()
     {
-        return hash;
+        return timestamp;
     }
 
-    public void setHash(byte[] hash)
+    public void setTimestamp(Timestamp timestamp)
     {
-        this.hash = hash;
+        this.timestamp = timestamp;
     }
 
-    public byte[] getKey()
+    public byte[] getMessageHash()
     {
-        return key;
+        return messageHash;
     }
 
-    public void setKey(byte[] key)
+    public void setMessageHash(byte[] messageHash)
     {
-        this.key = key;
+        this.messageHash = messageHash;
+    }
+
+    public byte[] getTimestampHash()
+    {
+        return timestampHash;
+    }
+
+    public void setTimestampHash(byte[] timestampHash)
+    {
+        this.timestampHash = timestampHash;
     }
 }
