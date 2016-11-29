@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/commons-codec-1.10" />
             <option value="$PROJECT_DIR$/sirs-communication-1.0-SNAPSHOT" />
           </set>
         </option>

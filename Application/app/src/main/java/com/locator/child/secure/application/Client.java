@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+
+import org.joda.time.DateTime;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,11 +22,10 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import sirs.communication.response.AddUserResponse;
-import sirs.communication.response.CreateSessionKeyResponse;
-import sirs.communication.response.GetLocationsResponse;
-import sirs.communication.response.LoginResponse;
-import sirs.communication.response.VerifySessionKeyResponse;
+import javax.crypto.SecretKey;
+
+import sirs.communication.response.*;
+import sirs.communication.request.*;
 
 public class Client extends AsyncTask<String, Void, Result>
 {
@@ -33,6 +35,9 @@ public class Client extends AsyncTask<String, Void, Result>
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private Context context;
+    private SecretKey secretKey;
+    private Cryptography cryptography;
+    private Gson gson;
 
     public Client(Context c)
     {
@@ -42,6 +47,9 @@ public class Client extends AsyncTask<String, Void, Result>
         port = 9000;
         bufferedReader = null;
         printWriter = null;
+        secretKey = null;
+        cryptography = new Cryptography();
+        gson = new Gson();
     }
 
     public Client(String serverName, int port)
@@ -51,6 +59,9 @@ public class Client extends AsyncTask<String, Void, Result>
         this.port = port;
         bufferedReader = null;
         printWriter = null;
+        secretKey = null;
+        cryptography = new Cryptography();
+        gson = new Gson();
     }
 
     public boolean wellInicialized(){
@@ -79,7 +90,6 @@ public class Client extends AsyncTask<String, Void, Result>
         if(r.getResult()==false)
             Toast.makeText(context, r.getMessage(), Toast.LENGTH_SHORT).show();
 
-        Gson gson = new Gson();
         AddUserResponse addUserResponse = gson.fromJson(r.getMessage(), AddUserResponse.class);
 
         if (addUserResponse.getType().equals("LoginResponse")  ) {
@@ -91,7 +101,7 @@ public class Client extends AsyncTask<String, Void, Result>
                 ((Activity)context).finish();
             }
             else
-                Toast.makeText(context, loginResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, loginResponse.getErrorMessage(), Toast.LENGTH_SHORT).show();
 
         }
 
@@ -102,7 +112,7 @@ public class Client extends AsyncTask<String, Void, Result>
                 ((Activity)context).finish();
             }
             else{
-                Toast.makeText(context,addUserResponse.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,addUserResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
             }
         }
 
@@ -135,7 +145,7 @@ public class Client extends AsyncTask<String, Void, Result>
                     }
 
                 }
-                Toast.makeText(context,createSessionKeyResponse.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,createSessionKeyResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
             }
         }
 
@@ -168,7 +178,7 @@ public class Client extends AsyncTask<String, Void, Result>
                     }
 
                 }
-                Toast.makeText(context,verifySessionKeyResponse.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,verifySessionKeyResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
             }
         }
         else if(addUserResponse.getType().equals("GetLocationsResponse")){
@@ -181,13 +191,13 @@ public class Client extends AsyncTask<String, Void, Result>
                 List<String> locations = new ArrayList<>();
                 List<String> locationsEnc = getLocationsResponse.getLocation();
                 for(String s:locationsEnc)
-                    locations.add(cript.desincriptSymetricMessage(s,m.getKidRequestPass()));
+                    locations.add(cript.decryptWithPassword(s,m.getKidRequestPass()));
                 MyLocationsAdapter adapter = new MyLocationsAdapter(locations,context);
                 ListView list = (ListView) ((Activity)context).findViewById(R.id.listViewLocations);
                 list.setAdapter(adapter);
             }
             else{
-                Toast.makeText(context,getLocationsResponse.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(context,getLocationsResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
             }
 
         }
@@ -230,15 +240,63 @@ public class Client extends AsyncTask<String, Void, Result>
 
     private Result send(String message)
     {
-        printWriter.println(message);
+        secretKey = cryptography.generateKey();
+        byte[] utf8 = secretKey.getEncoded();
+        String secretKeyString = Base64.encodeToString(utf8, Base64.DEFAULT);
+        String encryptedSecretKey = cryptography.encryptRSA(secretKeyString);
+
+        System.out.println("encrypted secret key");
+
+        String messageHash = cryptography.hash(message);
+
+        System.out.println("hashed the message");
+
+        DateTime dateTime = new DateTime();
+        String dateTimeHash = cryptography.hash(dateTime.toString());
+
+        System.out.println("hashed the time");
+
+        CipheredRequest cipheredRequest = new CipheredRequest(message, dateTime, messageHash, dateTimeHash);
+        String cipheredRequestJson = gson.toJson(cipheredRequest);
+
+        String encryptedRequest = cryptography.encryptAES(cipheredRequestJson, secretKey);
+
+        FinalRequest finalRequest = new FinalRequest(encryptedRequest, encryptedSecretKey);
+        String finalRequestJson = gson.toJson(finalRequest);
+
+        printWriter.println(finalRequestJson);
         printWriter.flush();
+
         return receive();
     }
 
     private Result receive()
     {
         try {
-            String message = bufferedReader.readLine();
+            String request = bufferedReader.readLine();
+            CipheredResponse cipheredResponse = gson.fromJson(request, CipheredResponse.class);
+
+            String message = cryptography.decryptAES(cipheredResponse.getMessage(), secretKey);
+            String messageHash = cipheredResponse.getMessageHash();
+            String dateTimeHash = cipheredResponse.getTimestampHash();
+            DateTime dateTime = cipheredResponse.getDateTime();
+
+            if (!cryptography.hashIsValid(message, messageHash)) {
+                // do nothing, message is not valid
+                return new Result(false, "Invalid message: it was tampered with.");
+            }
+            if (!cryptography.hashIsValid(dateTime.toString(), dateTimeHash)) {
+                // do nothing, message is not valid
+                return new Result(false, "Invalid message: it was tampered with.");
+            }
+
+            DateTime now = new DateTime();
+
+            dateTime.plusMinutes(2); // if message is more than two minutes, discard
+            if (now.isAfter(dateTime)) {
+                // do nothing, expired request
+                return new Result(false, "Request is no longer valid: it has expired.");
+            }
 
             return new Result(true,message);
         }

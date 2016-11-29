@@ -1,1 +1,1 @@
-include ':app', ':sirs-communication-1.0-SNAPSHOT'
+include ':app', ':sirs-communication-1.0-SNAPSHOT', ':commons-codec-1.10'
