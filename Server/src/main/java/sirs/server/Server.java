@@ -14,11 +14,14 @@ public class Server
     private int port;
     private ServerSocket serverSocket;
     private Database database;
+    private Cryptography cryptography;
 
     public Server()
     {
         this.port = 9000;
         this.database = new Database();
+        this.cryptography = new Cryptography();
+
         startServer();
     }
 
@@ -46,7 +49,7 @@ public class Server
         while (true) {
             try {
                 Socket clientSocket = serverSocket.accept();
-                ClientServiceThread clientThread = new ClientServiceThread(clientSocket, database);
+                ClientServiceThread clientThread = new ClientServiceThread(clientSocket, database, cryptography);
                 clientThread.start();
             }
             catch (IOException e) {

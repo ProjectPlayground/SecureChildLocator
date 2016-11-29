@@ -1,10 +1,13 @@
 package sirs.server;
 
 import com.google.gson.Gson;
+import org.joda.time.DateTime;
 import sirs.communication.request.*;
 import sirs.communication.response.*;
-import sirs.server.database.*;
+import sirs.server.database.Database;
+import sirs.server.database.UserAlreadyExistsException;
 
+import javax.crypto.SecretKey;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -19,16 +22,20 @@ class ClientServiceThread extends Thread
     private BufferedReader bufferedReader;
     private PrintWriter printWriter;
     private Database database;
+    private Cryptography cryptography;
     private Gson gson;
+    private SecretKey secretKey;
 
-    ClientServiceThread(Socket clientSocket, Database database)
+    ClientServiceThread(Socket clientSocket, Database database, Cryptography cryptography)
     {
         this.running = true;
         this.clientSocket = clientSocket;
         this.bufferedReader = null;
         this.printWriter = null;
         this.database = database;
+        this.cryptography = cryptography;
         this.gson = new Gson();
+        this.secretKey = null;
     }
 
     @Override
@@ -85,49 +92,101 @@ class ClientServiceThread extends Thread
 
     private void send(String response)
     {
-        printWriter.println(response);
+        String encryptedMessage = cryptography.encryptAES(response, secretKey);
+        String messageHash = cryptography.hash(encryptedMessage);
+        DateTime dateTime = new DateTime();
+        String timeHash = cryptography.hash(dateTime.toString());
+
+        CipheredResponse cipheredResponse = new CipheredResponse(encryptedMessage, dateTime, messageHash, timeHash);
+        String cipheredResponseJson = gson.toJson(cipheredResponse);
+        printWriter.println(cipheredResponseJson);
         printWriter.flush();
     }
 
-    private void doRequest(String message)
+    private void doFinalRequest(String request)
     {
-        Gson gson = new Gson();
-        AddUserRequest addUserRequest = gson.fromJson(message, AddUserRequest.class);
+        FinalRequest finalRequest = gson.fromJson(request, FinalRequest.class);
+
+        doCipheredRequest(finalRequest.getKey(), finalRequest.getMessage());
+    }
+
+    private void doCipheredRequest(String key, String request)
+    {
+        try {
+            secretKey = cryptography.getKey(key);
+            // First we decrypt the key with our private key
+            String decryptedKey = cryptography.decryptRSA(key);
+            // Now we use the decrypted key to decrypt the content of our request
+            String cipheredRequestJson = cryptography.decryptAES(request, decryptedKey);
+
+            CipheredRequest cipheredRequest = gson.fromJson(cipheredRequestJson, CipheredRequest.class);
+
+            if (!cryptography.hashIsValid(cipheredRequest.getMessage(), cipheredRequest.getMessageHash())) {
+                // do nothing, message is not valid
+                return;
+            }
+            if (!cryptography.hashIsValid(cipheredRequest.getDateTime().toString(), cipheredRequest.getDateTimeHash())) {
+                // do nothing, message is not valid
+                return;
+            }
+
+            // but what if the timestamp is old?
+            DateTime requestTimestamp = cipheredRequest.getDateTime();
+            DateTime now = new DateTime();
+
+            requestTimestamp.plusMinutes(2); // if message is more than two minutes, discard
+            if (now.isAfter(requestTimestamp)) {
+                // do nothing, expired request
+                return;
+            }
+
+            // message is valid! let's continue
+            doRequest(cipheredRequest.getMessage());
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void doRequest(String request)
+    {
+        AddUserRequest addUserRequest = gson.fromJson(request, AddUserRequest.class);
         String type = addUserRequest.getType();
 
         if (type.equals("AddUserRequest")) {
             doAddUserRequest(addUserRequest);
         }
         else if (type.equals("AddLocationRequest")) {
-            AddLocationRequest addLocationRequest = gson.fromJson(message, AddLocationRequest.class);
+            AddLocationRequest addLocationRequest = gson.fromJson(request, AddLocationRequest.class);
             doAddLocationRequest(addLocationRequest);
         }
         else if (type.equals("ConfirmUserRequest")) {
-            ConfirmUserRequest confirmUserRequest = gson.fromJson(message, ConfirmUserRequest.class);
+            ConfirmUserRequest confirmUserRequest = gson.fromJson(request, ConfirmUserRequest.class);
             doConfirmUserRequest(confirmUserRequest);
         }
         else if (type.equals("CreateSessionKeyRequest")) {
-            CreateSessionKeyRequest createSessionKeyRequest = gson.fromJson(message, CreateSessionKeyRequest.class);
+            CreateSessionKeyRequest createSessionKeyRequest = gson.fromJson(request, CreateSessionKeyRequest.class);
             doCreateSessionKeyRequest(createSessionKeyRequest);
         }
         else if (type.equals("GetLatestLocationRequest")) {
-            GetLatestLocationRequest getLatestLocationRequest = gson.fromJson(message, GetLatestLocationRequest.class);
+            GetLatestLocationRequest getLatestLocationRequest = gson.fromJson(request, GetLatestLocationRequest.class);
             doLatestLocationRequest(getLatestLocationRequest);
         }
         else if (type.equals("GetLocationsRequest")) {
-            GetLocationsRequest getLocationsRequest = gson.fromJson(message, GetLocationsRequest.class);
+            GetLocationsRequest getLocationsRequest = gson.fromJson(request, GetLocationsRequest.class);
             doGetLocations(getLocationsRequest);
         }
         else if (type.equals("LoginRequest")) {
-            LoginRequest loginRequest = gson.fromJson(message, LoginRequest.class);
+            LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
             doLoginRequest(loginRequest);
         }
         else if (type.equals("RemoveUserRequest")) {
-            RemoveUserRequest removeUserRequest = gson.fromJson(message, RemoveUserRequest.class);
+            RemoveUserRequest removeUserRequest = gson.fromJson(request, RemoveUserRequest.class);
             doRemoveUserRequest(removeUserRequest);
         }
         else if (type.equals("VerifySessionKeyRequest")) {
-            VerifySessionKeyRequest verifySessionKeyRequest = gson.fromJson(message, VerifySessionKeyRequest.class);
+            VerifySessionKeyRequest verifySessionKeyRequest = gson.fromJson(request, VerifySessionKeyRequest.class);
             doVerifySessionKeyRequest(verifySessionKeyRequest);
         }
         else {
@@ -150,7 +209,7 @@ class ClientServiceThread extends Thread
             catch (UserAlreadyExistsException e) {
                 AddUserResponse addUserResponse = new AddUserResponse(false);
                 addUserResponse.setError(e.getClass().getSimpleName());
-                addUserResponse.setMessage(e.getMessage());
+                addUserResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(addUserResponse);
                 send(response);
             }
@@ -172,7 +231,7 @@ class ClientServiceThread extends Thread
             catch (Exception e) {
                 AddLocationResponse addLocationResponse = new AddLocationResponse(false);
                 addLocationResponse.setError(e.getClass().getSimpleName());
-                addLocationResponse.setMessage(e.getMessage());
+                addLocationResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(addLocationResponse);
                 send(response);
             }
@@ -202,7 +261,7 @@ class ClientServiceThread extends Thread
             catch (Exception e) {
                 CreateSessionKeyResponse createSessionKeyResponse = new CreateSessionKeyResponse(false);
                 createSessionKeyResponse.setError(e.getClass().getSimpleName());
-                createSessionKeyResponse.setMessage(e.getMessage());
+                createSessionKeyResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(createSessionKeyResponse);
                 send(response);
             }
@@ -223,7 +282,7 @@ class ClientServiceThread extends Thread
             catch (Exception e) {
                 GetLatestLocationResponse getLatestLocationResponse = new GetLatestLocationResponse(false);
                 getLatestLocationResponse.setError(e.getClass().getSimpleName());
-                getLatestLocationResponse.setMessage(e.getMessage());
+                getLatestLocationResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(getLatestLocationResponse);
                 send(response);
             }
@@ -246,7 +305,7 @@ class ClientServiceThread extends Thread
             catch (Exception e) {
                 GetLocationsResponse getLocationsResponse = new GetLocationsResponse(false);
                 getLocationsResponse.setError(e.getClass().getSimpleName());
-                getLocationsResponse.setMessage(e.getMessage());
+                getLocationsResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(getLocationsResponse);
                 send(response);
             }
@@ -264,7 +323,7 @@ class ClientServiceThread extends Thread
         catch (Exception e) {
             LoginResponse loginResponse = new LoginResponse(false);
             loginResponse.setError(e.getClass().getSimpleName());
-            loginResponse.setMessage(e.getMessage());
+            loginResponse.setErrorMessage(e.getMessage());
             String response = gson.toJson(loginResponse);
             send(response);
         }
@@ -282,7 +341,7 @@ class ClientServiceThread extends Thread
             catch (Exception e) {
                 RemoveUserResponse removeUserResponse = new RemoveUserResponse(false);
                 removeUserResponse.setError(e.getClass().getSimpleName());
-                removeUserResponse.setMessage(e.getMessage());
+                removeUserResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(removeUserResponse);
                 send(response);
             }
@@ -303,7 +362,7 @@ class ClientServiceThread extends Thread
             catch (Exception e) {
                 VerifySessionKeyResponse verifySessionKeyResponse = new VerifySessionKeyResponse(false);
                 verifySessionKeyResponse.setError(e.getClass().getSimpleName());
-                verifySessionKeyResponse.setMessage(e.getMessage());
+                verifySessionKeyResponse.setErrorMessage(e.getMessage());
                 String response = gson.toJson(verifySessionKeyResponse);
                 send(response);
             }
