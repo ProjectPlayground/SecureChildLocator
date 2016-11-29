@@ -1,6 +1,6 @@
 package sirs.communication.request;
 
-class FinalRequest
+public class FinalRequest
 {
     private byte[] message;
     private byte[] key;
