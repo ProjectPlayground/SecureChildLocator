@@ -89,6 +89,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,8 +98,20 @@
         android:id="@+id/textView21"
         android:textColor="#0000FF"
         android:layout_marginTop="17dp"
-        android:layout_below="@+id/textViewKidCodeView"
+        android:layout_below="@+id/buttonRefresh"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Refresh"
+        android:id="@+id/buttonRefresh"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/textViewKidCodeView"
+        android:layout_alignLeft="@+id/textView15"
+        android:layout_alignStart="@+id/textView15"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

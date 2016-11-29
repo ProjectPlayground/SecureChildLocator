@@ -8,6 +8,7 @@ import java.security.spec.KeySpec;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -51,12 +52,12 @@ public class Cryptography
         }
     }
 
-    public String encriptMessage(String message, String pass){
+    public String encriptSymetricMessage(String message, String pass){
         try {
             byte[] pBytes = passwordToBytes(pass);
             SecretKey key = new SecretKeySpec(pBytes, "AES");
             Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
-            ecipher.init(Cipher.ENCRYPT_MODE, key);
+            ecipher.init(Cipher.ENCRYPT_MODE, key,new IvParameterSpec("0000000000000000".getBytes()));
 
             byte[] utf8 = message.getBytes("UTF-8");
             byte[] enc = ecipher.doFinal(utf8);
@@ -69,12 +70,12 @@ public class Cryptography
         return "";
     }
 
-    public String desincriptMessage(String message, String pass){
+    public String desincriptSymetricMessage(String message, String pass){
         try {
             byte[] pBytes = passwordToBytes(pass);
             SecretKey key = new SecretKeySpec(pBytes, "AES");
             Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
-            ecipher.init(Cipher.DECRYPT_MODE, key);
+            ecipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec("0000000000000000".getBytes()));
 
             byte[] dec = Base64.decode(message, Base64.DEFAULT);
 

@@ -60,8 +60,14 @@ public class MyLocationsAdapter extends BaseAdapter implements ListAdapter {
 
                 Intent myIntent = new Intent(context, MapsActivity.class);
                 String[] splited = elementBtn.getText().toString().split(";");
-                myIntent.putExtra("LAT", splited[0]);
-                myIntent.putExtra("LON", splited[1]);
+                String lat="0";
+                String lon="0";
+                if(splited.length==3){
+                    lat=splited[0];
+                    lon=splited[1];
+                }
+                myIntent.putExtra("LAT", lat);
+                myIntent.putExtra("LON", lon);
 
                 context.startActivity(myIntent);
 

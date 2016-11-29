@@ -274,7 +274,7 @@ public class Manager {
         Cryptography cript = new Cryptography();
 
         String time = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a zzz").format(Calendar.getInstance().getTime());
-        String location = cript.encriptMessage(""+lat+";"+lon+";\n"+time,p.getSharedPass());
+        String location = cript.encriptSymetricMessage(""+lat+";"+lon+";\n"+time,p.getSharedPass());
         AddLocationRequest addLocationRequest = new AddLocationRequest(p.getCode(), p.getMail(), p.getPass(), location);
         Gson gson = new Gson();
         String addLocationRequestString = gson.toJson(addLocationRequest);

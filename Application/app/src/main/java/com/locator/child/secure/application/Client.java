@@ -181,7 +181,7 @@ public class Client extends AsyncTask<String, Void, Result>
                 List<String> locations = new ArrayList<>();
                 List<String> locationsEnc = getLocationsResponse.getLocation();
                 for(String s:locationsEnc)
-                    locations.add(cript.desincriptMessage(s,m.getKidRequestPass()));
+                    locations.add(cript.desincriptSymetricMessage(s,m.getKidRequestPass()));
                 MyLocationsAdapter adapter = new MyLocationsAdapter(locations,context);
                 ListView list = (ListView) ((Activity)context).findViewById(R.id.listViewLocations);
                 list.setAdapter(adapter);
