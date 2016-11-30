@@ -1,8 +1,13 @@
 package com.locator.child.secure.application;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Base64;
-
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.FileInputStream;
 import java.security.PublicKey;
@@ -20,7 +25,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Cryptography
 {
-    private static final String CERTIFICATE_DIR = "keys/serverCertificate.cer";
+    private static final String CERTIFICATE_DIR = "serverCertificate.cer";
     private static final String SALT = "[B@3764951d";
     private static final int PASSWORD_LENGTH = 16;
     private static final int KEY_LENGTH = 256;
@@ -28,15 +33,28 @@ public class Cryptography
 
     private PublicKey certificatePublicKey;
 
-    public Cryptography()
+    public Cryptography(Context context)
     {
-        doKey();
+        doKey(context);
     }
 
-    private void doKey()
+    private void doKey(Context context)
     {
         try {
-            FileInputStream fileInputStream = new FileInputStream(CERTIFICATE_DIR);
+
+            String[] PERMISSIONS_STORAGE = {
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            };
+            int permission = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions((Activity)context, PERMISSIONS_STORAGE, 1);
+            }
+
+            AssetManager am = ((Activity)context).getAssets();
+            AssetFileDescriptor fileDescriptor  = am.openFd(CERTIFICATE_DIR);
+            FileInputStream fileInputStream = fileDescriptor.createInputStream();
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
             X509Certificate certificate = (X509Certificate) certificateFactory.generateCertificate(fileInputStream);
             certificatePublicKey = certificate.getPublicKey();

@@ -48,7 +48,7 @@ public class Client extends AsyncTask<String, Void, Result>
         bufferedReader = null;
         printWriter = null;
         secretKey = null;
-        cryptography = new Cryptography();
+        cryptography = new Cryptography(context);
         gson = new Gson();
     }
 
@@ -60,7 +60,7 @@ public class Client extends AsyncTask<String, Void, Result>
         bufferedReader = null;
         printWriter = null;
         secretKey = null;
-        cryptography = new Cryptography();
+        cryptography = new Cryptography(context);
         gson = new Gson();
     }
 
@@ -182,7 +182,7 @@ public class Client extends AsyncTask<String, Void, Result>
             }
         }
         else if(addUserResponse.getType().equals("GetLocationsResponse")){
-            Cryptography cript = new Cryptography();
+            Cryptography cript = new Cryptography(context);
             LocalMemory m = LocalMemory.getInstance();
 
             GetLocationsResponse getLocationsResponse = gson.fromJson(r.getMessage(), GetLocationsResponse.class);

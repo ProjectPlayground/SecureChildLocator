@@ -271,7 +271,7 @@ public class Manager {
 
     public void addLocation(Context context,Parent p,double lat, double lon){
         Client client = new Client(context);
-        Cryptography cript = new Cryptography();
+        Cryptography cript = new Cryptography(context);
 
         String time = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a zzz").format(Calendar.getInstance().getTime());
         String location = cript.encryptWithPassword(""+lat+";"+lon+";\n"+time,p.getSharedPass());
