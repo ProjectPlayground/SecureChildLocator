@@ -4,12 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.support.v4.app.ActivityCompat;
-import android.util.Base64;
 
-import java.io.FileInputStream;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.binary.Base64;
+
+import java.io.InputStream;
 import java.security.PublicKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
@@ -53,11 +55,12 @@ public class Cryptography
             }
 
             AssetManager am = ((Activity)context).getAssets();
-            AssetFileDescriptor fileDescriptor  = am.openFd(CERTIFICATE_DIR);
-            FileInputStream fileInputStream = fileDescriptor.createInputStream();
+            InputStream inputStream = am.open(CERTIFICATE_DIR);
+            //AssetFileDescriptor fileDescriptor  = am.openFd(CERTIFICATE_DIR);
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-            X509Certificate certificate = (X509Certificate) certificateFactory.generateCertificate(fileInputStream);
+            X509Certificate certificate = (X509Certificate) certificateFactory.generateCertificate(inputStream);
             certificatePublicKey = certificate.getPublicKey();
+            System.out.println("Public key: " + certificatePublicKey.toString());
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +101,7 @@ public class Cryptography
     {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-            keyGenerator.init(256);
+            keyGenerator.init(128);
             SecretKey key = keyGenerator.generateKey();
             return key;
         }
@@ -113,18 +116,20 @@ public class Cryptography
         try {
             byte[] pBytes = passwordToKey(pass);
             SecretKey key = new SecretKeySpec(pBytes, "AES");
-            Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             ecipher.init(Cipher.ENCRYPT_MODE, key,new IvParameterSpec("0000000000000000".getBytes()));
 
             byte[] utf8 = message.getBytes("UTF-8");
             byte[] enc = ecipher.doFinal(utf8);
 
-            return Base64.encodeToString(enc, Base64.DEFAULT);
+            System.out.println("Bytes: " + utf8);
+
+            return new String(Base64.encodeBase64(enc), "UTF-8");
         }
-        catch(Exception e){
+        catch (Exception e){
             e.printStackTrace();
         }
-        return "";
+        return null;
     }
 
     public String decryptWithPassword(String message, String pass){
@@ -132,10 +137,10 @@ public class Cryptography
             byte[] pBytes = passwordToKey(pass);
 
             SecretKey key = new SecretKeySpec(pBytes, "AES");
-            Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+            Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             ecipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec("0000000000000000".getBytes()));
 
-            byte[] dec = Base64.decode(message, Base64.DEFAULT);
+            byte[] dec = android.util.Base64.decode(message, android.util.Base64.NO_WRAP);
             byte[] utf8 = ecipher.doFinal(dec);
 
             return new String(utf8, "UTF-8");
@@ -155,7 +160,7 @@ public class Cryptography
             byte[] utf8 = text.getBytes("UTF-8");
             byte[] enc = cipher.doFinal(utf8);
 
-            return Base64.encodeToString(enc, Base64.DEFAULT);
+            return new String(Base64.encodeBase64(enc), "UTF-8");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -170,7 +175,7 @@ public class Cryptography
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec("0000000000000000".getBytes()));
 
-            byte[] dec = Base64.decode(text, Base64.DEFAULT);
+            byte[] dec = android.util.Base64.decode(text, android.util.Base64.NO_WRAP);
             byte[] utf8 = cipher.doFinal(dec);
 
             return new String(utf8, "UTF-8");
@@ -185,13 +190,13 @@ public class Cryptography
     public String encryptRSA(String text)
     {
         try {
-            Cipher cipher = Cipher.getInstance("RSA");
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, certificatePublicKey);
 
             byte[] utf8 = text.getBytes("UTF-8");
             byte[] enc = cipher.doFinal(utf8);
 
-            return Base64.encodeToString(enc, Base64.DEFAULT);
+            return new String(Base64.encodeBase64(enc), "UTF-8");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -201,11 +206,11 @@ public class Cryptography
 
     public boolean hashIsValid(String text, String hash)
     {
-        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(text).equals(hash);
+        return (new String(Hex.encodeHex(DigestUtils.sha256(text)))).equals(hash);
     }
 
     public String hash(String text)
     {
-        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(text);
+        return new String(Hex.encodeHex(DigestUtils.sha256(text)));
     }
 }

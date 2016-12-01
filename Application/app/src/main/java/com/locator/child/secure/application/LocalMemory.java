@@ -19,6 +19,7 @@ public class LocalMemory {
     private String loggedUserMail;
     private String loggedUserPassword;
     private String kidRequestPass;
+    private String sessionKey;
 
     public LocalMemory(){
 
@@ -64,6 +65,15 @@ public class LocalMemory {
         handlerGPS=h;
     }
 
+    public String getSessionKey()
+    {
+        return sessionKey;
+    }
+
+    public void setSessionKey(String sessionKey)
+    {
+        this.sessionKey = sessionKey;
+    }
 
     public List<Parent> getParents() {
         return parents;

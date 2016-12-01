@@ -34,4 +34,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'commons-codec:commons-codec:1.10'
     compile 'joda-time:joda-time:2.9.6'
+    compile group: 'com.fatboyindustrial.gson-jodatime-serialisers', name: 'gson-jodatime-serialisers', version: '1.4.0'
 }

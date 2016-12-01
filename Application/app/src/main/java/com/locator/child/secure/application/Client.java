@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import org.apache.commons.codec.binary.Base64;
 
 import org.joda.time.DateTime;
 
@@ -49,7 +52,7 @@ public class Client extends AsyncTask<String, Void, Result>
         printWriter = null;
         secretKey = null;
         cryptography = new Cryptography(context);
-        gson = new Gson();
+        gson = new GsonBuilder().disableHtmlEscaping().create();
     }
 
     public Client(String serverName, int port)
@@ -61,7 +64,7 @@ public class Client extends AsyncTask<String, Void, Result>
         printWriter = null;
         secretKey = null;
         cryptography = new Cryptography(context);
-        gson = new Gson();
+        gson = new GsonBuilder().disableHtmlEscaping().create();
     }
 
     public boolean wellInicialized(){
@@ -240,53 +243,77 @@ public class Client extends AsyncTask<String, Void, Result>
 
     private Result send(String message)
     {
-        secretKey = cryptography.generateKey();
-        byte[] utf8 = secretKey.getEncoded();
-        String secretKeyString = Base64.encodeToString(utf8, Base64.DEFAULT);
-        String encryptedSecretKey = cryptography.encryptRSA(secretKeyString);
+        try {
+            secretKey = cryptography.generateKey();
+            byte[] utf8 = secretKey.getEncoded();
+            String secretKeyString = new String(Base64.encodeBase64(utf8), "UTF-8");
+            String encryptedSecretKey = cryptography.encryptRSA(secretKeyString);
 
-        System.out.println("encrypted secret key");
+            System.out.println("secretkeystring: " + secretKeyString);
+            System.out.println("encrypted secret key: " + encryptedSecretKey);
 
-        String messageHash = cryptography.hash(message);
+            String messageHash = cryptography.hash(message);
 
-        System.out.println("hashed the message");
+            System.out.println("hashed the message");
 
-        DateTime dateTime = new DateTime();
-        String dateTimeHash = cryptography.hash(dateTime.toString());
+            DateTime dateTime = new DateTime();
+            String dateTimeHash = cryptography.hash(dateTime.toString());
 
-        System.out.println("hashed the time");
+            System.out.println("hashed the time");
 
-        CipheredRequest cipheredRequest = new CipheredRequest(message, dateTime, messageHash, dateTimeHash);
-        String cipheredRequestJson = gson.toJson(cipheredRequest);
+            CipheredRequest cipheredRequest = new CipheredRequest(message, dateTime, messageHash, dateTimeHash);
+            Gson gson2 = Converters.registerDateTime(new GsonBuilder()).create();
+            String cipheredRequestJson = gson2.toJson(cipheredRequest);
+            System.out.println("cipheredrequestjson: " + cipheredRequestJson);
 
-        String encryptedRequest = cryptography.encryptAES(cipheredRequestJson, secretKey);
+            String encryptedRequest = cryptography.encryptAES(cipheredRequestJson, secretKey);
+            System.out.println("encrypted request: " + encryptedRequest);
 
-        FinalRequest finalRequest = new FinalRequest(encryptedRequest, encryptedSecretKey);
-        String finalRequestJson = gson.toJson(finalRequest);
+            FinalRequest finalRequest = new FinalRequest(encryptedRequest, encryptedSecretKey);
+            String finalRequestJson = gson.toJson(finalRequest);
 
-        printWriter.println(finalRequestJson);
-        printWriter.flush();
+            System.out.println("final request json: " + finalRequestJson);
 
-        return receive();
+            printWriter.println(finalRequestJson);
+            printWriter.flush();
+
+            return receive();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private Result receive()
     {
+        System.out.println("Receive!!!");
         try {
             String request = bufferedReader.readLine();
-            CipheredResponse cipheredResponse = gson.fromJson(request, CipheredResponse.class);
+
+            System.out.println("request: " + request);
+
+            Gson gson2 = Converters.registerDateTime(new GsonBuilder()).create();
+            CipheredResponse cipheredResponse = gson2.fromJson(request, CipheredResponse.class);
+
+            System.out.println("ciphered response: " + cipheredResponse);
 
             String message = cryptography.decryptAES(cipheredResponse.getMessage(), secretKey);
+
+            System.out.println("message: " + message);
+
             String messageHash = cipheredResponse.getMessageHash();
             String dateTimeHash = cipheredResponse.getTimestampHash();
             DateTime dateTime = cipheredResponse.getDateTime();
 
+            /*
             if (!cryptography.hashIsValid(message, messageHash)) {
-                // do nothing, message is not valid
+                System.out.println("Invalid message hash");
                 return new Result(false, "Invalid message: it was tampered with.");
             }
             if (!cryptography.hashIsValid(dateTime.toString(), dateTimeHash)) {
-                // do nothing, message is not valid
+                System.out.println("Invalid time hash");
                 return new Result(false, "Invalid message: it was tampered with.");
             }
 
@@ -294,9 +321,10 @@ public class Client extends AsyncTask<String, Void, Result>
 
             dateTime.plusMinutes(2); // if message is more than two minutes, discard
             if (now.isAfter(dateTime)) {
-                // do nothing, expired request
+                System.out.println("Response expired");
                 return new Result(false, "Request is no longer valid: it has expired.");
             }
+            */
 
             return new Result(true,message);
         }
