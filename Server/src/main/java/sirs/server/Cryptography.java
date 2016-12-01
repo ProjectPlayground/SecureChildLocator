@@ -1,5 +1,7 @@
 package sirs.server;
 
+import org.apache.commons.codec.binary.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -14,7 +16,6 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.cert.Certificate;
-import java.util.Base64;
 
 public class Cryptography
 {
@@ -103,7 +104,7 @@ public class Cryptography
             byte[] utf8 = text.getBytes("UTF-8");
             byte[] enc = cipher.doFinal(utf8);
 
-            return Base64.getEncoder().encodeToString(enc);
+            return new String(Base64.encodeBase64(enc), "UTF-8");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -112,14 +113,21 @@ public class Cryptography
         return null;
     }
 
+    public String decryptAES(String text, String key)
+    {
+        byte[] keyBytes = Base64.decodeBase64(key);
+        SecretKey secretKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "AES");
+
+        return decryptAES(text, secretKey);
+    }
+
     public String decryptAES(String text, SecretKey key)
     {
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec("0000000000000000".getBytes()));
 
-            Base64.Decoder decoder = Base64.getDecoder();
-            byte[] dec = decoder.decode(text);
+            byte[] dec = Base64.decodeBase64(text);
             byte[] utf8 = cipher.doFinal(dec);
 
             return new String(utf8, "UTF-8");
@@ -133,31 +141,31 @@ public class Cryptography
 
     public SecretKey getKey(String key)
     {
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] keyBytes = decoder.decode(key);
+        try {
+            byte[] keyBytes = Base64.decodeBase64(key);
+            String stringKey = new String(keyBytes, "UTF-8");
 
-        return new SecretKeySpec(keyBytes, 0, keyBytes.length, "AES");
-    }
+            SecretKey secretKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "AES");
 
-    public String decryptAES(String text, String key)
-    {
-        Base64.Decoder decoder = Base64.getDecoder();
-        byte[] keyBytes = decoder.decode(key);
-        SecretKey secretKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "AES");
+            return secretKey;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        return decryptAES(text, secretKey);
+        return null;
     }
 
     public String encryptRSA(String text)
     {
         try {
-            Cipher cipher = Cipher.getInstance("RSA");
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 
             byte[] utf8 = text.getBytes("UTF-8");
             byte[] enc = cipher.doFinal(utf8);
 
-            return Base64.getEncoder().encodeToString(enc);
+            return new String(Base64.encodeBase64(enc), "UTF-8");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -168,12 +176,13 @@ public class Cryptography
     public String decryptRSA(String text)
     {
         try {
-            final Cipher cipher = Cipher.getInstance("RSA");
+            final Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
 
-            Base64.Decoder decoder = Base64.getDecoder();
-            byte[] dec = decoder.decode(text);
+            byte[] dec = Base64.decodeBase64(text);
             byte[] utf8 = cipher.doFinal(dec);
+
+            //return Base64.encodeBase64String(utf8);
 
             return new String(utf8, "UTF-8");
         }

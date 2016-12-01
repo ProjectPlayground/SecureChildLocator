@@ -28,13 +28,13 @@ public class Database
             database.addUser("h@g.c", "96", "qwerty");
             database.addUser("c@g.c", "97", "qwerty");
 
-            String sessionKey = database.createSessionKey("h@g.c", "qwerty");
-            System.out.println(sessionKey + " length: " + sessionKey.length());
+           // String sessionKey = database.createSessionKey("h@g.c", "qwerty");
+        //    System.out.println(sessionKey + " length: " + sessionKey.length());
 
-            database.addLocation(sessionKey, "h@g.c", "qwerty", "location1");
+          //  database.addLocation(sessionKey, "h@g.c", "qwerty", "location1");
 
-            database.get30Locations("h@g.c", "qwerty", sessionKey);
-            database.getLatestLocation("h@g.c", "qwerty", sessionKey);
+            //database.get30Locations("h@g.c", "qwerty", sessionKey);
+            //database.getLatestLocation("h@g.c", "qwerty", sessionKey);
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
@@ -110,12 +110,12 @@ public class Database
         }
     }
 
-    public void addLocation(String sessionKey, String email, String password, String location)
+    public void addLocation(String sessionKey, String email, String location)
             throws UserDoesntExistException, SessionKeyDoesntExistException,
             ExpiredSessionKeyException, IncorrectPasswordException, WrongKeyException
     {
-        login(email, password);
-        checkIfSessionKeyBelongsToUser(email, sessionKey);
+        //login(email, password);
+        //checkIfSessionKeyBelongsToUser(email, sessionKey);
 
         try {
             String addLocation = "insert into location (location_date, location, session_key, email) " +
@@ -158,12 +158,12 @@ public class Database
         }
     }
 
-    public TreeMap<Date, String> get30Locations(String email, String password, String sessionKey)
+    public TreeMap<Date, String> get30Locations(String email, String sessionKey)
             throws UserDoesntExistException, SessionKeyDoesntExistException,
             ExpiredSessionKeyException, IncorrectPasswordException, WrongKeyException
     {
-        login(email, password);
-        checkIfSessionKeyBelongsToUser(email, sessionKey);
+        //login(email, password);
+        //checkIfSessionKeyBelongsToUser(email, sessionKey);
 
         TreeMap<Date, String> locations = new TreeMap<>();
 
@@ -233,10 +233,10 @@ public class Database
         return null;
     }
 
-    public String createSessionKey(String email, String password)
+    public String createSessionKey(String email)
             throws IncorrectPasswordException, UserDoesntExistException
     {
-        login(email, password);
+        //login(email, password);
 
         try {
             List<String> sessionKeys = new ArrayList<>();
@@ -283,12 +283,12 @@ public class Database
      * (they last for 15 minutes).
      * If this all checks, then we mark the session key as used and that's it.
      */
-    public void verifySessionKey(String email, String password, String key)
+    public void verifySessionKey(String email, String key)
             throws ExpiredSessionKeyException, UsedSessionKeyException,
             IncorrectPasswordException, UserDoesntExistException,
             WrongKeyException
     {
-        login(email, password);
+        // login(email, password);
 
         try {
             String getCodes = "select * from session_keys where session_key = ? limit 1";
@@ -318,9 +318,9 @@ public class Database
 
                 Timestamp time = new Timestamp(new Date().getTime());
 
-                if (time.getTime() > (timestamp.getTime() + MINUTES_15)) {
-                    throw new ExpiredSessionKeyException(key);
-                }
+                //if (time.getTime() > (timestamp.getTime() + MINUTES_15)) {
+                //    throw new ExpiredSessionKeyException(key);
+                //}
             }
             else{
                 throw new WrongKeyException(email, key);

@@ -1,5 +1,7 @@
 package sirs.server;
 
+import javax.crypto.SecretKey;
+
 public class Main
 {
     public static void main(String[] args) throws Exception
@@ -19,32 +21,15 @@ public class Main
 
         new Server(9000);
 
-        /*
         Cryptography cryptography = new Cryptography();
-        String hash = cryptography.hash("hello");
-        System.out.println(hash);
-        System.out.println(cryptography.hashIsValid("hello", hash));
 
+        SecretKey key = cryptography.generateKey();
 
-        /*
+        String encrypted = cryptography.encryptAES("I'm awesome!!!", key);
+        String decrypted = cryptography.decryptAES(encrypted, key);
 
-        String encrypted = cryptography.encryptRSA("i'm awesome!");
-        String decrypted = cryptography.decryptRSA(encrypted);
-
-        System.out.println(encrypted);
-        System.out.println(decrypted);
-
-        SecretKey secretKey = cryptography.generateKey();
-        encrypted = cryptography.encryptAES("i'm awesome!", secretKey);
-        decrypted = cryptography.decryptAES(encrypted, secretKey);
-
-        System.out.println(encrypted);
-        System.out.println(decrypted);
-
-       DateTime dateTime = new DateTime();
-       System.out.println(dateTime);
-*/
-
+        System.out.println("encrypted: " + encrypted);
+        System.out.println("decrypted: " + decrypted);
     }
 
 }

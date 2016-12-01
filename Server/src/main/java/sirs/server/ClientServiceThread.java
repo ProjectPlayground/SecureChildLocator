@@ -1,6 +1,8 @@
 package sirs.server;
 
+import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.joda.time.DateTime;
 import sirs.communication.request.*;
 import sirs.communication.response.*;
@@ -34,7 +36,7 @@ class ClientServiceThread extends Thread
         this.printWriter = null;
         this.database = database;
         this.cryptography = cryptography;
-        this.gson = new Gson();
+        this.gson = new GsonBuilder().disableHtmlEscaping().create();
         this.secretKey = null;
     }
 
@@ -82,7 +84,7 @@ class ClientServiceThread extends Thread
             }
             else {
                 System.out.println(message);
-                doRequest(message);
+                doFinalRequest(message);
             }
         }
         catch (IOException e) {
@@ -93,12 +95,20 @@ class ClientServiceThread extends Thread
     private void send(String response)
     {
         String encryptedMessage = cryptography.encryptAES(response, secretKey);
+        System.out.println("encrypted message: " + encryptedMessage);
         String messageHash = cryptography.hash(encryptedMessage);
+        System.out.println("message hash: " + messageHash);
         DateTime dateTime = new DateTime();
         String timeHash = cryptography.hash(dateTime.toString());
 
+        Gson gson2 = Converters.registerDateTime(new GsonBuilder().disableHtmlEscaping()).create();
+
         CipheredResponse cipheredResponse = new CipheredResponse(encryptedMessage, dateTime, messageHash, timeHash);
-        String cipheredResponseJson = gson.toJson(cipheredResponse);
+        String cipheredResponseJson = gson2.toJson(cipheredResponse);
+
+        System.out.println(cipheredResponse);
+        System.out.println(cipheredResponseJson);
+
         printWriter.println(cipheredResponseJson);
         printWriter.flush();
     }
@@ -106,27 +116,41 @@ class ClientServiceThread extends Thread
     private void doFinalRequest(String request)
     {
         FinalRequest finalRequest = gson.fromJson(request, FinalRequest.class);
+        String key = finalRequest.getKey();
+        String message = finalRequest.getMessage();
 
-        doCipheredRequest(finalRequest.getKey(), finalRequest.getMessage());
+        doCipheredRequest(key, message);
     }
 
     private void doCipheredRequest(String key, String request)
     {
         try {
-            secretKey = cryptography.getKey(key);
+            System.out.println("Key: " + key);
+            System.out.println("Request: " + request);
+
             // First we decrypt the key with our private key
             String decryptedKey = cryptography.decryptRSA(key);
-            // Now we use the decrypted key to decrypt the content of our request
-            String cipheredRequestJson = cryptography.decryptAES(request, decryptedKey);
+            System.out.println("decrypted key: " + decryptedKey);
 
-            CipheredRequest cipheredRequest = gson.fromJson(cipheredRequestJson, CipheredRequest.class);
+            secretKey = cryptography.getKey(decryptedKey);
+            // Now we use the decrypted key to decrypt the content of our request
+            String cipheredRequestJson = cryptography.decryptAES(request, secretKey);
+            System.out.println(cipheredRequestJson);
+
+            Gson gson2 = Converters.registerDateTime(new GsonBuilder()).create();
+
+            CipheredRequest cipheredRequest = gson2.fromJson(cipheredRequestJson, CipheredRequest.class);
+
+            System.out.println(cipheredRequest);
 
             if (!cryptography.hashIsValid(cipheredRequest.getMessage(), cipheredRequest.getMessageHash())) {
                 // do nothing, message is not valid
+                System.out.println("Message hash is not valid");
                 return;
             }
             if (!cryptography.hashIsValid(cipheredRequest.getDateTime().toString(), cipheredRequest.getDateTimeHash())) {
                 // do nothing, message is not valid
+                System.out.println("Date time hash is not valid");
                 return;
             }
 
@@ -134,12 +158,14 @@ class ClientServiceThread extends Thread
             DateTime requestTimestamp = cipheredRequest.getDateTime();
             DateTime now = new DateTime();
 
-            requestTimestamp.plusMinutes(2); // if message is more than two minutes, discard
+            /*
+            requestTimestamp.plusMinutes(2); // if message is more than two minutes, discard as protection to replay attacks
             if (now.isAfter(requestTimestamp)) {
                 // do nothing, expired request
+                System.out.println("Message has expired");
                 return;
             }
-
+            */
             // message is valid! let's continue
             doRequest(cipheredRequest.getMessage());
         }
@@ -151,6 +177,7 @@ class ClientServiceThread extends Thread
 
     private void doRequest(String request)
     {
+        System.out.println("Doing request!");
         AddUserRequest addUserRequest = gson.fromJson(request, AddUserRequest.class);
         String type = addUserRequest.getType();
 
@@ -178,6 +205,7 @@ class ClientServiceThread extends Thread
             doGetLocations(getLocationsRequest);
         }
         else if (type.equals("LoginRequest")) {
+            System.out.println("Login request");
             LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
             doLoginRequest(loginRequest);
         }
@@ -222,7 +250,7 @@ class ClientServiceThread extends Thread
             try {
                 database.addLocation(addLocationRequest.getSessionKey(),
                         addLocationRequest.getEmail(),
-                        addLocationRequest.getPassword(),
+                        /*addLocationRequest.getPassword(),*/
                         addLocationRequest.getLocation());
                 AddLocationResponse addLocationResponse = new AddLocationResponse(true);
                 String response = gson.toJson(addLocationResponse);
@@ -252,8 +280,7 @@ class ClientServiceThread extends Thread
     {
         synchronized (database) {
             try {
-                String sessionKey = database.createSessionKey(createSessionKeyRequest.getEmail(),
-                        createSessionKeyRequest.getPassword());
+                String sessionKey = database.createSessionKey(createSessionKeyRequest.getEmail());
                 CreateSessionKeyResponse createSessionKeyResponse = new CreateSessionKeyResponse(sessionKey);
                 String response = gson.toJson(createSessionKeyResponse);
                 send(response);
@@ -295,11 +322,13 @@ class ClientServiceThread extends Thread
         synchronized (database) {
             try {
                 Map<Date, String> locationsMap = database.get30Locations(getLocationsRequest.getEmail(),
-                        getLocationsRequest.getPassword(),
                         getLocationsRequest.getSessionKey());
+                System.out.println(locationsMap);
                 List<String> locations = (List<String>) new ArrayList(locationsMap.values());
+                System.out.println(locations);
                 GetLocationsResponse getLocationsResponse = new GetLocationsResponse(locations);
                 String response = gson.toJson(getLocationsResponse);
+                System.out.println(response);
                 send(response);
             }
             catch (Exception e) {
@@ -314,11 +343,14 @@ class ClientServiceThread extends Thread
 
     private void doLoginRequest(LoginRequest loginRequest)
     {
+        System.out.println("doing login request");
         try {
             database.login(loginRequest.getEmail(), loginRequest.getPassword());
             LoginResponse loginResponse = new LoginResponse(true);
             String response = gson.toJson(loginResponse);
+            System.out.println("response: " + response);
             send(response);
+            System.out.println("Response sent");
         }
         catch (Exception e) {
             LoginResponse loginResponse = new LoginResponse(false);
@@ -353,7 +385,6 @@ class ClientServiceThread extends Thread
         synchronized (database) {
             try {
                 database.verifySessionKey(verifySessionKeyRequest.getEmail(),
-                        verifySessionKeyRequest.getPassword(),
                         verifySessionKeyRequest.getSessionKey());
                 VerifySessionKeyResponse verifySessionKeyResponse = new VerifySessionKeyResponse(true);
                 String response = gson.toJson(verifySessionKeyResponse);

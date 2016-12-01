@@ -29,6 +29,7 @@ public class Server
     {
         this.port = port;
         this.database = new Database();
+        this.cryptography = new Cryptography();
         startServer();
     }
 
