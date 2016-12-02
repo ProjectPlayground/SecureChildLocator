@@ -66,10 +66,7 @@ public class Manager {
         }
 
         Client client = new Client(context);
-        /*
-         * SESSION KEY!!!!!!!!!!!!! FIX THIS
-         */
-        VerifySessionKeyRequest verifySessionKeyRequest = new VerifySessionKeyRequest(mail, "30pago8oace7lfg54fdu");
+        VerifySessionKeyRequest verifySessionKeyRequest = new VerifySessionKeyRequest(mail, sharedCode);
         Gson gson = new Gson();
         String verifySessionKeyRequestString = gson.toJson(verifySessionKeyRequest);
         client.execute(verifySessionKeyRequestString);
@@ -291,10 +288,8 @@ public class Manager {
         m.setKidRequestPass(pass);
 
         Client client = new Client(context);
-        /*
-         * SESSION KEY!!!!!!!!!!!!! FIX THIS
-         */
-        GetLocationsRequest getLocationsRequest = new GetLocationsRequest(m.getLoggedUserMail(),m.getLoggedUserPass(), "hello");
+
+        GetLocationsRequest getLocationsRequest = new GetLocationsRequest(m.getLoggedUserMail(),m.getLoggedUserPass(), code);
         Gson gson = new Gson();
         String getLocationsRequestString = gson.toJson(getLocationsRequest);
         client.execute(getLocationsRequestString);
