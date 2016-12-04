@@ -59,33 +59,13 @@ public class Cryptography
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
             keyGenerator.init(128);
-            SecretKey key = keyGenerator.generateKey();
-            return key;
+            return keyGenerator.generateKey();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
-    }
-
-    public void test(String text, KeyStore keyStore, String password)
-    {
-        try {
-            System.out.println("Plain text: " + text);
-
-            PrivateKey privateKey = (PrivateKey) keyStore.getKey("selfsigned", password.toCharArray());
-            Certificate cert = keyStore.getCertificate("selfsigned");
-            PublicKey publicKey = cert.getPublicKey();
-
-            String encrypted = encryptRSA(text);
-            System.out.println("Encrypted: " + encrypted);
-
-            System.out.println("Plain text again: " + decryptRSA(encrypted));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public String encryptAES(String text, SecretKey key)
@@ -174,8 +154,6 @@ public class Cryptography
 
             byte[] dec = Base64.decodeBase64(text);
             byte[] utf8 = cipher.doFinal(dec);
-
-            //return Base64.encodeBase64String(utf8);
 
             return new String(utf8, "UTF-8");
         }
