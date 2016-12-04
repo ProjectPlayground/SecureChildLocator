@@ -14,7 +14,6 @@ import java.net.URL;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SecureRandom;
 import java.security.cert.Certificate;
 
 public class Cryptography
@@ -22,30 +21,24 @@ public class Cryptography
     private static final String KEYSTORE_DIR = "keys/serverkeystore.jks";
     private static final String PASSWORD = "sirs@childlocator";
     private static final String ALIAS = "selfsigned";
-    private static final String salt = "[B@3764951d";
-    private static final int KEY_LENGTH = 256;
-    private static final int ITERATIONS = 1000;
 
     // Server keys
     private PublicKey publicKey;
     private PrivateKey privateKey;
 
-    private SecureRandom secureRandom;
-
     public Cryptography()
     {
-        this.secureRandom = new SecureRandom();
         doKeys();
     }
 
     private void doKeys()
     {
         try {
-            File file = new File("keys/serverkeystore.jks");
+            File file = new File(KEYSTORE_DIR);
             URI keystoreUri = file.toURI();
             URL keystoreUrl = keystoreUri.toURL();
             KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
-            InputStream stream = null;
+            InputStream stream;
 
             stream = keystoreUrl.openStream();
             keystore.load(stream, PASSWORD.toCharArray());
