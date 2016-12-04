@@ -52,7 +52,7 @@ public class Client extends AsyncTask<String, Void, Result>
         printWriter = null;
         secretKey = null;
         cryptography = new Cryptography(context);
-        gson = new GsonBuilder().disableHtmlEscaping().create();
+        gson = Converters.registerDateTime(new GsonBuilder().disableHtmlEscaping()).create();
     }
 
     public Client(String serverName, int port)
@@ -64,7 +64,7 @@ public class Client extends AsyncTask<String, Void, Result>
         printWriter = null;
         secretKey = null;
         cryptography = new Cryptography(context);
-        gson = new GsonBuilder().disableHtmlEscaping().create();
+        gson = Converters.registerDateTime(new GsonBuilder().disableHtmlEscaping()).create();
     }
 
     public boolean wellInicialized(){
@@ -93,119 +93,110 @@ public class Client extends AsyncTask<String, Void, Result>
         if(r.getResult()==false)
             Toast.makeText(context, r.getMessage(), Toast.LENGTH_SHORT).show();
 
-        AddUserResponse addUserResponse = gson.fromJson(r.getMessage(), AddUserResponse.class);
+        try {
+            AddUserResponse addUserResponse = gson.fromJson(r.getMessage(), AddUserResponse.class);
 
-        if (addUserResponse.getType().equals("LoginResponse")  ) {
-            LoginResponse loginResponse = gson.fromJson(r.getMessage(), LoginResponse.class);
+            if (addUserResponse.getType().equals("LoginResponse")) {
+                LoginResponse loginResponse = gson.fromJson(r.getMessage(), LoginResponse.class);
 
-            if (loginResponse.isSuccessful()){
-                Intent myIntent = new Intent(context, MainParentActivity.class);
-                context.startActivity(myIntent);
-                ((Activity)context).finish();
-            }
-            else
-                Toast.makeText(context, loginResponse.getErrorMessage(), Toast.LENGTH_SHORT).show();
+                if (loginResponse.isSuccessful()) {
+                    Intent myIntent = new Intent(context, MainParentActivity.class);
+                    context.startActivity(myIntent);
+                    ((Activity) context).finish();
+                } else
+                    Toast.makeText(context, loginResponse.getErrorMessage(), Toast.LENGTH_SHORT).show();
 
-        }
-
-        else if(addUserResponse.getType().equals("AddUserResponse")){
-            if (addUserResponse.isSuccessful()){
-                Intent myIntent = new Intent(context, ConfirmRegisterActivity.class);
-                context.startActivity(myIntent);
-                ((Activity)context).finish();
-            }
-            else{
-                Toast.makeText(context,addUserResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
-            }
-        }
-
-        else if(addUserResponse.getType().equals("CreateSessionKeyResponse")){
-            CreateSessionKeyResponse createSessionKeyResponse = gson.fromJson(r.getMessage(), CreateSessionKeyResponse.class);
-            LocalMemory m = LocalMemory.getInstance();
-            List<Kid> kids = m.getKids();
-
-            if (createSessionKeyResponse.isSuccessful()){
-                Kid nKid=null;
-                for(int i=0;i<kids.size();i++){
-                    if(kids.get(i).getCode().equals("---")){
-                        nKid = new Kid(kids.get(i).getName(),kids.get(i).getPass(),createSessionKeyResponse.getSessionKey());
-                        m.removeKid(kids.get(i).getName());
-                        break;
-                    }
-
+            } else if (addUserResponse.getType().equals("AddUserResponse")) {
+                if (addUserResponse.isSuccessful()) {
+                    Intent myIntent = new Intent(context, ConfirmRegisterActivity.class);
+                    context.startActivity(myIntent);
+                    ((Activity) context).finish();
+                } else {
+                    Toast.makeText(context, addUserResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
                 }
-                m.addKid(nKid);
+            } else if (addUserResponse.getType().equals("CreateSessionKeyResponse")) {
+                CreateSessionKeyResponse createSessionKeyResponse = gson.fromJson(r.getMessage(), CreateSessionKeyResponse.class);
+                LocalMemory m = LocalMemory.getInstance();
+                List<Kid> kids = m.getKids();
 
-                Intent myIntent = new Intent(context, MainParentActivity.class);
-                context.startActivity(myIntent);
-                ((Activity)context).finish();
-            }
-            else{
-                for(int i=0;i<kids.size();i++){
-                    if(kids.get(i).getCode().equals("---")){
-                        m.removeKid(kids.get(i).getName());
-                        break;
+                if (createSessionKeyResponse.isSuccessful()) {
+                    Kid nKid = null;
+                    for (int i = 0; i < kids.size(); i++) {
+                        if (kids.get(i).getCode().equals("---")) {
+                            nKid = new Kid(kids.get(i).getName(), kids.get(i).getPass(), createSessionKeyResponse.getSessionKey());
+                            m.removeKid(kids.get(i).getName());
+                            break;
+                        }
+
                     }
+                    m.addKid(nKid);
 
+                    Intent myIntent = new Intent(context, MainParentActivity.class);
+                    context.startActivity(myIntent);
+                    ((Activity) context).finish();
+                } else {
+                    for (int i = 0; i < kids.size(); i++) {
+                        if (kids.get(i).getCode().equals("---")) {
+                            m.removeKid(kids.get(i).getName());
+                            break;
+                        }
+
+                    }
+                    Toast.makeText(context, createSessionKeyResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(context,createSessionKeyResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
+            } else if (addUserResponse.getType().equals("VerifySessionKeyResponse")) {
+                VerifySessionKeyResponse verifySessionKeyResponse = gson.fromJson(r.getMessage(), VerifySessionKeyResponse.class);
+                LocalMemory m = LocalMemory.getInstance();
+                List<Parent> parents = m.getParents();
+
+                if (verifySessionKeyResponse.isValid()) {
+                    Parent nParent = null;
+                    for (int i = 0; i < parents.size(); i++) {
+                        if (!parents.get(i).isVerified()) {
+                            nParent = new Parent(parents.get(i).getMail(), parents.get(i).getPass(), parents.get(i).getSharedPass(), parents.get(i).getCode(), true);
+                            m.removeParent(parents.get(i).getMail());
+                            break;
+                        }
+
+                    }
+                    m.addParent(nParent);
+
+                    Intent myIntent = new Intent(context, MainKidsActivity.class);
+                    context.startActivity(myIntent);
+                    ((Activity) context).finish();
+                } else {
+                    for (int i = 0; i < parents.size(); i++) {
+                        if (!parents.get(i).isVerified()) {
+                            m.removeParent(parents.get(i).getMail());
+                            break;
+                        }
+
+                    }
+                    Toast.makeText(context, verifySessionKeyResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
+                }
+            } else if (addUserResponse.getType().equals("GetLocationsResponse")) {
+                Cryptography cript = new Cryptography(context);
+                LocalMemory m = LocalMemory.getInstance();
+
+                GetLocationsResponse getLocationsResponse = gson.fromJson(r.getMessage(), GetLocationsResponse.class);
+
+                if (getLocationsResponse.isSuccessful()) {
+                    List<String> locations = new ArrayList<>();
+                    List<String> locationsEnc = getLocationsResponse.getLocation();
+                    for (String s : locationsEnc)
+                        locations.add(cript.decryptWithPassword(s, m.getKidRequestPass()));
+                    MyLocationsAdapter adapter = new MyLocationsAdapter(locations, context);
+                    ListView list = (ListView) ((Activity) context).findViewById(R.id.listViewLocations);
+                    list.setAdapter(adapter);
+                } else {
+                    Toast.makeText(context, getLocationsResponse.getErrorMessage(), Toast.LENGTH_LONG).show();
+                }
+
             }
         }
-
-        else if(addUserResponse.getType().equals("VerifySessionKeyResponse")){
-            VerifySessionKeyResponse verifySessionKeyResponse = gson.fromJson(r.getMessage(), VerifySessionKeyResponse.class);
-            LocalMemory m = LocalMemory.getInstance();
-            List<Parent> parents = m.getParents();
-
-            if (verifySessionKeyResponse.isValid()){
-                Parent nParent=null;
-                for(int i=0;i<parents.size();i++){
-                    if(!parents.get(i).isVerified()){
-                        nParent = new Parent(parents.get(i).getMail(),parents.get(i).getPass(),parents.get(i).getSharedPass(),parents.get(i).getCode(),true);
-                        m.removeParent(parents.get(i).getMail());
-                        break;
-                    }
-
-                }
-                m.addParent(nParent);
-
-                Intent myIntent = new Intent(context, MainKidsActivity.class);
-                context.startActivity(myIntent);
-                ((Activity)context).finish();
-            }
-            else{
-                for(int i=0;i<parents.size();i++){
-                    if(!parents.get(i).isVerified()){
-                        m.removeParent(parents.get(i).getMail());
-                        break;
-                    }
-
-                }
-                Toast.makeText(context,verifySessionKeyResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
-            }
+        catch (com.google.gson.JsonSyntaxException e) {
+            System.out.println("Result contains an unsuccessful request - meaning, without json");
         }
-        else if(addUserResponse.getType().equals("GetLocationsResponse")){
-            Cryptography cript = new Cryptography(context);
-            LocalMemory m = LocalMemory.getInstance();
-
-            GetLocationsResponse getLocationsResponse = gson.fromJson(r.getMessage(), GetLocationsResponse.class);
-
-            if (getLocationsResponse.isSuccessful()){
-                List<String> locations = new ArrayList<>();
-                List<String> locationsEnc = getLocationsResponse.getLocation();
-                for(String s:locationsEnc)
-                    locations.add(cript.decryptWithPassword(s,m.getKidRequestPass()));
-                MyLocationsAdapter adapter = new MyLocationsAdapter(locations,context);
-                ListView list = (ListView) ((Activity)context).findViewById(R.id.listViewLocations);
-                list.setAdapter(adapter);
-            }
-            else{
-                Toast.makeText(context,getLocationsResponse.getErrorMessage(),Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-
     }
 
     private Result startClient()
@@ -262,8 +253,7 @@ public class Client extends AsyncTask<String, Void, Result>
             System.out.println("hashed the time");
 
             CipheredRequest cipheredRequest = new CipheredRequest(message, dateTime, messageHash, dateTimeHash);
-            Gson gson2 = Converters.registerDateTime(new GsonBuilder()).create();
-            String cipheredRequestJson = gson2.toJson(cipheredRequest);
+            String cipheredRequestJson = gson.toJson(cipheredRequest);
             System.out.println("cipheredrequestjson: " + cipheredRequestJson);
 
             String encryptedRequest = cryptography.encryptAES(cipheredRequestJson, secretKey);
@@ -294,21 +284,24 @@ public class Client extends AsyncTask<String, Void, Result>
 
             System.out.println("request: " + request);
 
-            Gson gson2 = Converters.registerDateTime(new GsonBuilder()).create();
-            CipheredResponse cipheredResponse = gson2.fromJson(request, CipheredResponse.class);
+            CipheredResponse cipheredResponse = gson.fromJson(request, CipheredResponse.class);
 
             System.out.println("ciphered response: " + cipheredResponse);
 
-            String message = cryptography.decryptAES(cipheredResponse.getMessage(), secretKey);
+            String originalMessage = cipheredResponse.getMessage();
+            String message = cryptography.decryptAES(originalMessage, secretKey);
 
             System.out.println("message: " + message);
 
             String messageHash = cipheredResponse.getMessageHash();
             String dateTimeHash = cipheredResponse.getTimestampHash();
             DateTime dateTime = cipheredResponse.getDateTime();
+            DateTime now = new DateTime();
 
-            /*
-            if (!cryptography.hashIsValid(message, messageHash)) {
+            System.out.println("messageHash: " + messageHash);
+            System.out.println("timehash: " + dateTimeHash);
+
+            if (!cryptography.hashIsValid(originalMessage, messageHash)) {
                 System.out.println("Invalid message hash");
                 return new Result(false, "Invalid message: it was tampered with.");
             }
@@ -317,14 +310,11 @@ public class Client extends AsyncTask<String, Void, Result>
                 return new Result(false, "Invalid message: it was tampered with.");
             }
 
-            DateTime now = new DateTime();
-
-            dateTime.plusMinutes(2); // if message is more than two minutes, discard
+            dateTime = dateTime.plusSeconds(20); // if message is more than twenty seconds, discard
             if (now.isAfter(dateTime)) {
                 System.out.println("Response expired");
                 return new Result(false, "Request is no longer valid: it has expired.");
             }
-            */
 
             return new Result(true,message);
         }
