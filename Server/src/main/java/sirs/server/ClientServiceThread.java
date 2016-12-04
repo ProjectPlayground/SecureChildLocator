@@ -155,17 +155,16 @@ class ClientServiceThread extends Thread
             }
 
             // but what if the timestamp is old?
-            DateTime requestTimestamp = cipheredRequest.getDateTime();
             DateTime now = new DateTime();
+            DateTime requestTimestamp = cipheredRequest.getDateTime();
+            requestTimestamp = requestTimestamp.plusSeconds(20); // if message is more than twenty seconds, discard as protection to replay attacks
 
-            /*
-            requestTimestamp.plusMinutes(2); // if message is more than two minutes, discard as protection to replay attacks
             if (now.isAfter(requestTimestamp)) {
                 // do nothing, expired request
                 System.out.println("Message has expired");
                 return;
             }
-            */
+
             // message is valid! let's continue
             doRequest(cipheredRequest.getMessage());
         }
