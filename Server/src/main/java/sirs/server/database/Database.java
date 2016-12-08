@@ -187,7 +187,6 @@ public class Database
 
             while (it.hasNext()) {
                 Map.Entry tm = (Map.Entry) it.next();
-                System.out.println("Location date: " + tm.getKey() + " Location: " + tm.getValue());
             }
 
         }
@@ -220,8 +219,6 @@ public class Database
                 Date locationDate = result.getTimestamp("location_date");
 
                 locationEntry = new AbstractMap.SimpleEntry<>(locationDate, location);
-
-                System.out.println(locationEntry);
 
                 return locationEntry;
             }

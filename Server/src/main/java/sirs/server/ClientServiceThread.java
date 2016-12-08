@@ -79,11 +79,11 @@ class ClientServiceThread extends Thread
             String message = bufferedReader.readLine();
 
             if (message.equalsIgnoreCase("stop")) {
-                System.out.println("End of conversation.");
+                System.out.println("End of request.");
                 running = false;
             }
             else {
-                System.out.println(message);
+                System.out.println("Received a request");
                 doFinalRequest(message);
             }
         }
@@ -95,9 +95,7 @@ class ClientServiceThread extends Thread
     private void send(String response)
     {
         String encryptedMessage = cryptography.encryptAES(response, secretKey);
-        System.out.println("encrypted message: " + encryptedMessage);
         String messageHash = cryptography.hash(encryptedMessage);
-        System.out.println("message hash: " + messageHash);
         DateTime dateTime = new DateTime();
         String timeHash = cryptography.hash(dateTime.toString());
 
@@ -105,9 +103,6 @@ class ClientServiceThread extends Thread
 
         CipheredResponse cipheredResponse = new CipheredResponse(encryptedMessage, dateTime, messageHash, timeHash);
         String cipheredResponseJson = gson2.toJson(cipheredResponse);
-
-        System.out.println(cipheredResponse);
-        System.out.println(cipheredResponseJson);
 
         printWriter.println(cipheredResponseJson);
         printWriter.flush();
@@ -125,23 +120,16 @@ class ClientServiceThread extends Thread
     private void doCipheredRequest(String key, String request)
     {
         try {
-            System.out.println("Key: " + key);
-            System.out.println("Request: " + request);
-
             // First we decrypt the key with our private key
             String decryptedKey = cryptography.decryptRSA(key);
-            System.out.println("decrypted key: " + decryptedKey);
-
             secretKey = cryptography.getKey(decryptedKey);
+
             // Now we use the decrypted key to decrypt the content of our request
             String cipheredRequestJson = cryptography.decryptAES(request, secretKey);
-            System.out.println(cipheredRequestJson);
 
             Gson gson2 = Converters.registerDateTime(new GsonBuilder()).create();
 
             CipheredRequest cipheredRequest = gson2.fromJson(cipheredRequestJson, CipheredRequest.class);
-
-            System.out.println(cipheredRequest);
 
             if (!cryptography.hashIsValid(cipheredRequest.getMessage(), cipheredRequest.getMessageHash())) {
                 // do nothing, message is not valid
@@ -176,7 +164,6 @@ class ClientServiceThread extends Thread
 
     private void doRequest(String request)
     {
-        System.out.println("Doing request!");
         AddUserRequest addUserRequest = gson.fromJson(request, AddUserRequest.class);
         String type = addUserRequest.getType();
 
@@ -204,7 +191,6 @@ class ClientServiceThread extends Thread
             doGetLocations(getLocationsRequest);
         }
         else if (type.equals("LoginRequest")) {
-            System.out.println("Login request");
             LoginRequest loginRequest = gson.fromJson(request, LoginRequest.class);
             doLoginRequest(loginRequest);
         }
@@ -322,12 +308,9 @@ class ClientServiceThread extends Thread
             try {
                 Map<Date, String> locationsMap = database.get30Locations(getLocationsRequest.getEmail(),
                         getLocationsRequest.getSessionKey());
-                System.out.println(locationsMap);
                 List<String> locations = (List<String>) new ArrayList(locationsMap.values());
-                System.out.println(locations);
                 GetLocationsResponse getLocationsResponse = new GetLocationsResponse(locations);
                 String response = gson.toJson(getLocationsResponse);
-                System.out.println(response);
                 send(response);
             }
             catch (Exception e) {
@@ -342,14 +325,11 @@ class ClientServiceThread extends Thread
 
     private void doLoginRequest(LoginRequest loginRequest)
     {
-        System.out.println("doing login request");
         try {
             database.login(loginRequest.getEmail(), loginRequest.getPassword());
             LoginResponse loginResponse = new LoginResponse(true);
             String response = gson.toJson(loginResponse);
-            System.out.println("response: " + response);
             send(response);
-            System.out.println("Response sent");
         }
         catch (Exception e) {
             LoginResponse loginResponse = new LoginResponse(false);

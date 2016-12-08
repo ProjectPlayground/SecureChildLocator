@@ -105,7 +105,7 @@ public class Cryptography
 
             return new String(utf8, "UTF-8");
         }
-        catch(Exception e){
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -118,9 +118,7 @@ public class Cryptography
             byte[] keyBytes = Base64.decodeBase64(key);
             String stringKey = new String(keyBytes, "UTF-8");
 
-            SecretKey secretKey = new SecretKeySpec(keyBytes, 0, keyBytes.length, "AES");
-
-            return secretKey;
+            return new SecretKeySpec(keyBytes, 0, keyBytes.length, "AES");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -157,8 +155,8 @@ public class Cryptography
 
             return new String(utf8, "UTF-8");
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
         return null;
