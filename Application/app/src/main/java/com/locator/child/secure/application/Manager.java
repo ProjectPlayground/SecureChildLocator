@@ -42,6 +42,14 @@ public class Manager {
     }
 
     public void register(Context context,String mail,String phone,String pass){
+        if(mail.length()<5) {
+            Toast.makeText(context, "The mail must have at least 5 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else if(pass.length()<6) {
+            Toast.makeText(context, "The password must have at least 6 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
         Client client = new Client(context);
         AddUserRequest addUserRequest = new AddUserRequest(mail,phone,pass);
         Gson gson = new Gson();
@@ -57,6 +65,14 @@ public class Manager {
     }
 
     public void addParent(Context context,String mail,String name,String pass,String sharedCode){
+        if(name.length()<3) {
+            Toast.makeText(context, "The name must have at least 3 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else if(pass.length()<6) {
+            Toast.makeText(context, "The password must have at least 6 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
         LocalMemory m = LocalMemory.getInstance();
         for(Parent p:m.getParents()){
             if(p.getMail().equals(mail)) {
@@ -75,6 +91,14 @@ public class Manager {
     }
 
     public void addKid(Context context,String name,String pass){
+        if(name.length()<3) {
+            Toast.makeText(context, "The name must have at least 3 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else if(pass.length()<6) {
+            Toast.makeText(context, "The password must have at least 6 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
         LocalMemory m = LocalMemory.getInstance();
         for(Kid k:m.getKids()){
             if(k.getName().equals(name)) {

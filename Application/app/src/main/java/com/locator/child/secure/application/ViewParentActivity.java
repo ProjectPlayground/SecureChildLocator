@@ -14,16 +14,13 @@ public class ViewParentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String mail = intent.getStringExtra("MAIL");
-        String sharedPass = intent.getStringExtra("sPASS");
         String code = intent.getStringExtra("CODE");
 
         TextView mailV = (TextView) findViewById(R.id.textViewParentMailView);
-        TextView sharedPassV = (TextView) findViewById(R.id.textViewParentSharedPassView);
         TextView codeV = (TextView) findViewById(R.id.textViewParentCodeView);
 
 
         mailV.setText(mail);
-        sharedPassV.setText(sharedPass);
         codeV.setText(code);
 
     }

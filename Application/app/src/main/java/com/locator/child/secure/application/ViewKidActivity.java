@@ -29,16 +29,13 @@ public class ViewKidActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         name = intent.getStringExtra("NAME");
-        pass = intent.getStringExtra("PASS");
         code = intent.getStringExtra("CODE");
-
+        pass = intent.getStringExtra("PASS");
 
         TextView nameV = (TextView) findViewById(R.id.textViewKidNameView);
-        TextView passV = (TextView) findViewById(R.id.textViewKidPassView);
         TextView codeV = (TextView) findViewById(R.id.textViewKidCodeView);
 
         nameV.setText(name);
-        passV.setText(pass);
         codeV.setText(code);
 
         populateListView(context,code,pass);
@@ -48,8 +45,8 @@ public class ViewKidActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent myIntent = new Intent(context, ViewKidActivity.class);
                 myIntent.putExtra("NAME", name);
-                myIntent.putExtra("PASS", pass);
                 myIntent.putExtra("CODE", code);
+                myIntent.putExtra("PASS", pass);
                 context.startActivity(myIntent);
                 ((Activity)context).finish();
             }
