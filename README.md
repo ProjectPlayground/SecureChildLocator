@@ -34,4 +34,5 @@ mvn compile exec:java
 
 ### Application
 
-
+Open build.gradle with Android Studio and run in a virtual device running 
+Android 5.1 (with Google APIs).
