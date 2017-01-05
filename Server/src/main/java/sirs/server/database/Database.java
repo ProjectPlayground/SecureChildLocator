@@ -10,7 +10,7 @@ public class Database
 {
     private static final String DATABASE = "jdbc:mysql://db.ist.utl.pt:3306/ist178190";
     private static final String USER = "ist178190";
-    private static final String PASSWORD = "wgul0127";
+    private static final String PASSWORD = "wgul0127"; // old password
 
     private static final int MINUTES_15 = 900000; // 15 minutes in ms
 
